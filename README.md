@@ -1,12 +1,12 @@
 # Game - Programming Assignments Private Repository
 ### Student Information
-  + Name: Tommy Trojan
-  + USC Email: ttrojan@usc.edu
-  + USC ID: 0123456789
+  + Name: Angelica Huyen Tran
+  + USC Email: tranac@usc.edu
+  + USC ID: 5286316282
 
 ### Game Information
-  + Game Name: myAwsomeGame
-  + Game Description: One sentence game description
+  + Game Name: FlyQuest
+  + Game Description: Side-scrolling flying game. Avoid obstacles and stay alive as long as possible. //not one sentence
   + [Game Design Doc](GameDesignDoc.md)
 
 

@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+# Temporary Files
+*.cpp~
+*.h~
+*.md~

@@ -18,121 +18,129 @@ The purpose of these programming assignments is to make a game using QT. The gam
 ### `Item`
 Abstract base class that all of the game items inherits from.
 
-**Data Members**
+#### Data Members
 
-* `int x_`
-> X coordinate of the item relative to the game screen.
+`int x_`
 
-* `int y_`
-> Y coordinate of the item relative to the game screen.
+X coordinate of the item relative to the game screen.
 
-* `int vx_`
-> Velocity of the x coordinate. Item will move this many pixels each time `move()` is called.
+`int y_`
 
-* `int vy_`
-> Velocity of the y coordinate. Item will move this many pixels each time `move()` is called.
+Y coordinate of the item relative to the game screen.
 
-* `QPixMap* pic_`
-> QPixMap for the graphic of the item. 
+`int vx_`
 
-**Member Methods**
+Velocity of the x coordinate. Item will move this many pixels each time `move()` is called.
 
-* `Item(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+`int vy_`
 
-* `virtual move()`
-> Virtual move function. Changes the item position.
+Velocity of the y coordinate. Item will move this many pixels each time `move()` is called.
+
+`QPixMap* pic_`
+
+QPixMap for the graphic of the item. 
+
+#### Member Methods
+
+`Item(int x, int y, int vx, int vy, QPixMap* pic)`
+Default constructor.
+
+`virtual move()`
+Virtual move function. Changes the item position.
 
 ### `VerticalWall`
 One of the obstacles. Moves up and down a portion of the screen at a constant rate. Does not move horizontally (except as the screen moves horizontally).
+obstacles.
 
-**Data Members**
+#### Data Members
 
-* `ItemName`
->Text
+`ItemName`
+Text
 
-**Member Methods**
+#### Member Methods
 
-* `VerticalWall(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+`VerticalWall(int x, int y, int vx, int vy, QPixMap* pic)`
+Default constructor.
 
-* `move()`
-> Changes the item position.
+`move()`
+Changes the item position.
 
 ### `Bullet` \ or `FireBall`
 One of the obstacles. Moves horizontally at a rate faster than the screen scrolls. Vertical position is randomized and does not change as the object moves.
+obstacles.
 
-**Data Members**
+#### Data Members
 
->Text
+`ItemName`
+Text
 
-**Member Methods**
+#### Member Methods
 
-* `Bullet(int x, int y, int vx, int vy, QPixMap* pic)` \ `FireBall(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+`Bullet(int x, int y, int vx, int vy, QPixMap* pic)` \ `FireBall(int x, int y, int vx, int vy, QPixMap* pic)`
+Default constructor.
 
-* `move()`
-> Changes the item position.
+`move()`
+Changes the item position.
 
-### `Wind` / `Whirlpool` thing
+### Item Three: `Wind` / `Whirlpool` thing
 One of the obstacles. Does not move horizontally or vertically (besides moving with the scrolling screen). It does however mover in a stationary clockwise fashion. Covers a larger area than the other obstacles.
 
 #### Data Members
 
 `ItemName`
->Text
+Text
 
 #### Member Methods
 
 `Wind(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+Default constructor.
 
 `move()`
-> Changes the item position.
+Changes the item position.
 
 ### `Item 4`
 
 
-**Data Members**
+#### Data Members
 
-* `ItemName`
->Text
+`ItemName`
+Text
 
-**Member Methods**
+#### Member Methods
 
-* `(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+`Item4(int x, int y, int vx, int vy, QPixMap* pic)`
+Default constructor.
 
-* `move()`
-> Changes the item position.
+`move()`
+Changes the item position.
 
 ### `Gem`
 Bonus item in the game. Appears sporadically and moves in a zig-zag path across the screen (moves vertically and horizontally). 
 
-**Data Members**
+#### Data Members
 
-* `ItemName`
->Text
+`ItemName`
+Text
 
-**Member Methods**
+#### Member Methods
 
-* `Gem(int x, int y, int vx, int vy, QPixMap* pic)`
-> Default constructor.
+`Gem(int x, int y, int vx, int vy, QPixMap* pic)`
+Default constructor.
 
-* `move()`
-> Changes the item position.
+`move()`
+Changes the item position.
 
 ### `Player`
 Player is the user's avatar. 
 
-**Data Members**
+#### Data Members
 
-* `QPixMap* player_`
-> Image of the player. Contains
+`QPixMap* player_`
+Image of the player. Contains
 
-**Member Methods**
+#### Member Methods
 
-* `Player()`
+`Player()`
 
 ## Gameplay
 This game is a side-scrolling "flying" game similar to the well-known helicopter game. The player's avatar starts halfway (on the vertical scale) up the screen on the left side. If the mouse is not clicked, the player will fall to the bottom of the screen (same y-coordinate) at a constant rate. If the mouse button is clicked, the player will start to ascend. The longer the button is clicked, the higher they rise. As soon as the mouse is release, the player starts to fall again.

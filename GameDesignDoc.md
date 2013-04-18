@@ -77,15 +77,17 @@ One of the obstacles. Moves horizontally at a rate faster than the screen scroll
 ### `Wind` / `Whirlpool` thing
 One of the obstacles. Does not move horizontally or vertically (besides moving with the scrolling screen). It does however mover in a stationary clockwise fashion. Covers a larger area than the other obstacles.
 
-* `ItemName`
+**Data Members**
+
+`ItemName`
 >Text
 
 **Member Methods**
 
-* `Wind(int x, int y, int vx, int vy, QPixMap* pic)`
+`Wind(int x, int y, int vx, int vy, QPixMap* pic)`
 > Default constructor.
 
-* `move()`
+`move()`
 > Changes the item position.
 
 ### `Item 4`

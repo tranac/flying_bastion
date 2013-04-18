@@ -1,89 +1,157 @@
-# Game Design Document
-This is a place holder for your game design document. You are advised to write your document in [Markdown](http://daringfireball.net/projects/markdown/) and the following section will show you how to write a document using Markdown markup.
+#Game Design Document for PA5 & PA6
 
-Alternativley, you can write your document in plain text if you wish.
+## Purpose/Overview
 
-----
+The purpose of these programming assignments is to make a game using QT. The game must including moving objects and will be implemented using timers, GUI input classes, and QT widgets.
 
-## Markdown
-Markdown is a human-readable structured plain text format that is used to convert text into HTML. GitHub automatically renders Markdown into HTML.
+## Requirements
 
-This is a crash course on how to use Markdown. The following section will show you the plain text used to generate the document shown in the rendering section.
+* Must have at least 5 different items in the game, 4 of which must be moving.
+* Items must be represented by different classes, and must be stored in a templated data structure, STL container, or QT container.
+* New items show up randomly at different times and intervals.
+* Users can start, pause, and quit the game.
+* Users have a username, a score displayed, and a finite amount of lives.
+* Game should speed up as time elapses until its too hard for a human to play.
 
-### Code
+## Five Moving Items / Classes
 
-```
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
+### `Item`
+Abstract base class that all of the game items inherits from.
 
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
+**Data Members**
 
->Blockquotes are done as such.
+* `int x_`
+> X coordinate of the item relative to the game screen.
 
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
+* `int y_`
+> Y coordinate of the item relative to the game screen.
 
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
+* `int vx_`
+> Velocity of the x coordinate. Item will move this many pixels each time `move()` is called.
 
-Tables are pretty easy to make:
+* `int vy_`
+> Velocity of the y coordinate. Item will move this many pixels each time `move()` is called.
 
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
+* `QPixMap* pic_`
+> QPixMap for the graphic of the item. 
+
+**Member Methods**
+
+* `Item(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
+
+* `virtual move()`
+> Virtual move function. Changes the item position.
+
+### `VerticalWall`
+One of the obstacles. Moves up and down a portion of the screen at a constant rate. Does not move horizontally (except as the screen moves horizontally).
+
+**Data Members**
+
+* `ItemName`
+>Text
+
+**Member Methods**
+
+* `VerticalWall(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
+
+* `move()`
+> Changes the item position.
+
+### `Bullet` \ or `FireBall`
+One of the obstacles. Moves horizontally at a rate faster than the screen scrolls. Vertical position is randomized and does not change as the object moves.
+
+**Data Members**
+
+>Text
+
+**Member Methods**
+
+* `Bullet(int x, int y, int vx, int vy, QPixMap* pic)` \ `FireBall(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
+
+* `move()`
+> Changes the item position.
+
+### `Wind` / `Whirlpool` thing
+One of the obstacles. Does not move horizontally or vertically (besides moving with the scrolling screen). It does however mover in a stationary clockwise fashion. Covers a larger area than the other obstacles.
+
+* `ItemName`
+>Text
+
+**Member Methods**
+
+* `Wind(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
+
+* `move()`
+> Changes the item position.
+
+### `Item 4`
 
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
-```
+**Data Members**
 
-----
+* `ItemName`
+>Text
 
-### Rendering
-This section shows the rendering of the plain text above.
+**Member Methods**
 
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
+* `(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
 
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
+* `move()`
+> Changes the item position.
 
->Blockquotes are done as such.
+### `Gem`
+Bonus item in the game. Appears sporadically and moves in a zig-zag path across the screen (moves vertically and horizontally). 
 
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
+**Data Members**
 
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
+* `ItemName`
+>Text
 
-Tables are pretty easy to make:
+**Member Methods**
 
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
+* `Gem(int x, int y, int vx, int vy, QPixMap* pic)`
+> Default constructor.
 
+* `move()`
+> Changes the item position.
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
+### `Player`
+Player is the user's avatar. 
+
+**Data Members**
+
+* `QPixMap* player_`
+> Image of the player. Contains
+
+**Member Methods**
+
+* `Player()`
+
+## Gameplay
+This game is a side-scrolling "flying" game similar to the well-known helicopter game. The player's avatar starts halfway (on the vertical scale) up the screen on the left side. If the mouse is not clicked, the player will fall to the bottom of the screen (same y-coordinate) at a constant rate. If the mouse button is clicked, the player will start to ascend. The longer the button is clicked, the higher they rise. As soon as the mouse is release, the player starts to fall again.
+
+The user must avoid all of the obstacles which include moving platforms, bullets/fireballs (not sure which yet), and _____________. They can also pick up gems. If the user's avatar comes in contact with any of these items, it counts as a hit.
+
+### Levels
+There are 5 levels. Each level lasts 30 seconds (tentatively). The screen (and the obstacles) start moving faster at the beginning of each level. The upper levels may also an influx of obstacles.
+
+### Scoring
+Score will increase at a constant rate the longer the player stays in the game. It's equivalent to the distance that the player flies. Gems are worth bonus points.
+
+### Lives
+The user will have 3 initial lives. Every time the user hits an obstacle, they lose a life. The obstacle will disappear and the avatar will flash, but the game will continue on. There are no ways to gain additional lives. Scores will accumulate for the 3 lives. Once a player loses all three lives, the game ends.
+
+### Power-Ups
+There is only one power-up, a shield that allows the user to take one hit without losing a life.
+
+## Layout
+See attached photo. 
+
+New items will be entering the screen from the right side and exit from the left side.
+
 

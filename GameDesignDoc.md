@@ -14,6 +14,7 @@ The purpose of these programming assignments is to make a game using QT. The gam
 * Game should speed up as time elapses until its too hard for a human to play.
 
 ## Five Moving Items / Classes
+Tentative classes. More functions may be added.
 
 ### `Item`
 Abstract base class that all of the game items inherits from.
@@ -46,131 +47,103 @@ QPixMap for the graphic of the item.
 Default constructor.
 
 `virtual move()`
-Virtual move function. Changes the item position.
+Virtual move function. Changes the item position. **Note:** Because of Qt's axis, moving "up" the screen is actually a negative velocity value, while moving down is a positive value. The same applies to the x-direction velocity. Moving to the left (which is "positive" for this game) is actually a negative velocity value for Qt. 
 
 ### Item One: `Platform`
-Inherits from `Item`. One of the obstacles. Vertical wall that moves up and down a portion of the screen at a constant rate. Does not move horizontally (except as the screen moves horizontally).
-obstacles.
+Inherits from `Item`. One of the obstacles. Vertical wall that moves up and down a portion of the screen at a constant rate. Does not move horizontally except at the constant speed the level.
 
-#### Data Members
-
-Inherited members from `Item`.
+Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Platform(int y, int vx, int vy, QPixMap* pic)`
-Default constructor. Initial `x_` is always the right edge of the screen. `vx_` will be the speed of the background.
+`Platform(int y, int vx, int vy, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vx_` will be the speed of the current level. (See **Gameplay**.)
 
-`move()`
-Changes the item position.
+`move()` Changes the item position. The range of the platform is set to a fourth of the screen (tentatively). When `Platform` reaches the top or bottom edge of this boundary, it starts moving in the opposite direction.
 
 ### Item Two: `Arrow`
-Inherits from `Item`. One of the obstacles. Moves horizontally at a rate faster than the screen scrolls. Vertical position is randomized and does not change as the object moves.
-obstacles.
+Inherits from `Item`. One of the obstacles. Moves horizontally at a rate faster than the level speed. Vertical position is randomized and does not change.
 
-#### Data Members
-
-Inherited members from `Item`.
+Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Arrow(int y, int vx, QPixMap* pic)`
-Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0.
+`Arrow(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0.
 
-`move()`
-Changes the item position.
+`move()` Changes the item position.
 
 ### Item Three: `Wind`
-Inherits from `Item`. One of the obstacles. Does not move horizontally or vertically (besides moving with the scrolling screen). It does however mover in a stationary clockwise fashion. Covers a larger area than the other obstacles.
+Inherits from `Item`. One of the obstacles. Does not move vertically and moves horizontally at the constant level speed. It does however move in a stationary clockwise fashion. Covers a larger area than the other obstacles.
 
-#### Data Members
-
-Inherited members from `Item`.
+Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Wind(int x, int y, int vx, QPixMap* pic)`
-Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen. The clockwise motion will be made by editing the `pic` of the wind.
+`Wind(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen. The clockwise motion will be made by editing `pic` of the wind, rather than actually moving `Wind`.
 
-`move()`
-Changes the item position.
+`move()` Changes the item position.
 
-### `Dragon`
-Inherits from `Item`. One of the obstacles. Once the user reaches level 3 of 5, there is a chance of a dragon appearing. This dragon is the same size as `Wind` and behaves in the same fashion. However, a dragon will kill you right away, no matter how many lives you have left.
+### Item Four: `Dragon`
+Inherits from `Item`. One of the obstacles. `Dragon` is as `Wind` and also moves horizontally at the level speed. However, contact with a `Dragon` will end the game even if you have multiple lives left.
 
-#### Data Members
-
-Inherited members from `Item`.
+Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Dragon(int x, int y, int vx, QPixMap* pic)`
-Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen.
+`Dragon(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen.
 
-`move()`
-Changes the item position.
+`move()` Changes the item position.
 
-### `Gem`
-Inherits from `Item`. Bonus item in the game. Appears sporadically and moves in straight line at a faster speed than the screen.
+**Note:** I may (potentially) get rid of `Wind` and instead add a fireball element to the dragon that moves at the same speed as `Arrow` but also kills you right away, but I'm not sure. I probably will not, though.
 
-#### Data Members
+### Item Five: `Gem`
+Inherits from `Item`. Bonus item in the game. Appears sporadically and moves in straight line at a faster speed than the level speed.
 
-Inherited members from `Item`.
+Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Gem(int x, int y, int vx, QPixMap* pic)`
-Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen.
+`Gem(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the level speed.
 
-`move()`
-Changes the item position.
+`move()` Changes the item position.
 
 ### `Player`
 Inherited from `Item`. Player is the user's avatar. 
 
 #### Data Members
+Data members are inherited from `Item`.
 
-`QPixMap* player_`
-Image of the player.
-
-`int lives_`
-Number of lives the user has. Initialized to 3 and decreased by 1 each time the player hits an obstacle.
+`int lives_` Number of lives the user has. Initialized to 3 and decreased by 1 each time the player hits an obstacle.
 
 #### Member Methods
 
-`Player()`
-Default constructor.
+`Player()` Default constructor. Initial position is always set to a fixed value. `vx_` is always 0. `vy_` is initialized to a constant speed to fall down the screen.
 
-`move()`
-Changes the player's position. If mouse is clicked, player is moved in a positive vertical direction. Otherwise it moves down.
+`move()` Changes the player's position. If mouse is clicked, player moves up the screen. Otherwise it moves down.
 
 ## Gameplay
-This game is a side-scrolling "flying" game similar to the well-known helicopter game. The player's avatar starts halfway (on the vertical scale) up the screen on the left side. If the mouse is not left-clicked, the player will fall to the bottom of the screen (same y-coordinate) at a constant rate. If the mouse button is clicked, the player will start to ascend. The longer the button is clicked, the higher they rise. As soon as the mouse is release, the player starts to fall again.
+This game is a side-scrolling game similar to the well-known helicopter game on the internet. The goal is to stay alive as long as possible by avoiding obstacles and the screen boundaries.
 
-The user must avoid all of the obstacles which include moving platforms, arrows, and wind gusts. They can also pick up gems. If the user's avatar comes in contact with any of these items, it counts as a hit.
+The player's avatar start automatically falling down the screen at a constant rate (the x-position does not change). Once the mouse button is left-clicked, however, the avatar starts to ascend, also at a constant rate. The mouse must be held down to continuously rise. As soon as it's released, the player starts to fall again.
+
+Obstacles travel across the screen from left to right. Some move vertically up and down, while others stay stationary. They include moving platforms, arrows, wind gusts, and dragons. The top and bottom of the screen also count as boundaries. If the player comes into contact with any of these items, they lose a life.
 
 ### Levels
-There are 5 levels. Each level lasts 30 seconds (tentatively). The screen (and the obstacles) start moving faster at the beginning of each level. The upper levels also increase the frequency of obstacles. Starting level 3, there is a possibilty of a dragon appearing, which can kill the user right away.
+There are 5 levels that each last about 30 seconds (tentatively). Obstacles start moving faster and appear at a more frequent rate the higher the level. Dragons only start appearing on level 3.
 
 ### Scoring
-Score will increase at a constant rate the longer the player stays in the game. It's equivalent to the distance that the player flies. Gems are worth bonus points. Score cannot decrease.
+A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. Gems are worth 20 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.
 
 ### Lives
-The user will have 3 initial lives. Every time the user hits an obstacle, they lose a life. The obstacle will disappear and the avatar will flash, but the game will continue on. If the user hits the top or bottom edge of the screen, they lose a life. There are no ways to gain additional lives. Scores will accumulate for the 3 lives. Once a player loses all three lives, the game ends.
-
-There will be a `int` value called `lives_` in `player` which will be decreased each time a user loses a life.
+The user has 3 lives. There are no ways to gain additional lives. The game ends when a player has no more lives. As mentioned earlier, each obstacle hit loses a life. The avatar will flash to signify this. The score will not restart each time a user loses a life. `Player` has an `int lives_` member that will keep track of how many lives a user has. When `lives_` == 0, the game ends.
 
 ## Layout
 There will be a start screen, a gameplay screen, and a finished screen.
 
 ### Start Screen
-Includes the game name, a text box to enter a username, a start button, and a quit button. If the user does not enter a username, it defaults to 'User'. The quit button closes the program, and the start button will begin the game and transition to the gameplay screen.
+Includes the game name, a text box to enter a user name, a start button, and a quit button. If the user does not enter a username, it defaults to 'User'. The quit button closes the program, and the start button will begin the game and switch the scene to the gameplay screen.
 
 ### Gameplay Screen
-New items will be entering the screen from the right side and exit from the left side. The player's avatar stays about a third of the way from the left of the screen and moves only in the vertical direction. Lives are displayed in the top right corner.
-
-#### Toolbar
-There is a toolbar at the bottom of the gameplay windowthat shows the user's name and score. It also contains two buttons, one start/pause button and one quit button. 
+New items will enter the screen from the right side and exit at the left. The player's avatar stays stationary on the left side, moving only in the vertical direction. The level and lives are displayed in the top right corner. A toolbar at the bottom of the gameplay window shows the user's name and score. It also contains two buttons to pause/restart the game and to quit the game.
 
 ### Finish Screen
 Once the player loses all three lives, the game switches to the finish screen. The screen shows the player's final score and has two buttons, one to start a new game and one to quit.

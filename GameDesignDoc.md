@@ -54,6 +54,8 @@ Inherits from `Item`. One of the obstacles. Vertical wall that moves up and down
 
 Data members are inherited from `Item`.
 
+![Platform](images/wall.png "Platform")
+
 #### Member Methods
 
 `Platform(int y, int vx, int vy, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vx_` will be the speed of the current level. (See **Gameplay**.)
@@ -64,6 +66,8 @@ Data members are inherited from `Item`.
 Inherits from `Item`. One of the obstacles. Moves horizontally at a rate faster than the level speed. Vertical position is randomized and does not change.
 
 Data members are inherited from `Item`.
+
+![Arrow](images/arrow.png "Arrow")
 
 #### Member Methods
 
@@ -76,6 +80,8 @@ Inherits from `Item`. One of the obstacles. Does not move vertically and moves h
 
 Data members are inherited from `Item`.
 
+**No image for wind yet.**
+
 #### Member Methods
 
 `Wind(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen. The clockwise motion will be made by editing `pic` of the wind, rather than actually moving `Wind`.
@@ -85,11 +91,13 @@ Data members are inherited from `Item`.
 ### Item Four: `Dragon`
 Inherits from `Item`. One of the obstacles. `Dragon` is as `Wind` and also moves horizontally at the level speed. However, contact with a `Dragon` will end the game even if you have multiple lives left.
 
+**No image for dragon yet. Will be a pixel dragon.**
+
 Data members are inherited from `Item`.
 
 #### Member Methods
 
-`Dragon(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen.
+`Dragon(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the same speed as the screen. 
 
 `move()` Changes the item position.
 
@@ -97,6 +105,8 @@ Data members are inherited from `Item`.
 
 ### Item Five: `Gem`
 Inherits from `Item`. Bonus item in the game. Appears sporadically and moves in straight line at a faster speed than the level speed.
+
+![Will be made better later.](images/gem.png "Gem")
 
 Data members are inherited from `Item`.
 
@@ -108,6 +118,8 @@ Data members are inherited from `Item`.
 
 ### `Player`
 Inherited from `Item`. Player is the user's avatar. 
+
+**No image for player yet. Will be a person.**
 
 #### Data Members
 Data members are inherited from `Item`.
@@ -142,8 +154,14 @@ There will be a start screen, a gameplay screen, and a finished screen.
 ### Start Screen
 Includes the game name, a text box to enter a user name, a start button, and a quit button. If the user does not enter a username, it defaults to 'User'. The quit button closes the program, and the start button will begin the game and switch the scene to the gameplay screen.
 
+![Start Screen](images/IMG_1948.jpg "Start Screen")
+
 ### Gameplay Screen
 New items will enter the screen from the right side and exit at the left. The player's avatar stays stationary on the left side, moving only in the vertical direction. The level and lives are displayed in the top right corner. A toolbar at the bottom of the gameplay window shows the user's name and score. It also contains two buttons to pause/restart the game and to quit the game.
 
+![Gameplay Screen](images/IMG_8389.jpg "Start Screen")
+
 ### Finish Screen
 Once the player loses all three lives, the game switches to the finish screen. The screen shows the player's final score and has two buttons, one to start a new game and one to quit.
+
+![Finish Screen](images/IMG_4456.jpg "Finish Screen")

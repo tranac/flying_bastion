@@ -16,3 +16,7 @@
 *.cpp~
 *.h~
 *.md~
+
+# QT Files
+Makefile
+*.pro

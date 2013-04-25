@@ -98,11 +98,14 @@ void MainWindow::startGame()
 void MainWindow::pauseGame()
 {
 	timer->stop();
-	lives_--;
-	
 }
+
 void MainWindow::handleTimer()
 {
+	//check collisions
+	
+	
+
 	//check if dead
 	if(!lives_)
 	{
@@ -113,13 +116,20 @@ void MainWindow::handleTimer()
 		return;
 	}
 
+	//if not dead, move items
+	
+		//check if mouse is being pressed for player velocity
+		if(qApp->mouseButtons() == Qt::LeftButton)
+			std::cout << "Huzzah!" << std::endl;
+		else
+			std::cout << "Falling." << std::endl;
+
+
 	//increase score
 	score_++;
 	score->setPlainText(QString::number(score_));
 	
-	//check if mouse is being pressed
-	if(qApp->mouseButtons() == Qt::LeftButton)
-		std::cout << "Huzzah!" << std::endl;
+	//check if need speeding up
 }
 /*
 void MainWindow::mousePressEvent(QMouseEvent* event)

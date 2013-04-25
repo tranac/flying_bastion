@@ -25,7 +25,18 @@ MainWindow::MainWindow()
 	QBrush b(c);
 	scene->setBackgroundBrush(b);
  	layout->addWidget(view);
-
+/*s
+  //create menu bar
+  	menu = menuBar();
+  	action = menu->addAction("Start");
+*/
+/*******************************************************************
+	pic = new QPixmap("images/gem.png","png");
+	item = new QGraphicsPixmapItem;
+	item->setPos(20,20);
+	item->setPixmap(*pic);
+	scene->addItem(item);
+********************************************************************/
   //create start button
   	start = new QPushButton("Start Game");
 	options->addWidget(start);
@@ -52,7 +63,7 @@ MainWindow::MainWindow()
   	score->setWindowOpacity(0);
   	score->setFixedSize(100,30);
   	options->addWidget(score);
-  		
+  	
   //create input for name
 	name_ = new QLineEdit("Please Enter a Username");
  	scene->addWidget(name_);
@@ -103,26 +114,30 @@ void MainWindow::pauseGame()
 void MainWindow::handleTimer()
 {
 	//check collisions
+/*
 	
-	
-
+*/	
 	//check if dead
 	if(!lives_)
 	{
-		timer->stop();
-		std::cout << "Dead!" << std::endl;
-		score_ = 0;
-		finished = true;
+		endGame();
 		return;
 	}
 
 	//if not dead, move items
-	
+	else
+	{
+		/*
+		for()
+			items[i]->move();
+		*/
 		//check if mouse is being pressed for player velocity
 		if(qApp->mouseButtons() == Qt::LeftButton)
+			
 			std::cout << "Huzzah!" << std::endl;
 		else
 			std::cout << "Falling." << std::endl;
+	}
 
 
 	//increase score
@@ -140,3 +155,11 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
 		std::cout << "Success!" << std::endl;
 	}
 }*/
+
+void MainWindow::endGame()
+{
+	timer->stop();
+	std::cout << "Dead!" << std::endl;
+	score_ = 0;
+	finished = true;
+}

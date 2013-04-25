@@ -8,14 +8,19 @@
 #include <QGraphicsView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QFormLayout>
-#include <QListWidget> 	//used for A* solution
+#include <QMenuBar>
+#include <QAction>
 #include <QPushButton>	//used for Start, Quit, and A* buttons
 #include <QTextEdit>	//used for error messages
+#include <QTextDocument>
+#include <QTextObject>
 #include <QLineEdit>	//used for initial inputs
 #include <QTimer>		//used for move function
+#include <QVector>
 #include <QString>
 #include <QColor>
+
+#include <QGraphicsPixmapItem>
 
 #include <cmath>
 #include <stdexcept>
@@ -29,6 +34,7 @@ public:
     ~MainWindow();
     
 //  	void mousePressEvent(QMouseEvent* event);
+	void endGame();
 protected slots:
 	void startGame();
 	void pauseGame();
@@ -45,16 +51,23 @@ private:
 	QGraphicsScene* scene;	//scene for view
 	QGraphicsView* 	view;
 
+//	QTextDocument* welcome;
+//	QPixmap* pic;
+//	QGraphicsPixmapItem* item;
+
 	QLineEdit*    name_;
 	QTextEdit*	  name;
 	QTextEdit*	  score;
 
+//	QMenuBar*	  menu;
+//	QAction*	  action;
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
 	
 	QTimer*	timer;
 	
+	QVector<int> items;		//list of items in screen
 	int score_;
 	int lives_;
 	int pv_;				//player velocity

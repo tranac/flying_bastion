@@ -3,9 +3,13 @@
 
 MainWindow::MainWindow()
 {
+  //set variables
 	started = false;
 	score_ = 0;
 	lives_ = 0;
+	executions = 0;
+	speed = 100;
+	
   //create overall layout
 	this->setGeometry(1,0,20,20);
 	
@@ -31,7 +35,7 @@ MainWindow::MainWindow()
   	action = menu->addAction("Start");
 */
 /*******************************************************************
-	pic = new QPixmap("images/gem.png","png");
+	pic = new QPixmap("images/aquatank.png","png");
 	item = new QGraphicsPixmapItem;
 	item->setPos(20,20);
 	item->setPixmap(*pic);
@@ -50,18 +54,18 @@ MainWindow::MainWindow()
 	quit = new QPushButton("Quit Game");
 	options->addWidget(quit);
 	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit()));
-  	
+
   //create name show
-  	name = new QTextEdit("User");
+  	name = new QLineEdit("User");
   	name->setReadOnly(true);
-  	name->setWindowOpacity(0);
-  	name->setFixedSize(100,30);
+//  	name->setWindowOpacity(0);
+  	name->setFixedWidth(100);
   	options->addWidget(name);
   //create score show
-  	score = new QTextEdit(QString::number(0));
+  	score = new QLineEdit(QString::number(0));
   	score->setReadOnly(true);
-  	score->setWindowOpacity(0);
-  	score->setFixedSize(100,30);
+//  	score->setWindowOpacity(0);
+  	score->setFixedWidth(100);
   	options->addWidget(score);
   	
   //create input for name
@@ -70,7 +74,7 @@ MainWindow::MainWindow()
  	
   //create timer
   	timer = new QTimer();
-	timer->setInterval(50);
+	timer->setInterval(speed);
 	QObject::connect(timer,SIGNAL(timeout()),this,SLOT(handleTimer()));
 }
 
@@ -85,7 +89,7 @@ void MainWindow::startGame()
 	{
 		//grab username
 		QString n = name_->text();
-		name->setPlainText(n);
+		name->setText(n);
 		//make name invisible and unaccessible
 		name_->setEnabled(false);
 		name_->setHidden(true);
@@ -93,22 +97,43 @@ void MainWindow::startGame()
 		
 		started = true;
 		lives_ = 3;
+		
+		//create flags
 	}
-	
-	//if game is finished, start over
-	if(finished)
+	else
 	{
+		//reset values
+		timer->stop();
+		speed = 100;
+		timer->setInterval(speed);
+		finished = false;
 		score_ = 0;
 		lives_ = 3;
-		finished = false;	
+		executions = 0;
+
+		//delete current player and objects
+		
+		//create new player
+
 	}
-	
-	timer->start();
+		player = new Player();
+		scene->addItem(player);
+		//start timer
+		timer->start();
 }
 
 void MainWindow::pauseGame()
 {
-	timer->stop();
+	if(timer->isActive())
+	{
+		timer->stop();
+		pause->setText("Continue");
+	}
+	else
+	{
+		timer->start();
+		pause->setText("Pause");
+	}
 }
 
 void MainWindow::handleTimer()
@@ -124,37 +149,92 @@ void MainWindow::handleTimer()
 		return;
 	}
 
-	//if not dead, move items
-	else
+	items = new QQueue<int>;
+	items->enqueue(executions);
+	
+	//move items
+	/*
+	QQueue<int>::iterator it = items->begin();
+	while(it != items->end())
 	{
-		/*
-		for()
-			items[i]->move();
-		*/
-		//check if mouse is being pressed for player velocity
-		if(qApp->mouseButtons() == Qt::LeftButton)
-			
-			std::cout << "Huzzah!" << std::endl;
-		else
-			std::cout << "Falling." << std::endl;
+		int x = items->dequeue();
+		std::cout << x << std::endl;
+		++it;
 	}
+	*/
 
+	//check if mouse is being pressed for player velocity
+//	if(qApp->mouseButtons() == Qt::LeftButton)	
+//		std::cout << "Huzzah!" << std::endl;
+//	else
+//		std::cout << "Falling." << std::endl;
+
+	//create enemies
+	if((executions % 10))
+		createEnemies();
 
 	//increase score
 	score_++;
-	score->setPlainText(QString::number(score_));
+	score->setText(QString::number(score_));
+	executions++;
 	
 	//check if need speeding up
-}
-/*
-void MainWindow::mousePressEvent(QMouseEvent* event)
-{
-	QWidget::mousePressEvent(event);
-	if(started)
+	switch(executions)
 	{
-		std::cout << "Success!" << std::endl;
+		case 100:
+		case 350:
+		case 1000:
+		case 5000:
+		{
+			speed = speed / 2;
+			timer->setInterval(speed);
+		}
 	}
-}*/
+}
+
+void MainWindow::createEnemies()
+{
+	//randomly create enemies
+	srand(time(0));
+	int a = rand() % 10;
+	switch(a)		//random cases
+	{
+		//create red nocture / arrow
+		case 1:
+		{
+			std::cout << "Red Nocturne!" << std::endl;
+		}
+		//create aquatank / dragon
+		case 2:
+		{
+			std::cout << "Aquatank!" << std::endl;
+		}
+		//chance to create tornado step / gem
+		case 3:
+		{
+			int b = rand() % 2;
+			//create gem
+			if(b == 0)
+			{
+			std::cout << "Tornado Step!" << std::endl;
+			}
+		}
+		//chance to create mushroom / bubble
+		case 4:
+		{
+			int b = rand() % 2;
+			//create bubble
+			if(b == 1)
+			{
+			std::cout << "White Mushroom!" << std::endl;
+			}
+		}
+		default:
+		{
+		
+		}
+	}
+}
 
 void MainWindow::endGame()
 {

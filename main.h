@@ -16,14 +16,17 @@
 #include <QTextObject>
 #include <QLineEdit>	//used for initial inputs
 #include <QTimer>		//used for move function
-#include <QVector>
 #include <QString>
 #include <QColor>
+#include <QQueue>		//used for moving items
 
 #include <QGraphicsPixmapItem>
 
+#include "things/player.h"
+
 #include <cmath>
 #include <stdexcept>
+#include <cstdlib>
 
 class MainWindow : public QMainWindow
 {
@@ -33,7 +36,7 @@ public:
     explicit MainWindow();	//takes in number of commandline arguments
     ~MainWindow();
     
-//  	void mousePressEvent(QMouseEvent* event);
+	void createEnemies();
 	void endGame();
 protected slots:
 	void startGame();
@@ -52,12 +55,12 @@ private:
 	QGraphicsView* 	view;
 
 //	QTextDocument* welcome;
-//	QPixmap* pic;
-//	QGraphicsPixmapItem* item;
+	QPixmap* pic;
+	QGraphicsPixmapItem* item;
 
 	QLineEdit*    name_;
-	QTextEdit*	  name;
-	QTextEdit*	  score;
+	QLineEdit*	  name;
+	QLineEdit*	  score;
 
 //	QMenuBar*	  menu;
 //	QAction*	  action;
@@ -65,12 +68,16 @@ private:
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
 	
+	Player* player;
+	
 	QTimer*	timer;
 	
-	QVector<int> items;		//list of items in screen
+	QQueue<int>* items;		//list of items in screen
 	int score_;
 	int lives_;
 	int pv_;				//player velocity
+	int executions;
+	int speed;				//interval for timer
 } ;
 
 #endif

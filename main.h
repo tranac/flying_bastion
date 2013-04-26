@@ -18,6 +18,7 @@
 #include <QVector>		//used for moving items
 #include <QPixmap>
 
+#include "message.h"
 #include "life.h"
 #include "player.h"
 #include "item.h"
@@ -51,11 +52,10 @@ private:
 	bool finished;
 	
 	QWidget*		window;
-	
 	QVBoxLayout* 	layout;
 	QHBoxLayout* 	options;
 	
-	QGraphicsScene* scene;	//scene for view
+	QGraphicsScene* scene;	//game window
 	QGraphicsView* 	view;
 	
 	QLineEdit*    name_;
@@ -66,6 +66,7 @@ private:
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
 	
+	Message* message;
 	Player* player;
 	
 	QTimer*	timer;

@@ -57,10 +57,15 @@ MainWindow::MainWindow()
 	options->addWidget(quit);
 	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit())); 
   	
+  //create message text
+  	message = new Message();
+  	message->setStart();
+  	scene->addItem(message);
+  
   	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
 	name_ = new QLineEdit();
-	name_->setGeometry(250,150,150,30);
+	name_->setGeometry(300,250,190,30);
 //	QRect r(250,150,150,30);
  	scene->addWidget(name_);
  	
@@ -83,21 +88,22 @@ void MainWindow::startGame()
 		QString n = name_->text();
 		if(n == "")
 			return;
+			
 		n = n + " Score";
 		//create score show
 		s = new QFormLayout();
  	 	score = new QLineEdit(QString::number(0));
  	 	score->setReadOnly(true);
-	//  	score->setWindowOpacity(0);
   		score->setFixedWidth(100);
   		s->addRow(n,score);
   		options->addLayout(s);
   		options->setStretch(3,0.5);
-	//	name->setText(n);
-		//make name invisible and unaccessible
+  		
+		//make welcome screen invisible and unaccessible
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
+		scene->removeItem(message);
 	
 		started = true;
 		lives_ = 3;
@@ -238,7 +244,6 @@ void MainWindow::createEnemies()
 			newItem = new RedNocturne(b,-3,rn1,rn2);
 			scene->addItem(newItem);
 			items.push_back(newItem);
-			std::cout << "Red Nocturne!" << std::endl;
 			return;
 		}
 		//create aquatank / dragon
@@ -247,7 +252,6 @@ void MainWindow::createEnemies()
 			newItem = new Aquatank(b,-3,at);
 			scene->addItem(newItem);
 			items.push_back(newItem);
-			std::cout << "Aquatank!" << std::endl;
 			return;
 		}
 		//chance to create white mushroom
@@ -260,7 +264,6 @@ void MainWindow::createEnemies()
 				newItem = new WhiteMushroom(b,player,wm1,wm2);
 				scene->addItem(newItem);
 				items.push_back(newItem);
-				std::cout << "White Mushroom!" << std::endl;
 			}
 			return;
 		}
@@ -274,7 +277,6 @@ void MainWindow::createEnemies()
 				newItem = new TornadoStep(b,ts1,ts2);
 				scene->addItem(newItem);
 				items.push_back(newItem);
-				std::cout << "Tornado Step!" << std::endl;
 			}
 			return;
 		}
@@ -283,7 +285,6 @@ void MainWindow::createEnemies()
 			newItem = new AirSoldier(as1,as2);
 			scene->addItem(newItem);
 			items.push_back(newItem);
-			std::cout << "AirSoldier!" << std::endl;
 			return;
 		}
 	}
@@ -308,4 +309,18 @@ void MainWindow::endGame()
 	finished = true;
 	canLose = false;
 	lose = 0;
+	scene->removeItem(player);
+	
+	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+	{
+		Item* temp = *it;
+		scene->removeItem(temp);
+	}
+	
+	//delete vector
+	items.clear();
+	
+	message->setEnd();
+	scene->addItem(message);
+
 }

@@ -46,6 +46,7 @@ public:
 	void endGame();
 	void gainLife();
 	void gainPoints();
+	void deleteEnemies();
 protected slots:
 	void startGame();
 	void pauseGame();

@@ -127,8 +127,24 @@ void MainWindow::startGame()
 		
 		//delete player
 		delete player;
-/***************DELETE CURRENT OBJECTS********************/
-/***************DELETE LIVES******************************/
+		
+		//delete enemies
+		for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+		{
+			Item* temp = *it;
+			scene->removeItem(temp);
+			delete temp;
+		}
+		items.clear();
+		
+		//delete lives
+		for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++ it)
+		{
+			Life* temp = *it;
+			scene->removeItem(temp);
+			delete temp;
+		}
+		lives.clear();
 	}
 	
 		//hide message
@@ -210,6 +226,11 @@ void MainWindow::handleTimer()
 		return;
 	}
 	
+	//check if items left the scene
+	{
+		deleteEnemies();
+	}
+	
 	//move items
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
@@ -253,14 +274,10 @@ void MainWindow::handleTimer()
 
 void MainWindow::createEnemies()
 {
-
-/******************THING*******************************************/
-
-
 	//randomly create enemies
 	srand(time(0));
 	int a = rand() % 7;
-	int b = rand() % 320;
+	int b = rand() % 300;
 	switch(a)		//random cases
 	{
 		//create red nocture / arrow
@@ -335,7 +352,6 @@ void MainWindow::loseLife()
 void MainWindow::endGame()
 {
 	timer->stop();
-	std::cout << "Dead!" << std::endl;
 	score_ = 0;
 	finished = true;
 	canLose = false;
@@ -346,12 +362,10 @@ void MainWindow::endGame()
 	{
 		Item* temp = *it;
 		scene->removeItem(temp);
-		/*************DELETE ITEMS******************/
+		delete temp;
 	}
-	
-	//delete vector
 	items.clear();
-	
+	//set gameover message
 	message->setEnd();
 	message->setVisible(true);
 }
@@ -369,4 +383,22 @@ void MainWindow::gainPoints()
 {
 	score_ = score_ + 50;
 	score->setText(QString::number(score_));
+}
+
+void MainWindow::deleteEnemies()
+{
+	QVector<Item*>::iterator it = items.begin();
+	
+	while(it != items.end())
+	{
+		Item* temp = *it;
+		if(temp->getX() <= -20)
+	 	 {
+			it = items.erase(it);
+			scene->removeItem(temp);
+			delete temp;
+		}
+	  	else
+		  ++it;
+	}
 }

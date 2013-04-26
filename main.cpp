@@ -9,7 +9,7 @@ MainWindow::MainWindow()
 	score_ = 0;
 	lives_ = 0;
 	executions = 0;
-	speed = 100;
+	speed = 15;
 	canLose = true;
 	
   //create Pixmap images
@@ -218,7 +218,6 @@ void MainWindow::handleTimer()
 	  temp->collide();
 	}
 
-
 	//check if dead
 	if(!lives_)
 	{
@@ -227,9 +226,7 @@ void MainWindow::handleTimer()
 	}
 	
 	//check if items left the scene
-	{
 		deleteEnemies();
-	}
 	
 	//move items
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
@@ -238,9 +235,8 @@ void MainWindow::handleTimer()
 		temp->move();
 	}
 
-	//move player
+	//move player and checkes mousePress for player velocity
 	int v;
-	//check if mouse is being pressed for player velocity
 	if(qApp->mouseButtons() == Qt::LeftButton)	
 		v = 0;
 	else
@@ -256,17 +252,16 @@ void MainWindow::handleTimer()
 	//increase score
 	score_++;
 	score->setText(QString::number(score_));
-	executions++;
 	
+	executions++;
 	//check if need speeding up
 	switch(executions)
 	{
-		case 100:
-		case 350:
-		case 1000:
 		case 5000:
+		case 10000:
+
 		{
-			speed = speed / 3;
+			speed = speed / 2;
 			timer->setInterval(speed);
 		}
 	}

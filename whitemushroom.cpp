@@ -18,11 +18,11 @@ void WhiteMushroom::move()
 		setPixmap(*pic_);
 	
 	//if inline with player & not halfway across screen, teleport up or down
-	if((x_ > 150) && (y_ == p_->getY()))
+	if((x_ > 350) && (y_ >= p_->getY()) && (y_ <= p_->getY()+82))
 	{
 		if(y_ <= 50)
 			y_ = y_+50;
-		else if(y_ >= 320) 
+		else if(y_ >= 300) 
 			y_ = y_-50;
 		else
 		{
@@ -43,6 +43,6 @@ void WhiteMushroom::move()
 
 void WhiteMushroom::collide()
 {
-	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
+	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY()+82))
 		main_->gainLife();
 }

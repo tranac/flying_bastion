@@ -20,12 +20,12 @@ void Player::move(int x)
 	//falling is mouse isn't clicked
 	if(x)
 	{
-		y_ = y_ + 1;
+	    y_ = y_ + 2;
 		setPixmap(*pic2_);
 	}
 	else //else negative velocity
 	{
-		y_ = y_ - 1;
+		y_ = y_ - 2;
 		setPixmap(*pic_);
 	}
 	

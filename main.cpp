@@ -116,7 +116,7 @@ void MainWindow::startGame()
 	{
 		//reset values
 		timer->stop();
-		speed = 100;
+		speed = 15;
 		timer->setInterval(speed);
 		finished = false;
 		score_ = 0;
@@ -249,17 +249,21 @@ void MainWindow::handleTimer()
 		createEnemies();
 	}
 
-	//increase score
+	//increase score and executions
 	score_++;
 	score->setText(QString::number(score_));
-	
 	executions++;
-	//check if need speeding up
+	
+	//check if game requires speeding up
 	switch(executions)
 	{
-		case 5000:
+		case 3500:
 		case 10000:
-
+		case 25000:
+		case 50000:
+		case 100000:
+		case 200000:
+		case 400000:
 		{
 			speed = speed / 2;
 			timer->setInterval(speed);

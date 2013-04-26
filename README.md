@@ -5,8 +5,8 @@
   + USC ID: 5286316282
 
 ### Game Information
-  + Game Name: FlyQuest
-  + Game Description: Side-scrolling flying game. Avoid obstacles and stay alive as long as possible. //not one sentence
+  + Game Name: Flying Bastion
+  + Game Description: Avoid obstacles and stay alive as long as possible in this side-scrolling flying game.
   + [Game Design Doc](GameDesignDoc.md)
 
 
@@ -14,11 +14,16 @@
 The grader should use the following procedure to compile and run the code:
 ```shell
 #Compile Instructions
-echo "Write command here"
+qmake -project
+qmake
+make
+
 #Doxygen Instructions
-echo "Write command here"
+doxygen -g config.txt
+doxygen config.txt
+
 #Command to run
-echo "Write command here"
+./game_tranac
 ```
 
 ### Screenshots -- [Optional]

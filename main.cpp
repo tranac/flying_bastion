@@ -309,7 +309,7 @@ void MainWindow::createEnemies()
 void MainWindow::loseLife()
 {
 	lives_--;
-	Life* life = lives.at(lives_);
+	life = lives.at(lives_);
 	scene->removeItem(life);
 	lives.pop_back();
 	player->flash();
@@ -339,12 +339,15 @@ void MainWindow::endGame()
 	
 	message->setEnd();
 	message->setVisible(true);
-
 }
 
 void MainWindow::gainLife()
 {
-
+	lives_++;
+	Life* end = lives.back();
+	life = new Life((end->getX()+5),5,l);
+	scene->addItem(life);
+	lives.push_back(life);
 }
 
 void MainWindow::gainPoints()

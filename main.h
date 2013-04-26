@@ -72,20 +72,19 @@ private:
 	QTimer*	timer;
 	
 	QVector<Item*> items;		//list of items in screen
-	Item*		   newItem;
+	Item*		   newItem;	
 	
-	QVector<Life*> lives;
-	Life*		   life;
-	bool canLose;
-	int lose;
+	Life*		   life;	//pixmap item displayed for each life
+	QVector<Life*> lives;	//vector for lives
+	bool canLose;			//buffer after losing a life
+	int lose;				//num of counts for buffer
 	
-	int score_;
-	int lives_;
-	int pv_;				//player velocity
-	int executions;
-	int speed;				//interval for timer
+	int score_;				//score
+	int lives_;				//lives
+	int executions;			//num of timeouts()
+	int speed;				//interval for timer to speed up
 	
-	QPixmap* as1;
+	QPixmap* as1;			//enemy pics
 	QPixmap* as2;
 	QPixmap* at;
 	QPixmap* rn1;
@@ -95,6 +94,8 @@ private:
 	QPixmap* wm1;
 	QPixmap* wm2;
 	QPixmap* l;
+	QPixmap* bg;			//background
+	QPixmap* bgs;			//start background
 } ;
 
 #endif

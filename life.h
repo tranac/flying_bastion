@@ -8,6 +8,9 @@ class Life : public QGraphicsPixmapItem
   public:
 	Life(int x, int y, QPixmap* pic);
 	~Life();
+	
+	int getX() { return x_; }
+	int getY() { return y_; }
   private:
 	int x_;
 	int y_;

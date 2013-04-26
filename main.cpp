@@ -22,6 +22,8 @@ MainWindow::MainWindow()
   	wm1 = new QPixmap("images/whitemushroom1.png","png");
   	wm2 = new QPixmap("images/whitemushroom2.png","png");
   	l = new QPixmap("images/life.png","png");
+  	bg = new QPixmap("images/background.png","png");
+  	bgs = new QPixmap("images/startbackground.png","png");
   //create overall layout
 	this->setGeometry(1,0,20,20);
 	
@@ -33,14 +35,15 @@ MainWindow::MainWindow()
   //create options sidebar 
 	options = new QHBoxLayout();
 	layout->addLayout(options);
-  //create view space
+  //create gamespace
 	scene = new QGraphicsScene();
 	scene->setSceneRect(0,0,650,350);
 	view = new QGraphicsView(scene);
 	view->setFixedSize(675,375);
-	QColor c(16,64,46,255);
-	QBrush b(c);
-	scene->setBackgroundBrush(b);
+	QRect r(0,0,675,375);
+	QColor c(Qt::black);
+	QBrush b(c,*bgs);
+	view->setBackgroundBrush(b);
  	layout->addWidget(view);
 
   //create start button

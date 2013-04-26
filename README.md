@@ -26,5 +26,5 @@ doxygen config.txt
 ./game_tranac
 ```
 
-### Screenshots -- [Optional]
-You can either remove this section or add screenshots if you wish.
+### Screenshots
+![Gameplay Screen](images/gamescreen.png "Gameplay Screen")

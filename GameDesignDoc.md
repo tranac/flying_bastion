@@ -90,7 +90,7 @@ The gameplay screen is similar to the start scren, but there is a scrolling back
 
 Items enter the scene from the right and exit from the left. `Player` starts at a fixed x-coordinate but moves up and down. The `Pause` button now has functionality; it will stop the game timer if it's running. Clicking on it again will start it again with the same game. `Start` now restarts the entire game from the begninning.
 
-![Gameplay Screen](images/gamescreen.png "Start Screen")
+![Gameplay Screen](images/gamescreen.png "Game Screen")
 
 ### Finish Screen
 Once the player loses all three lives or hits an `Aquatank`, the game switches to the finish screen. It is very similar to the start screen, as it displays an image. All previous items in the scene (`Player`, `Item`s, et cetera) are removed from the scene and deleted. From here, the user can start a new game using `Start` or quit the program.

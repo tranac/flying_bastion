@@ -39,7 +39,7 @@ All five moving items inherit from an abstract `Item` class that contains a virt
 ### Item Four: Tornado Step
 ![TornadoStep](images/tornadostep1.png "TornadoStep")
 
-`TornadoStep`s are bonus itmes. They spawn rarely, and colliding with a `TornadoStep` gives the user 50 bonus points. They travel not only horizontally across the screen, but also vertically over a set portion of the screen. Intial y-position is random.
+`TornadoStep`s are bonus itmes. They spawn rarely, and colliding with a `TornadoStep` gives the user 100 bonus points. They travel not only horizontally across the screen, but also vertically over a set portion of the screen. Intial y-position is random.
 
 ### Item Five: White Mushroom
 ![WhiteMushroom](images/whitemushroom1.png "WhiteMushroom")
@@ -69,7 +69,7 @@ There are 3 types of enemies: `RedNocturne`s, `AirSoldier`s, `Gargoyle`s, and `A
 There are no specific levels to the game. However, at set intervals, the game speed starts to speed up (both the player and the enemies/items).
 
 ### Scoring
-A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. `TornadoStep`s are worth 50 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.
+A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. `TornadoStep`s are worth 100 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.
 
 ### Lives
 The user has 3 lives. `WhiteMushroom`s are the only way to gain an extra life. The game ends when a player has no more lives. As mentioned earlier, each obstacle hit loses a life. Contact with the upper and lower screen boundaries will also result in a lost life. `Aquatank`s will end the game despite the number of lives left. `Player` will flash to indicate a lost life. The score will not be reset each time a user loses a life. The `MainWindow` class has an `int lives_` member that will keep track of how many lives a user has. If `lives_` == 0, the game ends.

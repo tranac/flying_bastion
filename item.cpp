@@ -17,7 +17,6 @@ Item::Item(int x, int y, int vx, int vy, QPixmap* pic, QPixmap* pic2, Player* p,
 
 Item::~Item()
 {
-
 }
 
 bool Item::collide()

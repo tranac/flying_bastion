@@ -8,7 +8,6 @@ Player::Player()
 	pic_ = new QPixmap("images/wizard1.png","png");
 	pic2_ = new QPixmap("images/wizard2.png","png");
 	setPixmap(*pic_);
-	f = true;
 }
 
 Player::~Player()
@@ -31,14 +30,4 @@ void Player::move(int x)
 	}
 	
 	setPos(x_,y_);
-}
-
-void Player::flash()
-{
-	setVisible(f);
-	
-	if(f)
-		f = false;
-	else
-		f = true;
 }

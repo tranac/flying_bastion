@@ -174,7 +174,7 @@ void MainWindow::handleTimer()
 	//check collisions against wall
 	if(canLose)
 	{
-		if((player->getY() == 0) || ((player->getY() + 50) == 350))
+		if((player->getY() <= 0) || ((player->getY() + 50) >= 350))
 		{
 			loseLife();
 			return;
@@ -184,10 +184,14 @@ void MainWindow::handleTimer()
 	{
 		canLose = true;
 		lose = 0;
+		player->setVisible(true);
 	}
 	else
 	{
-		player->flash();
+		if(lose % 2)
+			player->setVisible(false);
+		else
+			player->setVisible(true);
 		lose++;
 	}
 	
@@ -312,7 +316,7 @@ void MainWindow::loseLife()
 	life = lives.at(lives_);
 	scene->removeItem(life);
 	lives.pop_back();
-	player->flash();
+	player->setVisible(false);
 	lose = 0;
 	canLose = false;
 }

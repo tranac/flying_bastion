@@ -9,7 +9,6 @@ class Player : public QGraphicsPixmapItem
   	Player();
   	~Player();
   	void move(int x);
-  	void flash();
   	int getX() { return x_; }
   	int getY() { return y_; }
   private:
@@ -17,7 +16,6 @@ class Player : public QGraphicsPixmapItem
   	int y_;
   	QPixmap* pic_;
   	QPixmap* pic2_;
-  	bool f;
 } ;
 
 #endif

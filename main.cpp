@@ -5,6 +5,7 @@ MainWindow::MainWindow()
 {
   //set variables
 	started = false;
+	finished = true;
 	score_ = 0;
 	lives_ = 0;
 	executions = 0;
@@ -65,11 +66,9 @@ MainWindow::MainWindow()
   	message->setStart();
   	scene->addItem(message);
   
-  	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
 	name_ = new QLineEdit();
 	name_->setGeometry(300,250,190,30);
-//	QRect r(250,150,150,30);
  	scene->addWidget(name_);
  	
   //create timer
@@ -89,13 +88,14 @@ void MainWindow::startGame()
 	{
 		//grab username
 		QString n = name_->text();
+		//if empty, the game won't start;
 		if(n == "")
 			return;
-			
+		
+		//create username and score output
 		n = n + " Score";
-		//create score show
 		s = new QFormLayout();
- 	 	score = new QLineEdit(QString::number(0));
+ 	 	score = new QLineEdit(QString::number(score_));
  	 	score->setReadOnly(true);
   		score->setFixedWidth(100);
   		s->addRow(n,score);
@@ -106,7 +106,6 @@ void MainWindow::startGame()
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
-		scene->removeItem(message);
 	
 		started = true;
 		lives_ = 3;
@@ -120,15 +119,24 @@ void MainWindow::startGame()
 		finished = false;
 		score_ = 0;
 		lives_ = 3;
-		lives.clear();
 		executions = 0;
-
-		//delete current player and objects
+		lose = 0;
+		canLose = true;
 		
+		//delete player
+		delete player;
+/***************DELETE CURRENT OBJECTS********************/
+/***************DELETE LIVES******************************/
 	}
+	
+		//hide message
+		message->setVisible(false);
+		
+		//create new player
 		player = new Player();
 		scene->addItem(player);
 		
+		//create lives
 		int x = 5;
 		for(int i=0;i<3;i++)
 		{
@@ -144,15 +152,18 @@ void MainWindow::startGame()
 
 void MainWindow::pauseGame()
 {
-	if(timer->isActive())
+	if(!finished)
 	{
-		timer->stop();
-		pause->setText("Continue");
-	}
-	else
-	{
-		timer->start();
-		pause->setText("Pause");
+		if(timer->isActive())
+		{
+			timer->stop();
+			pause->setText("Continue");
+		}
+		else
+		{
+			timer->start();
+			pause->setText("Pause");
+		}
 	}
 }
 
@@ -318,12 +329,13 @@ void MainWindow::endGame()
 	{
 		Item* temp = *it;
 		scene->removeItem(temp);
+		/*************DELETE ITEMS******************/
 	}
 	
 	//delete vector
 	items.clear();
 	
 	message->setEnd();
-	scene->addItem(message);
+	message->setVisible(true);
 
 }

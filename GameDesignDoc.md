@@ -13,159 +13,91 @@ The purpose of these programming assignments is to make a game using QT. The gam
 * Users have a username, a score displayed, and a finite amount of lives.
 * Game should speed up as time elapses until its too hard for a human to play.
 
-## Five Moving Items / Classes
-Tentative classes. More functions may be added.
+## Player, Moving Items, Et Cetera.
+All five moving items inherit from an abstract `Item` class that contains a virtual `move()` function, a `collide()` and various data members. All `Item`s are held in a `QVector<Item*>`. The player **is not** part of this vector.
 
-### `Item`
-Abstract base class that all of the game items inherits from.
+### Player
+![Player](images/wizard1.png "Player")
 
-#### Data Members
+`Player` is the player. It stays stationary in the x-direction, but constantly moves in the y-direciton. If the mousebutton is pressed, it will move upwards. Otherwise it will fall.
 
-`int x_`
+### Item One: Red Nocturne
+![RedNocturne](images/rednocturne1.png "RedNocturne")
 
-X coordinate of the item relative to the game screen.
+`RedNocturne`s are the basic enemies. They are spawned randomly and simply move horizontally across the screen at a faster pace than the game speed. Contact with a `RedNocturne` loses the player a life. Initial y-position is random.
 
-`int y_`
+### Item Two: Aquatank
+![Aquatank](images/aquatank.png "Aquatank")
 
-Y coordinate of the item relative to the game screen.
+`Aquatank`s are enemies. They behave in the same fashion as `RedNocturne`s except that contact with an `Aquatank` will end the entire game regardless of the number of lives you have left. Initial y-position is random.
 
-`int vx_`
+### Item Three: Air Soldier
+![AirSoldier](images/airsoldier1.png "AirSoldier")
 
-Velocity of the x coordinate. Item will move this many pixels each time `move()` is called.
+`AirSoldier`s are enemies. They travel in a straight line for the first half of its path, and then dive bomb and travel in a diagonal path downwards. Contact with an `AirSoldier` loses the player a life. Initial y-position is always at the top of the screen.
 
-`int vy_`
+### Item Four: Tornado Step
+![TornadoStep](images/tornadostep1.png "TornadoStep")
 
-Velocity of the y coordinate. Item will move this many pixels each time `move()` is called.
+`TornadoStep`s are bonus itmes. They spawn rarely, and colliding with a `TornadoStep` gives the user 50 bonus points. They travel not only horizontally across the screen, but also vertically over a set portion of the screen. Intial y-position is random.
 
-`QPixMap* pic_`
+### Item Five: White Mushroom
+![WhiteMushroom](images/whitemushroom1.png "WhiteMushroom")
 
-QPixMap for the graphic of the item. 
+`WhiteMushroom`s are bonus items. They spawn rarely, and colliding with a `WhiteMushroom` gives the user an extra life. For the first half of the screen, the `WhiteMushroom` will teleport 50 pixels up or 50 pixels down from its current position if it has the same y-coordinate as the player. Otherwise, it will travel in a straight horizontal line. It will stop teleporting once it gets halfway across the screen. Intial y-position is random.
 
-#### Member Methods
+### Item Six: Gargoyle
+![Gargoyle](images/gargoyle1.png "Gargoyle")
 
-`Item(int x, int y, int vx, int vy, QPixMap* pic)`
-Default constructor.
-
-`virtual move()`
-Virtual move function. Changes the item position. **Note:** Because of Qt's axis, moving "up" the screen is actually a negative velocity value, while moving down is a positive value. The same applies to the x-direction velocity. Moving to the left (which is "positive" for this game) is actually a negative velocity value for Qt. 
-
-### Item One: `Flag`
-Inherits from `Item`. Flags are stationary objects at the bottom of the screen that act as decoration. They do not move.
-
-Data members are inherited from `Item`.
-
-**No image for platform yet.**
-
-#### Member Methods
-
-`Flag(int x, QPixMap* pic)` Default constructor. Initial `y_` is always at the bottom of the screen.(See **Gameplay**.)
-
-`move()` Changes the item position.
-
-### Item Two: `Arrow`
-Inherits from `Item`. One of the obstacles. Moves horizontally at a rate faster than the level speed. Vertical position is randomized and does not change.
-
-Data members are inherited from `Item`.
-
-![Arrow](images/arrow.png "Arrow")
-
-#### Member Methods
-
-`Arrow(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0.
-
-`move()` Changes the item position.
-
-### Item Three: `Dragon`
-Inherits from `Item`. One of the obstacles. `Dragons` move vertically across the entire screen while still traveling horizontally at the level speed. Contact with a `Dragon` will end the game even if you have multiple lives left.
-
-**No image for dragon yet. Will be a pixel dragon.**
-
-Data members are inherited from `Item`.
-
-#### Member Methods
-
-`Dragon(int y, int vx, int vy, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is a set value. `vx_` moves at the same speed as the screen. 
-
-`move()` Changes the item position.
-
-**Note:** I may (potentially) get rid of `Wind` and instead add a fireball element to the dragon that moves at the same speed as `Arrow` but also kills you right away, but I'm not sure. I probably will not, though.
+`Gargoyle`s are enemies. While `WhiteMushroom`s avoid the user's position, the `Gargoyle` will mimic it for the first third of the screen. Once it reaches that one-third point, it will travel in a straight horizontal line. Contact with a `Gargoyle` loses the player a life. Intial y-position is the `Player`'s y-coordinate at the time.
 
 
-### Item Four: `Shield Bubble`
-Inherits from `Item`. Bonus item in the game. Appears sporadically and moves in a straight line across the screen at a faster speed than the level speed. A shield gives the user an extra life.
+### Nonmoving Items
+![Life](images/life.png "Life")
 
-Data members are inherited from `Item`.
-
-**No image for shield bubble yet.**
-
-#### Member Methods
-
-`Shield(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the level speed.
-
-`move()` Changes the item position.
-
-### Item Five: `Gem`
-Inherits from `Item`. Bonus item in the game. Appears sporadically and moves in straight line at a faster speed than the level speed. Gives the user bonus points.
-
-![Will be made better later.](images/gem.png "Gem")
-
-Data members are inherited from `Item`.
-
-#### Member Methods
-
-`Gem(int y, int vx, QPixMap* pic)` Default constructor. Initial `x_` is always the right edge of the screen. `vy_` is 0. `vx_` moves at the level speed.
-
-`move()` Changes the item position.
-
-### `Player`
-Inherited from `Item`. Player is the user's avatar. 
-
-**No image for player yet. Will be a person.**
-
-#### Data Members
-Data members are inherited from `Item`.
-
-`int lives_` Number of lives the user has. Initialized to 3 and decreased by 1 each time the player hits an obstacle.
-
-#### Member Methods
-
-`Player()` Default constructor. Initial position is always set to a fixed value. `vx_` is always 0. `vy_` is initialized to a constant speed to fall down the screen.
-
-`move()` Changes the player's position. If mouse is clicked, player moves up the screen. Otherwise it moves down.
+I also have several non-moving items. There is a `Life` item that is simply displayed for each life the user has left. `Life`s are held in a vector. There is also a `Message` item that has two `Pixmap`s in it: one for the start screen and one for the game over screen. `Message` is hidden during gameplay.
 
 ## Gameplay
-This game is a side-scrolling game similar to the well-known helicopter game on the internet. The goal is to stay alive as long as possible by avoiding obstacles and the screen boundaries.
+This game is a side-scrolling game similar to the well-known helicopter game on the internet, but with a Kingdom Hearts twist. The goal is to stay alive as long as possible by avoiding obstacles and the screen boundaries.
 
-The player's avatar start automatically falling down the screen at a constant rate (the x-position does not change). Once the mouse button is left-clicked, however, the avatar starts to ascend, also at a constant rate. The mouse must be held down to continuously rise. As soon as it's released, the player starts to fall again.
+The player will start automatically falling down the screen at a constant rate (the x-position does not change). Once the mouse button is left-clicked, however, the avatar starts to ascend, also at a constant rate. The mouse must be held down to continuously rise. As soon as it's released, the player starts to fall again.
 
-There are two obstacles, `arrow`s and `dragons` that travel across the screen from left to right.`Arrow`s will lose the user a life while `dragon`s will end the game. The top and bottom of the screen also count as boundaries. If the player comes into contact the boundaries, they lose a life.
+### Obstacles
+There are 3 types of enemies: `RedNocturne`s, `AirSoldier`s, `Gargoyle`s, and `Aquatank`s. Contact with the first three all lose the player a life while contact with an `Aquatank` ends the game.
 
 ### Levels
-There are 5 levels that each last about 30 seconds (tentatively). Obstacles start moving faster and appear at a more frequent rate the higher the level. Dragons only start appearing on level 3.
+There are no specific levels to the game. However, at set intervals, the game speed starts to speed up (both the player and the enemies/items).
 
 ### Scoring
-A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. Gems are worth 20 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.
+A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. `TornadoStep`s are worth 50 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.
 
 ### Lives
-The user has 3 lives. `Shield`s are the only way to gain an extra life. The game ends when a player has no more lives. As mentioned earlier, each obstacle hit loses a life. The dragon will end the game even if the user has remaining lives. The avatar will flash to signify this. The score will not restart each time a user loses a life. `Player` has an `int lives_` member that will keep track of how many lives a user has. When `lives_` == 0, the game ends.
+The user has 3 lives. `WhiteMushroom`s are the only way to gain an extra life. The game ends when a player has no more lives. As mentioned earlier, each obstacle hit loses a life. Contact with the upper and lower screen boundaries will also result in a lost life. `Aquatank`s will end the game despite the number of lives left. `Player` will flash to indicate a lost life. The score will not be reset each time a user loses a life. The `MainWindow` class has an `int lives_` member that will keep track of how many lives a user has. If `lives_` == 0, the game ends.
 
 ### User Control
-There will be a toolbar to control the game at the bottom of the screen. (See **Layout: Game Screen**.) Pressing the `Pause` button will pause the game timer and game. A user will be able to enter their name before they begin a new name on the start screen. (see **Layout: Start Screen**).
+There is a menubar above the game window. (See **Layout: Game Screen**.) Pressing the `Pause` button will pause the game timer and game. A user will be able to enter their name before they begin a new name on the start screen. (see **Layout: Start Screen**).
 
 ## Layout
 There will be a start screen, a gameplay screen, and a finished screen.
 
 ### Start Screen
-Includes the game name, a text box to enter a user name, a start button, and a quit button. If the user does not enter a username, it defaults to 'User'. The quit button closes the program, and the start button will begin the game and switch the scene to the gameplay screen.
+The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing.
 
 ![Start Screen](images/IMG_1948.jpg "Start Screen")
 
 ### Gameplay Screen
-New items will enter the screen from the right side and exit at the left. The player's avatar stays stationary on the left side, moving only in the vertical direction. The level and lives are displayed in the top right corner. A toolbar at the bottom of the gameplay window shows the user's name and score. It also contains two buttons to pause/restart the game and to quit the game. The first button will say pause and pause the game while the timer is running. If the game timer is not running, the button will say start and restart the game.
+The gameplay screen is similar to the start scren, but there is a scrolling background and added items. Added to the toolbar is the user's name displayed with their score. At the top left of the gameplay scene, three keyblades are shown to indicate the number of lives left. These increase and decrease as the user's lives increase and decrease.
+
+Items enter the scene from the right and exit from the left. `Player` starts at a fixed x-coordinate but moves up and down. The `Pause` button now has functionality; it will stop the game timer if it's running. Clicking on it again will start it again with the same game. `Start` now restarts the entire game from the begninning.
 
 ![Gameplay Screen](images/IMG_7526.jpg "Start Screen")
 
 ### Finish Screen
-Once the player loses all three lives, the game switches to the finish screen. The screen shows the player's final score and has two buttons, one to start a new game and one to quit.
+Once the player loses all three lives or hits an `Aquatank`, the game switches to the finish screen. It is very similar to the start screen, as it displays an image. All previous items in the scene (`Player`, `Item`s, et cetera) are removed from the scene and deleted. From here, the user can start a new game using `Start` or quit the program.
 
 ![Finish Screen](images/IMG_4456.jpg "Finish Screen")
+
+## Sources
+All pixel images are from this site: http://spriters-resource.com/gameboy_advance/khcom/
+
+The inital background is taken and edited from: http://www.khinsider.com/gallery/details.php?image_id=3237

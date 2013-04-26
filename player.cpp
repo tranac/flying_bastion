@@ -27,11 +27,6 @@ void Player::move(int x)
 	setPos(x_,y_);
 }
 
-void Player::collidesWith(Item* item)
-{
-	
-}
-
 void Player::flash()
 {
 	if(f)

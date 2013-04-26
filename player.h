@@ -10,7 +10,6 @@ class Player : public QGraphicsPixmapItem
   	Player();
   	~Player();
   	void move(int x);
-  	void collidesWith(Item* item);
   	void flash();
   	int getX() { return x_; }
   	int getY() { return y_; }

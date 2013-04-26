@@ -1,7 +1,7 @@
 #include "airsoldier.h"
 
 //check position
-AirSoldier::AirSoldier(QPixmap* pic, QPixmap* pic2) : Item(350,-50,-1,0,pic)
+AirSoldier::AirSoldier(QPixmap* pic, QPixmap* pic2) : Item(645,10,-1,0,pic)
 {
 	pic2_ = pic2;
 	setPixmap(*pic_);
@@ -22,7 +22,7 @@ void AirSoldier::move()
 		setPixmap(*pic_);
 		
 	//if across the screen, change vy
-	if(!x_)
+	if(x_ ==  300)
 		vy_ = 1;
 		
 	//change xy coordinates

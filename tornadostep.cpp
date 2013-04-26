@@ -1,6 +1,6 @@
 #include "tornadostep.h"
 
-TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2) : Item(350,y,-1,1,pic)
+TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2) : Item(645,y,-1,1,pic)
 {
 	pic2_ = pic2;
 	setPixmap(*pic_);
@@ -21,7 +21,7 @@ void TornadoStep::move()
 		setPixmap(*pic_);
 	
 	//if reached boundary, change direction
-	if((c_ == 20) || (y_ == 330) || !y_)
+	if((c_ == 100) || (y_ == 330) || !y_)
 	{
 		vy_ = -vy_;
 		c_ = 0;

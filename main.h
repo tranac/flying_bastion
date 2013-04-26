@@ -58,9 +58,7 @@ private:
 	QGraphicsScene* scene;	//scene for view
 	QGraphicsView* 	view;
 	
-	QFormLayout*  n;
 	QLineEdit*    name_;
-	QLineEdit*	  name;
 	QLineEdit*	  score;
 	QFormLayout*  s;
 

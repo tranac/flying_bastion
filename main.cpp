@@ -42,18 +42,7 @@ MainWindow::MainWindow()
 	QBrush b(c);
 	scene->setBackgroundBrush(b);
  	layout->addWidget(view);
-/*s
-  //create menu bar
-  	menu = menuBar();
-  	action = menu->addAction("Start");
-*/
-/*******************************************************************
-	pic = new QPixmap("images/aquatank.png","png");
-	item = new QGraphicsPixmapItem;
-	item->setPos(20,20);
-	item->setPixmap(*pic);
-	scene->addItem(item);
-********************************************************************/
+
   //create start button
   	start = new QPushButton("Start Game");
 	options->addWidget(start);
@@ -66,22 +55,7 @@ MainWindow::MainWindow()
   //create quit button
 	quit = new QPushButton("Quit Game");
 	options->addWidget(quit);
-	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit()));
-
-  //create name show
-  	name = new QLineEdit("User");
-  	name->setReadOnly(true);
-//  	name->setWindowOpacity(0);
-  	name->setFixedWidth(100);
-  	options->addWidget(name);
-  //create score show
-	s = new QFormLayout();
-  	score = new QLineEdit(QString::number(0));
-  	score->setReadOnly(true);
-//  	score->setWindowOpacity(0);
-  	score->setFixedWidth(100);
-  	s->addRow("Score",score);
-  	options->addLayout(s);
+	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit())); 
   	
   	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
@@ -109,16 +83,24 @@ void MainWindow::startGame()
 		QString n = name_->text();
 		if(n == "")
 			return;
-		
-			name->setText(n);
-			//make name invisible and unaccessible
-			name_->setEnabled(false);
-			name_->setHidden(true);
-			name_->setReadOnly(true);
-		
-			started = true;
-			lives_ = 3;
-		//create flags
+		n = n + " Score";
+		//create score show
+		s = new QFormLayout();
+ 	 	score = new QLineEdit(QString::number(0));
+ 	 	score->setReadOnly(true);
+	//  	score->setWindowOpacity(0);
+  		score->setFixedWidth(100);
+  		s->addRow(n,score);
+  		options->addLayout(s);
+  		options->setStretch(3,0.5);
+	//	name->setText(n);
+		//make name invisible and unaccessible
+		name_->setEnabled(false);
+		name_->setHidden(true);
+		name_->setReadOnly(true);
+	
+		started = true;
+		lives_ = 3;
 	}
 	else
 	{
@@ -214,7 +196,7 @@ void MainWindow::handleTimer()
 	player->move(v);
 
 	//create enemies
-	if(!(executions % 10))
+	if(!(executions % 50))
 	{
 		createEnemies();
 	}
@@ -242,51 +224,66 @@ void MainWindow::createEnemies()
 {
 
 /******************THING*******************************************/
-		newItem = new RedNocturne(125,-3,rn1,rn2);
-		scene->addItem(newItem);
-		items.push_back(newItem);
+
 
 	//randomly create enemies
 	srand(time(0));
-	int a = rand() % 10;
+	int a = rand() % 6;
+	int b = rand() % 330;
 	switch(a)		//random cases
 	{
 		//create red nocture / arrow
 		case 1:
 		{
+			newItem = new RedNocturne(b,-3,rn1,rn2);
+			scene->addItem(newItem);
+			items.push_back(newItem);
 			std::cout << "Red Nocturne!" << std::endl;
 			return;
 		}
 		//create aquatank / dragon
 		case 2:
 		{
+			newItem = new Aquatank(b,-3,at);
+			scene->addItem(newItem);
+			items.push_back(newItem);
 			std::cout << "Aquatank!" << std::endl;
 			return;
 		}
-		//chance to create tornado step / gem
+		//chance to create white mushroom
 		case 3:
 		{
-			int b = rand() % 2;
+			int c = rand() % 7;
 			//create gem
-			if(b == 0)
+			if(!c)
 			{
-			std::cout << "Tornado Step!" << std::endl;
+				newItem = new WhiteMushroom(b,player,wm1,wm2);
+				scene->addItem(newItem);
+				items.push_back(newItem);
+				std::cout << "White Mushroom!" << std::endl;
 			}
 			return;
 		}
-		//chance to create mushroom / bubble
+		//chance to create tornado step
 		case 4:
 		{
-			int b = rand() % 2;
-			//create bubble
-			if(b == 1)
+			int c = rand() % 7;
+			//create gem
+			if(!c)
 			{
-			std::cout << "White Mushroom!" << std::endl;
+				newItem = new TornadoStep(b,ts1,ts2);
+				scene->addItem(newItem);
+				items.push_back(newItem);
+				std::cout << "Tornado Step!" << std::endl;
 			}
 			return;
 		}
-		default:
+		case 5:
 		{
+			newItem = new AirSoldier(as1,as2);
+			scene->addItem(newItem);
+			items.push_back(newItem);
+			std::cout << "AirSoldier!" << std::endl;
 			return;
 		}
 	}

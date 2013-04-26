@@ -254,8 +254,8 @@ void MainWindow::createEnemies()
 
 	//randomly create enemies
 	srand(time(0));
-	int a = rand() % 6;
-	int b = rand() % 330;
+	int a = rand() % 7;
+	int b = rand() % 320;
 	switch(a)		//random cases
 	{
 		//create red nocture / arrow
@@ -306,6 +306,12 @@ void MainWindow::createEnemies()
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
+		}
+	        case 6:
+		{
+		  newItem = new Gargoyle(player->getY(),g1,g2,player,this);
+		  scene->addItem(newItem);
+		  items.push_back(newItem);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 class Gargoyle : public Item
 {
   public:
-	Gargoyle(Player* p, QPixmap* pic, QPixmap* pic2, class MainWindow* main);
+  Gargoyle(int y,  QPixmap* pic, QPixmap* pic2, Player* p, class MainWindow* main);
 	~Gargoyle();
 	void move();
 	void collide();

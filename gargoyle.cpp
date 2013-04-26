@@ -1,7 +1,7 @@
 #include "gargoyle.h"
 #include "main.h"
 
-Gargoyle::Gargoyle(int y, Player* p, QPixmap* pic, QPixmap* pic2, MainWindow* main) : Item(645,y,-1,0,pic,pic2,p,main)
+Gargoyle::Gargoyle(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-1,0,pic,pic2,p,main)
 {
 }
 
@@ -12,7 +12,7 @@ Gargoyle::~Gargoyle()
 void Gargoyle::move()
 {
 	//if inline with player & not a third of the way across screen, match player y-coordinate
-	if((y_ > 200))
+	if((x_ > 400))
 	{
 		y_ = p_->getY();
 	}

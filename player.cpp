@@ -1,8 +1,31 @@
 #include "player.h"
 
-Player::move()
+Player::Player()
 {
-	x_ = x_ + vx_;
-	y_ = y_ + vy_;
+	x_ = -200;
+	y_ = 0;
 	setPos(x_,y_);
+	pic_ = new QPixmap("images/aquatank.png","png");
+	setPixmap(*pic_);
+}
+
+Player::~Player()
+{
+//	delete pic_;
+}
+
+void Player::move(int x)
+{
+	//if falling, positive velocity
+	if(x)
+		y_ = y_ + 1;
+	else //else negative velocity
+		y_ = y_ - 1;
+	
+	setPos(x_,y_);
+}
+
+void Player::collidesWith()
+{
+	
 }

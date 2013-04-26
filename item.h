@@ -6,10 +6,10 @@
 class Item : public QGraphicsPixmapItem
 {
   public:
-  	Item(int x, int y, int vx, int vy, QPixmap* pic);
+  	Item(int x, int y, int vx, int vy);
 	~Item();
   	virtual void move() = 0;
-  private:
+  protected:
 	int x_;
 	int y_;
 	int vx_;

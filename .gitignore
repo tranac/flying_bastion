@@ -20,3 +20,6 @@
 # QT Files
 Makefile
 *.pro
+*.pro~
+game_tranac
+moc_main.cpp

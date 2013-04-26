@@ -1,13 +1,19 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "item.h"
+#include <QGraphicsPixmapItem>
 
-class Player : public Item
+class Player : public QGraphicsPixmapItem
 {
   public:
-  	Player(QPixmap* pic) : Item(50,200,0,5,pic) { }
-  	void move();
+  	Player();
+  	~Player();
+  	void move(int x);
+  	void collidesWith();
+  private:
+  	int x_;
+  	int y_;
+  	QPixmap* pic_;
 } ;
 
 #endif

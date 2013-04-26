@@ -67,9 +67,9 @@ MainWindow::MainWindow()
 //  	score->setWindowOpacity(0);
   	score->setFixedWidth(100);
   	options->addWidget(score);
-  	
+  	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
-	name_ = new QLineEdit("Please Enter a Username");
+	name_ = new QLineEdit();
  	scene->addWidget(name_);
  	
   //create timer
@@ -98,6 +98,7 @@ void MainWindow::startGame()
 		started = true;
 		lives_ = 3;
 		
+		queue = new QQueue<Item*>;
 		//create flags
 	}
 	else
@@ -113,11 +114,11 @@ void MainWindow::startGame()
 
 		//delete current player and objects
 		
-		//create new player
-
 	}
 		player = new Player();
 		scene->addItem(player);
+		
+		Item* temp = new Aquatank(-20,-1);
 		//start timer
 		timer->start();
 }
@@ -163,15 +164,23 @@ void MainWindow::handleTimer()
 	}
 	*/
 
+	int v;
 	//check if mouse is being pressed for player velocity
-//	if(qApp->mouseButtons() == Qt::LeftButton)	
+	if(qApp->mouseButtons() == Qt::LeftButton)	
+		v = 0;
 //		std::cout << "Huzzah!" << std::endl;
-//	else
+	else
+		v = 1;
 //		std::cout << "Falling." << std::endl;
 
 	//create enemies
 	if((executions % 10))
+	{
 		createEnemies();
+	}
+	
+	player->move(v);
+	aqua->move();
 
 	//increase score
 	score_++;
@@ -203,11 +212,13 @@ void MainWindow::createEnemies()
 		case 1:
 		{
 			std::cout << "Red Nocturne!" << std::endl;
+			return;
 		}
 		//create aquatank / dragon
 		case 2:
 		{
 			std::cout << "Aquatank!" << std::endl;
+			return;
 		}
 		//chance to create tornado step / gem
 		case 3:
@@ -218,6 +229,7 @@ void MainWindow::createEnemies()
 			{
 			std::cout << "Tornado Step!" << std::endl;
 			}
+			return;
 		}
 		//chance to create mushroom / bubble
 		case 4:
@@ -228,10 +240,11 @@ void MainWindow::createEnemies()
 			{
 			std::cout << "White Mushroom!" << std::endl;
 			}
+			return;
 		}
 		default:
 		{
-		
+			return;
 		}
 	}
 }

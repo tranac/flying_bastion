@@ -22,7 +22,10 @@
 
 #include <QGraphicsPixmapItem>
 
-#include "things/player.h"
+#include "player.h"
+#include "item.h"
+#include "aquatank.h"
+#include "rednocturne.h"
 
 #include <cmath>
 #include <stdexcept>
@@ -69,10 +72,11 @@ private:
 	QPushButton*  quit;		//quit game
 	
 	Player* player;
+	Aquatank* aqua;
 	
 	QTimer*	timer;
 	
-	QQueue<int>* items;		//list of items in screen
+	QQueue<Item*>* items;		//list of items in screen
 	int score_;
 	int lives_;
 	int pv_;				//player velocity

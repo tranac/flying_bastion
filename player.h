@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <QGraphicsPixmapItem>
+#include "item.h"
 
 class Player : public QGraphicsPixmapItem
 {
@@ -9,7 +10,7 @@ class Player : public QGraphicsPixmapItem
   	Player();
   	~Player();
   	void move(int x);
-  	void collidesWith();
+  	void collidesWith(Item* item);
   	int getX() { return x_; }
   	int getY() { return y_; }
   private:

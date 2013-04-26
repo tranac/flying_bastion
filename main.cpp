@@ -20,6 +20,7 @@ MainWindow::MainWindow()
   	ts2 = new QPixmap("images/tornadostep2.png","png");
   	wm1 = new QPixmap("images/whitemushroom1.png","png");
   	wm2 = new QPixmap("images/whitemushroom2.png","png");
+  	l = new QPixmap("images/life.png","png");
   //create overall layout
 	this->setGeometry(1,0,20,20);
 	
@@ -32,9 +33,10 @@ MainWindow::MainWindow()
 	options = new QHBoxLayout();
 	layout->addLayout(options);
   //create view space
-	scene = new QGraphicsScene();	
+	scene = new QGraphicsScene();
+	scene->setSceneRect(0,0,650,350);
 	view = new QGraphicsView(scene);
-	view->setFixedSize(650,350);
+	view->setFixedSize(675,375);
 	QColor c(16,64,46,255);
 	QBrush b(c);
 	scene->setBackgroundBrush(b);
@@ -80,6 +82,8 @@ MainWindow::MainWindow()
   	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
 	name_ = new QLineEdit();
+	name_->setGeometry(250,150,150,30);
+//	QRect r(250,150,150,30);
  	scene->addWidget(name_);
  	
   //create timer
@@ -108,7 +112,6 @@ void MainWindow::startGame()
 		started = true;
 		lives_ = 3;
 		
-		items = new QVector<Item*>;
 		//create flags
 	}
 	else
@@ -120,6 +123,7 @@ void MainWindow::startGame()
 		finished = false;
 		score_ = 0;
 		lives_ = 3;
+		lives.clear();
 		executions = 0;
 
 		//delete current player and objects
@@ -128,18 +132,14 @@ void MainWindow::startGame()
 		player = new Player();
 		scene->addItem(player);
 		
-	//	newItem = new Aquatank(-20,-1,at);
-	//	scene->addItem(newItem);
-	//	items->push_back(newItem);
-	//	newItem = new RedNocturne(40,-1,rn1,rn2);
-	//	scene->addItem(newItem);
-	//	items->push_back(newItem);
-	//	newItem = new AirSoldier(as1,as2);
-	//	scene->addItem(newItem);
-	//	items->push_back(newItem);
-		newItem = new WhiteMushroom(40,player,wm1,wm2);
-		scene->addItem(newItem);
-		items->push_back(newItem);
+		int x = 5;
+		for(int i=0;i<3;i++)
+		{
+			life = new Life(x,5,l);
+			scene->addItem(life);
+			lives.push_back(life);
+			x = x+15;
+		}
 		
 		//start timer
 		timer->start();
@@ -164,6 +164,8 @@ void MainWindow::handleTimer()
 	//check collisions
 /*
 	
+	
+	//if hit, take away a life
 */	
 	//check if dead
 	if(!lives_)
@@ -173,29 +175,26 @@ void MainWindow::handleTimer()
 	}
 	
 	//move items
-	for(QVector<Item*>::iterator it = items->begin(); it != items->end(); ++it)
+	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
 		Item* temp = *it;
 		temp->move();
 	}
 
-
+	//move player
 	int v;
 	//check if mouse is being pressed for player velocity
 	if(qApp->mouseButtons() == Qt::LeftButton)	
 		v = 0;
-//		std::cout << "Huzzah!" << std::endl;
 	else
 		v = 1;
-//		std::cout << "Falling." << std::endl;
+	player->move(v);
 
 	//create enemies
-	if((executions % 10))
+	if(!(executions % 10))
 	{
 		createEnemies();
 	}
-	
-	player->move(v);
 
 	//increase score
 	score_++;
@@ -218,6 +217,12 @@ void MainWindow::handleTimer()
 
 void MainWindow::createEnemies()
 {
+
+/******************THING*******************************************/
+		newItem = new WhiteMushroom(125,player,wm1,wm2);
+		scene->addItem(newItem);
+		items.push_back(newItem);
+
 	//randomly create enemies
 	srand(time(0));
 	int a = rand() % 10;

@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QFormLayout>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QLineEdit>
@@ -17,12 +18,14 @@
 #include <QVector>		//used for moving items
 #include <QPixmap>
 
+#include "life.h"
 #include "player.h"
 #include "item.h"
 #include "aquatank.h"
 #include "rednocturne.h"
 #include "airsoldier.h"
 #include "whitemushroom.h"
+#include "tornadostep.h"
 
 #include <cmath>
 #include <stdexcept>
@@ -54,6 +57,7 @@ private:
 	QGraphicsScene* scene;	//scene for view
 	QGraphicsView* 	view;
 	
+	QFormLayout*  n;
 	QLineEdit*    name_;
 	QLineEdit*	  name;
 	QLineEdit*	  score;
@@ -66,8 +70,11 @@ private:
 	
 	QTimer*	timer;
 	
-	QVector<Item*>* items;		//list of items in screen
+	QVector<Item*> items;		//list of items in screen
 	Item*		   newItem;
+	
+	QVector<Life*> lives;
+	Life*		   life;
 	
 	int score_;
 	int lives_;
@@ -84,6 +91,7 @@ private:
 	QPixmap* ts2;
 	QPixmap* wm1;
 	QPixmap* wm2;
+	QPixmap* l;
 } ;
 
 #endif

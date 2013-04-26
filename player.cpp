@@ -2,8 +2,8 @@
 
 Player::Player()
 {
-	x_ = -200;
-	y_ = 0;
+	x_ = 50;
+	y_ = 125;
 	setPos(x_,y_);
 	pic_ = new QPixmap("images/aquatank.png","png");
 	setPixmap(*pic_);
@@ -25,7 +25,7 @@ void Player::move(int x)
 	setPos(x_,y_);
 }
 
-void Player::collidesWith()
+void Player::collidesWith(Item* item)
 {
 	
 }

@@ -1,6 +1,5 @@
 #include "tornadostep.h"
 
-//check position
 TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2) : Item(350,y,-1,1,pic)
 {
 	pic2_ = pic2;

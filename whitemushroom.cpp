@@ -1,7 +1,8 @@
 #include "whitemushroom.h"
+#include <iostream>
 
 //check position
-WhiteMushroom::WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2) : Item(350,y,-1,0,pic)
+WhiteMushroom::WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2) : Item(645,y,-1,0,pic)
 {
 	pic2_ = pic2;
 	setPixmap(*pic_);
@@ -23,16 +24,16 @@ void WhiteMushroom::move()
 		setPixmap(*pic_);
 		
 	//if inline with player & not halfway across screen, teleport up or down
-	if((x_ > 0) && (x_ == p_->getX()))
+	if((x_ > 150) && (y_ == p_->getY()))
 	{
-		if(y_ < -220)
-			y_ = y_-10;
+		if(y_ >= 50)
+			y_ = y_-50;
 		else
-			y_ = y_+10;
+			y_ = y_+50;
 	}
 	else
 		y_ = y_ + vy_;
-		
+
 	//change xy coordinates
 	x_ = x_ + vx_;
 	setPos(x_,y_);

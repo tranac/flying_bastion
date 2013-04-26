@@ -1,14 +1,12 @@
 #include "aquatank.h"
+#include "main.h"
 
-//check position
-Aquatank::Aquatank(int y, int vx, QPixmap* pic) : Item(645,y,vx,0,pic)
+Aquatank::Aquatank(int y, int vx, QPixmap* pic, Player* p, MainWindow* main) : Item(645,y,vx,0,pic,NULL,p,main)
 {
-	setPixmap(*pic_);
 }
 
 Aquatank::~Aquatank()
 {
-
 }
 
 void Aquatank::move()
@@ -19,3 +17,8 @@ void Aquatank::move()
 	setPos(x_,y_);
 }
 
+void Aquatank::collide()
+{
+	if(Item::collide())
+		main_->endGame();
+}

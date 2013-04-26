@@ -2,18 +2,14 @@
 #define WHITEMUSHROOM_H
 
 #include "item.h"
-#include "player.h"
 
 class WhiteMushroom : public Item
 {
   public:
-	WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2);
+	WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2, class MainWindow* main);
 	~WhiteMushroom();
 	void move();
-  private:
-  	QPixmap* pic2_;
-  	int moves_;
-  	Player* p_;
+	void collide();
 } ;
 
 #endif

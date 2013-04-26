@@ -1,16 +1,12 @@
 #include "airsoldier.h"
+#include "main.h"
 
-//check position
-AirSoldier::AirSoldier(QPixmap* pic, QPixmap* pic2) : Item(645,10,-1,0,pic)
+AirSoldier::AirSoldier(QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,10,-1,0,pic,pic2,p,main)
 {
-	pic2_ = pic2;
-	setPixmap(*pic_);
-	moves_ = 0;
 }
 
 AirSoldier::~AirSoldier()
 {
-
 }
 
 void AirSoldier::move()
@@ -29,7 +25,10 @@ void AirSoldier::move()
 	x_ = x_ + vx_;
 	y_ = y_ + vy_;
 	setPos(x_,y_);
-	
-	moves_++;
 }
 
+void AirSoldier::collide()
+{
+	if(Item::collide())
+		main_->loseLife();
+}

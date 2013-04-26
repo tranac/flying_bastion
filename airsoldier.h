@@ -6,12 +6,10 @@
 class AirSoldier : public Item
 {
   public:
-	AirSoldier(QPixmap* pic, QPixmap* pic2);
+	AirSoldier(QPixmap* pic, QPixmap* pic2, Player* p, class MainWindow* main);
 	~AirSoldier();
 	void move();
-  private:
-  	QPixmap* pic2_;
-  	int moves_;
+	void collide();
 } ;
 
 #endif

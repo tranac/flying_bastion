@@ -1,9 +1,8 @@
 #include "tornadostep.h"
+#include "main.h"
 
-TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2) : Item(645,y,-1,1,pic)
+TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-1,1,pic,pic2,p,main)
 {
-	pic2_ = pic2;
-	setPixmap(*pic_);
 	c_ = 0;
 }
 
@@ -32,5 +31,11 @@ void TornadoStep::move()
 	setPos(x_,y_);
 	
 	c_++;
+}
+
+void TornadoStep::collide()
+{
+	if(Item::collide())
+		main_->gainPoints();
 }
 

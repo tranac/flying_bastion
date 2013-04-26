@@ -1,15 +1,13 @@
 #include "rednocturne.h"
+#include "main.h"
 
 //check position
-RedNocturne::RedNocturne(int y, int vx, QPixmap* pic, QPixmap* pic2) : Item(645,y,vx,0,pic)
+RedNocturne::RedNocturne(int y, int vx, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,vx,0,pic,pic2,p,main)
 {
-	pic2_ = pic2;
-	setPixmap(*pic_);
 }
 
 RedNocturne::~RedNocturne()
 {
-
 }
 
 void RedNocturne::move()
@@ -25,3 +23,8 @@ void RedNocturne::move()
 	setPos(x_,y_);
 }
 
+void RedNocturne::collide()
+{
+	if(Item::collide())
+		main_->loseLife();
+}

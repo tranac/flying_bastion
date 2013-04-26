@@ -27,6 +27,7 @@
 #include "airsoldier.h"
 #include "whitemushroom.h"
 #include "tornadostep.h"
+#include "gargoyle.h"
 
 #include <cmath>
 #include <stdexcept>
@@ -43,6 +44,8 @@ public:
 	void createEnemies();
 	void loseLife();
 	void endGame();
+	void gainLife();
+	void gainPoints();
 protected slots:
 	void startGame();
 	void pauseGame();
@@ -87,6 +90,8 @@ private:
 	QPixmap* as1;			//enemy pics
 	QPixmap* as2;
 	QPixmap* at;
+	QPixmap* g1;
+	QPixmap* g2;
 	QPixmap* rn1;
 	QPixmap* rn2;
 	QPixmap* ts1;

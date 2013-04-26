@@ -16,6 +16,8 @@ MainWindow::MainWindow()
   	as1 = new QPixmap("images/airsoldier1.png","png");
   	as2 = new QPixmap("images/airsoldier2.png","png");
   	at = new QPixmap("images/aquatank.png","png");
+  	g1 = new QPixmap("images/gargoyle1.png","png");
+  	g2 = new QPixmap("images/gargoyle2.png","png");
   	rn1 = new QPixmap("images/rednocturne1.png","png");
   	rn2 = new QPixmap("images/rednocturne2.png","png");
   	ts1 = new QPixmap("images/tornadostep1.png","png");
@@ -255,7 +257,7 @@ void MainWindow::createEnemies()
 		//create red nocture / arrow
 		case 1:
 		{
-			newItem = new RedNocturne(b,-3,rn1,rn2);
+			newItem = new RedNocturne(b,-3,rn1,rn2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -263,7 +265,7 @@ void MainWindow::createEnemies()
 		//create aquatank / dragon
 		case 2:
 		{
-			newItem = new Aquatank(b,-3,at);
+			newItem = new Aquatank(b,-3,at,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -275,7 +277,7 @@ void MainWindow::createEnemies()
 			//create gem
 			if(!c)
 			{
-				newItem = new WhiteMushroom(b,player,wm1,wm2);
+				newItem = new WhiteMushroom(b,player,wm1,wm2,this);
 				scene->addItem(newItem);
 				items.push_back(newItem);
 			}
@@ -288,7 +290,7 @@ void MainWindow::createEnemies()
 			//create gem
 			if(!c)
 			{
-				newItem = new TornadoStep(b,ts1,ts2);
+				newItem = new TornadoStep(b,ts1,ts2,player,this);
 				scene->addItem(newItem);
 				items.push_back(newItem);
 			}
@@ -296,7 +298,7 @@ void MainWindow::createEnemies()
 		}
 		case 5:
 		{
-			newItem = new AirSoldier(as1,as2);
+			newItem = new AirSoldier(as1,as2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -338,4 +340,15 @@ void MainWindow::endGame()
 	message->setEnd();
 	message->setVisible(true);
 
+}
+
+void MainWindow::gainLife()
+{
+
+}
+
+void MainWindow::gainPoints()
+{
+	score_ = score_ + 50;
+	score->setText(QString::number(score_));
 }

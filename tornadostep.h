@@ -6,11 +6,11 @@
 class TornadoStep : public Item
 {
   public:
-	TornadoStep(int y, QPixmap* pic, QPixmap* pic2);
+	TornadoStep(int y, QPixmap* pic, QPixmap* pic2, Player* p, class MainWindow* main);
 	~TornadoStep();
 	void move();
+	void collide();
   private:
-  	QPixmap* pic2_;
   	int c_;
 } ;
 

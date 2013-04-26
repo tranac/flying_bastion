@@ -62,6 +62,7 @@ private:
 	QLineEdit*    name_;
 	QLineEdit*	  name;
 	QLineEdit*	  score;
+	QFormLayout*  s;
 
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game

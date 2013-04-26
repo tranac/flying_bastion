@@ -75,11 +75,14 @@ MainWindow::MainWindow()
   	name->setFixedWidth(100);
   	options->addWidget(name);
   //create score show
+	s = new QFormLayout();
   	score = new QLineEdit(QString::number(0));
   	score->setReadOnly(true);
 //  	score->setWindowOpacity(0);
   	score->setFixedWidth(100);
-  	options->addWidget(score);
+  	s->addRow("Score",score);
+  	options->addLayout(s);
+  	
   	/***********************ADD IN TEXT TO ENTER USERNAME*********/
   //create input for name
 	name_ = new QLineEdit();
@@ -104,15 +107,17 @@ void MainWindow::startGame()
 	{
 		//grab username
 		QString n = name_->text();
-		name->setText(n);
-		//make name invisible and unaccessible
-		name_->setEnabled(false);
-		name_->setHidden(true);
-		name_->setReadOnly(true);
+		if(n == "")
+			return;
 		
-		started = true;
-		lives_ = 3;
+			name->setText(n);
+			//make name invisible and unaccessible
+			name_->setEnabled(false);
+			name_->setHidden(true);
+			name_->setReadOnly(true);
 		
+			started = true;
+			lives_ = 3;
 		//create flags
 	}
 	else
@@ -237,7 +242,7 @@ void MainWindow::createEnemies()
 {
 
 /******************THING*******************************************/
-		newItem = new WhiteMushroom(125,player,wm1,wm2);
+		newItem = new RedNocturne(125,-3,rn1,rn2);
 		scene->addItem(newItem);
 		items.push_back(newItem);
 
@@ -304,4 +309,6 @@ void MainWindow::endGame()
 	std::cout << "Dead!" << std::endl;
 	score_ = 0;
 	finished = true;
+	canLose = false;
+	lose = 0;
 }

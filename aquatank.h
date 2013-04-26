@@ -6,7 +6,7 @@
 class Aquatank : public Item
 {
   public:
-	Aquatank(int y, int vx);
+	Aquatank(int y, int vx, QPixmap* pic);
 	~Aquatank();
 	void move();
 } ;

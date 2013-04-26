@@ -1,9 +1,8 @@
 #include "aquatank.h"
 
 //check position
-Aquatank::Aquatank(int y, int vx) : Item(350,y,vx,0)
+Aquatank::Aquatank(int y, int vx, QPixmap* pic) : Item(350,y,vx,0,pic)
 {
-	pic_ = new QPixmap("images/aquatank.png","png");
 	setPixmap(*pic_);
 }
 

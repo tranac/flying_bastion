@@ -10,6 +10,16 @@ MainWindow::MainWindow()
 	executions = 0;
 	speed = 100;
 	
+  //create Pixmap images
+  	as1 = new QPixmap("images/airsoldier1.png","png");
+  	as2 = new QPixmap("images/airsoldier2.png","png");
+  	at = new QPixmap("images/aquatank.png","png");
+  	rn1 = new QPixmap("images/rednocturne1.png","png");
+  	rn2 = new QPixmap("images/rednocturne2.png","png");
+  	ts1 = new QPixmap("images/tornadostep1.png","png");
+  	ts2 = new QPixmap("images/tornadostep2.png","png");
+  	wm1 = new QPixmap("images/whitemushroom1.png","png");
+  	wm2 = new QPixmap("images/whitemushroom2.png","png");
   //create overall layout
 	this->setGeometry(1,0,20,20);
 	
@@ -98,7 +108,7 @@ void MainWindow::startGame()
 		started = true;
 		lives_ = 3;
 		
-		queue = new QQueue<Item*>;
+		items = new QVector<Item*>;
 		//create flags
 	}
 	else
@@ -118,7 +128,19 @@ void MainWindow::startGame()
 		player = new Player();
 		scene->addItem(player);
 		
-		Item* temp = new Aquatank(-20,-1);
+	//	newItem = new Aquatank(-20,-1,at);
+	//	scene->addItem(newItem);
+	//	items->push_back(newItem);
+	//	newItem = new RedNocturne(40,-1,rn1,rn2);
+	//	scene->addItem(newItem);
+	//	items->push_back(newItem);
+	//	newItem = new AirSoldier(as1,as2);
+	//	scene->addItem(newItem);
+	//	items->push_back(newItem);
+		newItem = new WhiteMushroom(40,player,wm1,wm2);
+		scene->addItem(newItem);
+		items->push_back(newItem);
+		
 		//start timer
 		timer->start();
 }
@@ -149,20 +171,14 @@ void MainWindow::handleTimer()
 		endGame();
 		return;
 	}
-
-	items = new QQueue<int>;
-	items->enqueue(executions);
 	
 	//move items
-	/*
-	QQueue<int>::iterator it = items->begin();
-	while(it != items->end())
+	for(QVector<Item*>::iterator it = items->begin(); it != items->end(); ++it)
 	{
-		int x = items->dequeue();
-		std::cout << x << std::endl;
-		++it;
+		Item* temp = *it;
+		temp->move();
 	}
-	*/
+
 
 	int v;
 	//check if mouse is being pressed for player velocity
@@ -180,7 +196,6 @@ void MainWindow::handleTimer()
 	}
 	
 	player->move(v);
-	aqua->move();
 
 	//increase score
 	score_++;

@@ -1,10 +1,9 @@
 #include "rednocturne.h"
 
 //check position
-RedNocturne::RedNocturne(int y, int vx) : Item(350,y,vx,0)
+RedNocturne::RedNocturne(int y, int vx, QPixmap* pic, QPixmap* pic2) : Item(350,y,vx,0,pic)
 {
-	pic_ = new QPixmap("images/rednocturne1.png","png");
-	pic2_ = new QPixmap("images/rednocturne2.png","png");
+	pic2_ = pic2;
 	setPixmap(*pic_);
 }
 

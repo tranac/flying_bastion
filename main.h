@@ -8,24 +8,21 @@
 #include <QGraphicsView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QMenuBar>
-#include <QAction>
-#include <QPushButton>	//used for Start, Quit, and A* buttons
-#include <QTextEdit>	//used for error messages
-#include <QTextDocument>
-#include <QTextObject>
-#include <QLineEdit>	//used for initial inputs
-#include <QTimer>		//used for move function
+#include <QPushButton>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QTimer>
 #include <QString>
 #include <QColor>
-#include <QQueue>		//used for moving items
-
-#include <QGraphicsPixmapItem>
+#include <QVector>		//used for moving items
+#include <QPixmap>
 
 #include "player.h"
 #include "item.h"
 #include "aquatank.h"
 #include "rednocturne.h"
+#include "airsoldier.h"
+#include "whitemushroom.h"
 
 #include <cmath>
 #include <stdexcept>
@@ -56,32 +53,37 @@ private:
 	
 	QGraphicsScene* scene;	//scene for view
 	QGraphicsView* 	view;
-
-//	QTextDocument* welcome;
-	QPixmap* pic;
-	QGraphicsPixmapItem* item;
-
+	
 	QLineEdit*    name_;
 	QLineEdit*	  name;
 	QLineEdit*	  score;
 
-//	QMenuBar*	  menu;
-//	QAction*	  action;
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
 	
 	Player* player;
-	Aquatank* aqua;
 	
 	QTimer*	timer;
 	
-	QQueue<Item*>* items;		//list of items in screen
+	QVector<Item*>* items;		//list of items in screen
+	Item*		   newItem;
+	
 	int score_;
 	int lives_;
 	int pv_;				//player velocity
 	int executions;
 	int speed;				//interval for timer
+	
+	QPixmap* as1;
+	QPixmap* as2;
+	QPixmap* at;
+	QPixmap* rn1;
+	QPixmap* rn2;
+	QPixmap* ts1;
+	QPixmap* ts2;
+	QPixmap* wm1;
+	QPixmap* wm2;
 } ;
 
 #endif

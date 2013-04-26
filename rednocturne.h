@@ -6,7 +6,7 @@
 class RedNocturne : public Item
 {
   public:
-	RedNocturne(int y, int vx);
+	RedNocturne(int y, int vx, QPixmap* pic, QPixmap* pic2);
 	~RedNocturne();
 	void move();
   private:

@@ -2,6 +2,7 @@
 #define WHITEMUSHROOM_H
 
 #include "item.h"
+#include <cstdlib>
 
 class WhiteMushroom : public Item
 {

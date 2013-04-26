@@ -1,6 +1,8 @@
 #include "tornadostep.h"
 #include "main.h"
 
+#include <iostream>
+
 TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-1,1,pic,pic2,p,main)
 {
 	c_ = 0;
@@ -35,7 +37,9 @@ void TornadoStep::move()
 
 void TornadoStep::collide()
 {
-	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
+	if((x_ >= p_->getX()+80) && (x_ <= p_->getX()+83) && (y_ >= p_->getY()-5) && (y_ <= p_->getY() + 82))
+	{
 		main_->gainPoints();
+	}
 }
 

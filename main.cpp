@@ -170,7 +170,7 @@ void MainWindow::startGame()
 
 void MainWindow::pauseGame()
 {
-	if(!finished)
+	if(started)
 	{
 		if(timer->isActive())
 		{
@@ -278,7 +278,13 @@ void MainWindow::createEnemies()
 	srand(time(0));
 	int a = rand() % 7;
 	int b = rand() % 300;
-	switch(a)		//random cases
+	if(a)
+	{
+			newItem = new WhiteMushroom(100,player,wm1,wm2,this);
+			scene->addItem(newItem);
+			items.push_back(newItem);
+	}
+/*	switch(a)		//random cases
 	{
 		//create red nocture / arrow
 		case 1:
@@ -336,12 +342,13 @@ void MainWindow::createEnemies()
 		  items.push_back(newItem);
 		}
 	}
+	*/
 }
 
 void MainWindow::loseLife()
 {
 	lives_--;
-	life = lives.at(lives_);
+	life = lives.back();
 	scene->removeItem(life);
 	lives.pop_back();
 	player->setVisible(false);
@@ -352,11 +359,17 @@ void MainWindow::loseLife()
 void MainWindow::endGame()
 {
 	timer->stop();
-	score_ = 0;
 	finished = true;
-	canLose = false;
-	lose = 0;
 	scene->removeItem(player);
+	
+	QVector<Life*>::iterator it = lives.begin();
+	while(it != lives.end())
+	{
+		Life* temp = *it;
+		scene->removeItem(temp);
+		delete temp;
+		++it;
+	}
 	
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
@@ -374,14 +387,14 @@ void MainWindow::gainLife()
 {
 	lives_++;
 	Life* end = lives.back();
-	life = new Life((end->getX()+5),5,l);
+	life = new Life((end->getX()+15),5,l);
 	scene->addItem(life);
 	lives.push_back(life);
 }
 
 void MainWindow::gainPoints()
 {
-	score_ = score_ + 50;
+	score_ = score_ + 100;
 	score->setText(QString::number(score_));
 }
 

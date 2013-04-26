@@ -18,7 +18,7 @@ void AirSoldier::move()
 		setPixmap(*pic_);
 		
 	//if across the screen, change vy
-	if(x_ ==  300)
+	if(x_ == 250)
 		vy_ = 1;
 		
 	//change xy coordinates
@@ -29,6 +29,6 @@ void AirSoldier::move()
 
 void AirSoldier::collide()
 {
-	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
+	if((x_ >= p_->getX()+80) && (x_ <= p_->getX()+83) && (y_ >= p_->getY()-5) && (y_ <= p_->getY() + 82))
 		main_->loseLife();
 }

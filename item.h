@@ -2,7 +2,6 @@
 #define ITEM_H
 
 #include <QGraphicsPixmapItem>
-#include "player.h"
 
 class Item : public QGraphicsPixmapItem
 {

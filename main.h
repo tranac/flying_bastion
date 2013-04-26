@@ -40,6 +40,7 @@ public:
     ~MainWindow();
     
 	void createEnemies();
+	void loseLife();
 	void endGame();
 protected slots:
 	void startGame();
@@ -75,6 +76,8 @@ private:
 	
 	QVector<Life*> lives;
 	Life*		   life;
+	bool canLose;
+	int lose;
 	
 	int score_;
 	int lives_;

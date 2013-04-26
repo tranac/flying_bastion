@@ -6,7 +6,9 @@ Player::Player()
 	y_ = 125;
 	setPos(x_,y_);
 	pic_ = new QPixmap("images/aquatank.png","png");
+	pic2_ = new QPixmap("images/player2.png","png");
 	setPixmap(*pic_);
+	f = true;
 }
 
 Player::~Player()
@@ -28,4 +30,18 @@ void Player::move(int x)
 void Player::collidesWith(Item* item)
 {
 	
+}
+
+void Player::flash()
+{
+	if(f)
+	{
+		setPixmap(*pic2_);
+		f = false;
+	}
+	else
+	{
+		setPixmap(*pic_);
+		f = true;
+	}
 }

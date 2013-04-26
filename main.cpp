@@ -9,6 +9,7 @@ MainWindow::MainWindow()
 	lives_ = 0;
 	executions = 0;
 	speed = 100;
+	canLose = true;
 	
   //create Pixmap images
   	as1 = new QPixmap("images/airsoldier1.png","png");
@@ -161,12 +162,29 @@ void MainWindow::pauseGame()
 
 void MainWindow::handleTimer()
 {
-	//check collisions
-/*
+	//check collisions against wall
+	if(canLose)
+	{
+		if((player->getY() == 0) || ((player->getY() + 50) == 350))
+		{
+			loseLife();
+			return;
+		}
+	}
+	else if(lose == 51)
+	{
+		canLose = true;
+		lose = 0;
+	}
+	else
+	{
+		player->flash();
+		lose++;
+	}
 	
+	//check collisions against enemies
 	
-	//if hit, take away a life
-*/	
+
 	//check if dead
 	if(!lives_)
 	{
@@ -209,7 +227,7 @@ void MainWindow::handleTimer()
 		case 1000:
 		case 5000:
 		{
-			speed = speed / 2;
+			speed = speed / 3;
 			timer->setInterval(speed);
 		}
 	}
@@ -267,6 +285,17 @@ void MainWindow::createEnemies()
 			return;
 		}
 	}
+}
+
+void MainWindow::loseLife()
+{
+	lives_--;
+	Life* life = lives.at(lives_);
+	scene->removeItem(life);
+	lives.pop_back();
+	player->flash();
+	lose = 0;
+	canLose = false;
 }
 
 void MainWindow::endGame()

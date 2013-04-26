@@ -35,6 +35,6 @@ void WhiteMushroom::move()
 
 void WhiteMushroom::collide()
 {
-	if(Item::collide())
+	if((x_ == p_->getX()) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
 		main_->gainLife();
 }

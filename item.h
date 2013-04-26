@@ -14,7 +14,7 @@ class Item : public QGraphicsPixmapItem
   	virtual void move() = 0;
   	int getX() { return x_; }
   	int getY() { return y_; }
-  	bool collide();
+  	virtual void collide() = 0;
   protected:
 	int x_;
 	int y_;

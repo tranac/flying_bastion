@@ -1,5 +1,7 @@
 #include "aquatank.h"
 #include "main.h"
+#include <iostream>
+
 
 Aquatank::Aquatank(int y, int vx, QPixmap* pic, Player* p, MainWindow* main) : Item(645,y,vx,0,pic,NULL,p,main)
 {
@@ -19,6 +21,6 @@ void Aquatank::move()
 
 void Aquatank::collide()
 {
-	if(Item::collide())
+	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
 		main_->endGame();
 }

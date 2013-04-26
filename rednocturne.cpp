@@ -25,6 +25,6 @@ void RedNocturne::move()
 
 void RedNocturne::collide()
 {
-	if(Item::collide())
+	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
 		main_->loseLife();
 }

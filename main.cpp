@@ -196,7 +196,12 @@ void MainWindow::handleTimer()
 	}
 	
 	//check collisions against enemies
-	
+	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+	{
+	  Item* temp = *it;
+	  temp->collide();
+	}
+
 
 	//check if dead
 	if(!lives_)

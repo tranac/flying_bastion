@@ -83,19 +83,19 @@ There will be a start screen, a gameplay screen, and a finished screen.
 ### Start Screen
 The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing.
 
-![Start Screen](images/IMG_1948.jpg "Start Screen")
+![Start Screen](images/startsreen.png "Start Screen")
 
 ### Gameplay Screen
 The gameplay screen is similar to the start scren, but there is a scrolling background and added items. Added to the toolbar is the user's name displayed with their score. At the top left of the gameplay scene, three keyblades are shown to indicate the number of lives left. These increase and decrease as the user's lives increase and decrease.
 
 Items enter the scene from the right and exit from the left. `Player` starts at a fixed x-coordinate but moves up and down. The `Pause` button now has functionality; it will stop the game timer if it's running. Clicking on it again will start it again with the same game. `Start` now restarts the entire game from the begninning.
 
-![Gameplay Screen](images/IMG_7526.jpg "Start Screen")
+![Gameplay Screen](images/gamescreen.png "Start Screen")
 
 ### Finish Screen
 Once the player loses all three lives or hits an `Aquatank`, the game switches to the finish screen. It is very similar to the start screen, as it displays an image. All previous items in the scene (`Player`, `Item`s, et cetera) are removed from the scene and deleted. From here, the user can start a new game using `Start` or quit the program.
 
-![Finish Screen](images/IMG_4456.jpg "Finish Screen")
+![Finish Screen](images/endscreen.png "Finish Screen")
 
 ## Sources
 All pixel images are from this site: http://spriters-resource.com/gameboy_advance/khcom/

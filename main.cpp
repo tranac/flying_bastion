@@ -274,20 +274,20 @@ void MainWindow::createEnemies()
 {
 	//randomly create enemies
 	srand(time(0));
-	int a = rand() % 7;
+	int a = rand() % 3;
 	int b = rand() % 300;
 	
 	switch(a)
 	{
 		//create red nocture
-		case 1:
+/*		case 1:
 		{
 			newItem = new RedNocturne(b,-3,rn1,rn2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
 		}
-		//create aquatank
+*/		//create aquatank
 		case 2:
 		{
 			newItem = new Aquatank(b,-3,at,player,this);
@@ -295,7 +295,7 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-		//chance to create white mushroom
+/*		//chance to create white mushroom
 		case 3:
 		{
 			int c = rand() % 4;
@@ -316,8 +316,8 @@ void MainWindow::createEnemies()
 			if(!c)
 			{
 				//make sure b is in boundaries
-				if(b > 300)
-					b = 280;
+				if(b > 250)
+					b = 200;
 				newItem = new TornadoStep(b,ts1,ts2,player,this);
 				scene->addItem(newItem);
 				items.push_back(newItem);
@@ -340,7 +340,7 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-	}
+*/	}
 
 }
 
@@ -360,7 +360,7 @@ void MainWindow::endGame()
 	timer->stop();
 	finished = true;
 	scene->removeItem(player);
-	
+
 	QVector<Life*>::iterator it = lives.begin();
 	while(it != lives.end())
 	{
@@ -413,4 +413,9 @@ void MainWindow::deleteEnemies()
 	  	else
 		  ++it;
 	}
+}
+
+void MainWindow::setLife(int x)
+{
+	lives_ = x;
 }

@@ -20,8 +20,5 @@ void Aquatank::move()
 void Aquatank::collide()
 {
 	if((x_ >= p_->getX()+80) && (x_ <= p_->getX()+83) && (y_ >= p_->getY()-5) && (y_ <= p_->getY() + 82))
-	{
-	//	main_->endGame();
-		main_->loseLife();
-	}
+		main_->setLife(0);
 }

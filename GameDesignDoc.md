@@ -77,11 +77,14 @@ The user has 3 lives. `WhiteMushroom`s are the only way to gain an extra life. T
 ### User Control
 There is a menubar above the game window. (See **Layout: Game Screen**.) Pressing the `Pause` button will pause the game timer and game. A user will be able to enter their name before they begin a new name on the start screen. (see **Layout: Start Screen**).
 
+### Invincible Mode
+The user may select an invincible mode at the beginning of the game. In this mode, the player cannot die. The only way for the game to end is for the user to manually quit. This is selected by a radio button in the toolbar. No items have any effect in invincible mode, including bonus items.
+
 ## Layout
 There will be a start screen, a gameplay screen, and a finished screen.
 
 ### Start Screen
-The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing.
+The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing. The toolbar also holds a radio button that the user may select if they want to play in invincible mode.
 
 ![Start Screen](images/startsreen.png "Start Screen")
 

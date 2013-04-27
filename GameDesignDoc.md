@@ -86,7 +86,7 @@ There will be a start screen, a gameplay screen, and a finished screen.
 ### Start Screen
 The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing. The toolbar also holds a radio button that the user may select if they want to play in invincible mode.
 
-![Start Screen](images/startsreen.png "Start Screen")
+![Start Screen](images/startscreen.png "Start Screen")
 
 ### Gameplay Screen
 The gameplay screen is similar to the start scren, but there is a scrolling background and added items. Added to the toolbar is the user's name displayed with their score. At the top left of the gameplay scene, three keyblades are shown to indicate the number of lives left. These increase and decrease as the user's lives increase and decrease.

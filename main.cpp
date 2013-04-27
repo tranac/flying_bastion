@@ -11,6 +11,7 @@ MainWindow::MainWindow()
 	executions = 0;
 	speed = 15;
 	canLose = true;
+	len = 3500;
 	
   //create Pixmap images
   	as1 = new QPixmap("images/airsoldier1.png","png");
@@ -127,6 +128,7 @@ void MainWindow::startGame()
 		executions = 0;
 		lose = 0;
 		canLose = true;
+		len = 3500;
 		
 		//delete player
 		delete player;
@@ -249,7 +251,7 @@ void MainWindow::handleTimer()
 	player->move(v);
 
 	//create enemies
-	if(!(executions % 50))
+	if(!(executions % (len/50)))
 	{
 		createEnemies();
 	}
@@ -260,19 +262,11 @@ void MainWindow::handleTimer()
 	executions++;
 	
 	//check if game requires speeding up
-	switch(executions)
+	if(!(executions % len) && (len <= 40000))
 	{
-		case 3500:
-		case 10000:
-		case 25000:
-		case 50000:
-		case 100000:
-		case 200000:
-		case 400000:
-		{
-			speed = speed / 2;
-			timer->setInterval(speed);
-		}
+		speed = speed / 2;
+		timer->setInterval(speed);
+		len = len + 5000;
 	}
 }
 
@@ -282,15 +276,10 @@ void MainWindow::createEnemies()
 	srand(time(0));
 	int a = rand() % 7;
 	int b = rand() % 300;
-	if(a)
+	
+	switch(a)
 	{
-			newItem = new WhiteMushroom(100,player,wm1,wm2,this);
-			scene->addItem(newItem);
-			items.push_back(newItem);
-	}
-/*	switch(a)		//random cases
-	{
-		//create red nocture / arrow
+		//create red nocture
 		case 1:
 		{
 			newItem = new RedNocturne(b,-3,rn1,rn2,player,this);
@@ -298,7 +287,7 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-		//create aquatank / dragon
+		//create aquatank
 		case 2:
 		{
 			newItem = new Aquatank(b,-3,at,player,this);
@@ -309,7 +298,7 @@ void MainWindow::createEnemies()
 		//chance to create white mushroom
 		case 3:
 		{
-			int c = rand() % 7;
+			int c = rand() % 4;
 			//create gem
 			if(!c)
 			{
@@ -322,16 +311,20 @@ void MainWindow::createEnemies()
 		//chance to create tornado step
 		case 4:
 		{
-			int c = rand() % 7;
+			int c = rand() % 4;
 			//create gem
 			if(!c)
 			{
+				//make sure b is in boundaries
+				if(b > 300)
+					b = 280;
 				newItem = new TornadoStep(b,ts1,ts2,player,this);
 				scene->addItem(newItem);
 				items.push_back(newItem);
 			}
 			return;
 		}
+		//create air soldier
 		case 5:
 		{
 			newItem = new AirSoldier(as1,as2,player,this);
@@ -339,14 +332,16 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-	        case 6:
+		//create gargoyle
+		case 6:
 		{
-		  newItem = new Gargoyle(player->getY(),g1,g2,player,this);
-		  scene->addItem(newItem);
-		  items.push_back(newItem);
+			newItem = new Gargoyle(player->getY(),g1,g2,player,this);
+			scene->addItem(newItem);
+			items.push_back(newItem);
+			return;
 		}
 	}
-	*/
+
 }
 
 void MainWindow::loseLife()

@@ -48,8 +48,6 @@ public:
 	void gainLife();
 	void gainPoints();
 	void deleteEnemies();
-	
-//	void invincibleMode();
 protected slots:
 	void startGame();
 	void pauseGame();
@@ -90,7 +88,8 @@ private:
 	int score_;				//score
 	int lives_;				//lives
 	int executions;			//num of timeouts()
-	int speed;				//interval for timer to speed up
+	int len;				//interval for timer to speed up
+	int speed;				//timer interval
 	
 	QPixmap* as1;			//enemy pics
 	QPixmap* as2;

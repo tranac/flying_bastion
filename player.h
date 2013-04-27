@@ -12,7 +12,7 @@ class Player : public QGraphicsPixmapItem
   	void move(int x);
   	/** @return x-coordinate of the player */
   	int getX() { return x_; }
-  	/** @retrurn y-coordinate of the player */
+  	/** @return y-coordinate of the player */
   	int getY() { return y_; }
   private:
   	int x_;

@@ -315,7 +315,7 @@ void MainWindow::createEnemies()
 		//create red nocture
 		case 1:
 		{
-			newItem = new RedNocturne(b,-3,rn1,rn2,player,this);
+			newItem = new RedNocturne(b,rn1,rn2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -323,7 +323,7 @@ void MainWindow::createEnemies()
 		//create aquatank
 		case 2:
 		{
-			newItem = new Aquatank(b,-3,at,player,this);
+			newItem = new Aquatank(b,at,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -400,7 +400,7 @@ void MainWindow::endGame()
 	finished = true;
 	scene->removeItem(player);
 
-	QVector<Life*>::iterator it = lives.begin();
+/*	QVector<Life*>::iterator it = lives.begin();
 	while(it != lives.end())
 	{
 		Life* temp = *it;
@@ -416,7 +416,7 @@ void MainWindow::endGame()
 		delete temp;
 	}
 	items.clear();
-	
+*/	
 	//set gameover message
 	message->setEnd();
 	message->setVisible(true);

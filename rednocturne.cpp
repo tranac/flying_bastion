@@ -3,15 +3,14 @@
 
 /**
 @param y y-coordinate of the RedNocturne relative to the scene; randomized in Main
-@param vx velocity in x-direction
 @param pic pointer to the item's first image
 @param pic2 pointer to the item's second image
 @param p pointer to the player of the game
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 645, the right boundary of the game. vy is always 0.
+An Item is created with these coordinates. x is always 645, the right boundary of the game. vy is always -3 and vy is always 0.
 */
-RedNocturne::RedNocturne(int y, int vx, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,vx,0,pic,pic2,p,main)
+RedNocturne::RedNocturne(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-3,0,pic,pic2,p,main)
 {
 }
 

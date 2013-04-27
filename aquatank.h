@@ -7,7 +7,7 @@
 class Aquatank : public Item
 {
   public:
-	Aquatank(int y, int vx, QPixmap* pic, Player* p, class MainWindow* main);
+	Aquatank(int y, QPixmap* pic, Player* p, class MainWindow* main);
 	~Aquatank();
 	void move();
 	void collide();

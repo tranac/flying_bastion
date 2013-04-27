@@ -80,6 +80,9 @@ There is a menubar above the game window. (See **Layout: Game Screen**.) Pressin
 ### Invincible Mode
 The user may select an invincible mode at the any point in the game. In this mode, the player cannot die. The only way for the game to end is for the user to manually quit. This is selected by a radio button in the toolbar. No items have any effect in invincible mode, including bonus items.
 
+#### Collisions
+As mentioned above, no collisions happen in invincible mode. In regular gameplay, collisions only happen between the player and the boundaries and items. Items do not collide with each other.
+
 ## Layout
 There will be a start screen, a gameplay screen, and a finished screen.
 

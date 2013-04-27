@@ -124,74 +124,81 @@ void MainWindow::startGame()
   		options->addLayout(s);
   		options->setStretch(3,0.5);
   		
-		//make welcome screen invisible and unaccessible
+		//make name input invisible
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
+		
+		//make message invisible
+		message->setVisible(false);
 	
 		started = true;
-		lives_ = 3;
 	}
-	else
+	else if(finished)
 	{
-		//reset values
-		timer->stop();
-		speed = 15;
-		timer->setInterval(speed);
-		score_ = 0;
-		lives_ = 3;
-		executions = 0;
-		lose = 0;
-		canLose = true;
-		len = 3500;
-		
-		//delete items if not already deleted
-		if(!finished)
-			{
-			//delete player
-			delete player;
-			
-			//delete enemies
-			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-			{
-				Item* temp = *it;
-				scene->removeItem(temp);
-				delete temp;
-			}
-			items.clear();
-		
-			//delete lives
-			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++ it)
-			{
-				Life* temp = *it;
-				scene->removeItem(temp);
-				delete temp;
-			}
-			lives.clear();
-			}
-		}
-		
-		finished = false;
 		//hide message
 		message->setVisible(false);
 		
-		//create new player
-		player = new Player();
-		scene->addItem(player);
+		//set finished to false
+		finished = false;
+	}
+	else
+	{
+		//stop timer
+		timer->stop();
 		
-		//create lives
-		int x = 5;
-		for(int i=0;i<3;i++)
+		//delete player, items, and lives
+		scene->removeItem(player);
+		delete player;
+		
+		QVector<Item*>::iterator it = items.begin();
+		while(it != items.end())
 		{
-			life = new Life(x,5,l);
-			scene->addItem(life);
-			lives.push_back(life);
-			x = x+15;
+			Item* temp = *it;
+			scene->removeItem(temp);
+			delete temp;
+			++it;
 		}
+		items.clear();
 		
-		//start timer
-		timer->start();
+		QVector<Life*>::iterator l = lives.begin();
+		while(l != lives.end())
+		{
+			Life* temp = *l;
+			scene->removeItem(temp);
+			delete temp;
+			++it;
+		}
+		lives.clear();
+	}
+	
+	//set intial values
+	executions = 0;
+	len = 3500;
+	speed = 15;
+	timer->setInterval(speed);
+	canLose = true;
+	lose = 0;
+	
+	//create player
+	player = new Player();
+	scene->addItem(player);
+
+	//create lives
+	lives_ = 3;
+	int x = 5;
+	for(int i=0;i<3;i++)
+	{
+		life = new Life(x,5,l);
+		scene->addItem(life);
+		lives.push_back(life);
+		x = x+15;
+	}
+	
+	//start timer
+	timer->start();
 }
+
 
 /**
 Pauses the game. Only applicable if the game has already been started. When pressed, the game timer is stopped and the button text changed to "Continue". If pressed again, the text is changed back and the timer started.
@@ -396,10 +403,15 @@ Ends the game. Stops the timer and sets the finished flag. Removes and deletes t
 */
 void MainWindow::endGame()
 {
+	//stop timer
 	timer->stop();
 	finished = true;
+	
+	//delete player
 	scene->removeItem(player);
-
+	delete player;
+	
+	//delete lives if any exist
 	QVector<Life*>::iterator it = lives.begin();
 	while(it != lives.end())
 	{
@@ -408,7 +420,9 @@ void MainWindow::endGame()
 		delete temp;
 		++it;
 	}
+	lives.clear();
 	
+	//delete enemies and items
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
 		Item* temp = *it;

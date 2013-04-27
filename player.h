@@ -3,13 +3,16 @@
 
 #include <QGraphicsPixmapItem>
 
+/** Models a player in the game. */
 class Player : public QGraphicsPixmapItem
 {
   public:
   	Player();
   	~Player();
   	void move(int x);
+  	/** @return x-coordinate of the player */
   	int getX() { return x_; }
+  	/** @reutnr y-coordinate of the player */
   	int getY() { return y_; }
   private:
   	int x_;

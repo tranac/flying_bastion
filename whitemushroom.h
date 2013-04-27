@@ -4,6 +4,7 @@
 #include "item.h"
 #include <cstdlib>
 
+/** Derived from Item class. One of the bonus items. */
 class WhiteMushroom : public Item
 {
   public:

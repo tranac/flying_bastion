@@ -16,7 +16,7 @@
 #include <QTimer>
 #include <QString>
 #include <QColor>
-#include <QVector>		//used for moving items
+#include <QVector>
 #include <QPixmap>
 
 #include "message.h"
@@ -34,6 +34,9 @@
 #include <stdexcept>
 #include <cstdlib>
 
+/**
+Main class of the game. Holds the game window, members, and functions.
+*/
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -78,7 +81,7 @@ private:
 	
 	QTimer*	timer;
 	
-	QVector<Item*> items;		//list of items in screen
+	QVector<Item*> items;	//list of items in screen
 	Item*		   newItem;	
 	
 	Life*		   life;	//pixmap item displayed for each life

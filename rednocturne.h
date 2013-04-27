@@ -3,6 +3,7 @@
 
 #include "item.h"
 
+/** Derived from Item class. One of the enemies. */
 class RedNocturne : public Item
 {
   public:

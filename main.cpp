@@ -1,6 +1,9 @@
 #include "main.h"
 #include <iostream>
 
+/**
+
+*/
 MainWindow::MainWindow()
 {
   //set variables
@@ -83,11 +86,24 @@ MainWindow::MainWindow()
 	QObject::connect(timer,SIGNAL(timeout()),this,SLOT(handleTimer()));
 }
 
+/**
+Deletes the timer. 
+*/
 MainWindow::~MainWindow()
 {
 	delete timer;
+	delete window;
 }
 
+/**
+Starts or restarts the game. If a game hasn't been started, it checks for a user name input and, if valid, starts a game.
+
+If a game is in the middle of gameplay, the current items are deleted and values/items are reset to their initialized state.
+
+If a game has ended, initial items are created.
+
+The game timer is started in this function.
+*/
 void MainWindow::startGame()
 {
 	if(!started)
@@ -177,6 +193,9 @@ void MainWindow::startGame()
 		timer->start();
 }
 
+/**
+Pauses the game. Only applicable if the game has already been started. When pressed, the game timer is stopped and the button text changed to "Continue". If pressed again, the text is changed back and the timer started.
+*/
 void MainWindow::pauseGame()
 {
 	if(started)
@@ -194,6 +213,13 @@ void MainWindow::pauseGame()
 	}
 }
 
+/**
+Handles the timer every time it timesout. If invincible mode is checked, no collisions will be checked. Otherwise it will first check against the walls and then against the items.
+
+If a player holds no lives, endGame() is called. If not, Items are then moved.
+
+handleTimer() also checks if new enemies should be spawned or if the game should be sped up.
+*/
 void MainWindow::handleTimer()
 {
   if(!invincible->isChecked())
@@ -237,7 +263,7 @@ void MainWindow::handleTimer()
 	}
   }
 	//check if items left the scene
-		deleteEnemies();
+	deleteEnemies();
 	
 	//move items
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
@@ -274,6 +300,9 @@ void MainWindow::handleTimer()
 	}
 }
 
+/**
+Creates a new item. The new item is randomized. For WhiteMushrooms and TornadoSteps, they must also be selected by a second random statement.
+*/
 void MainWindow::createEnemies()
 {
 	//randomly create enemies
@@ -348,6 +377,9 @@ void MainWindow::createEnemies()
 
 }
 
+/**
+Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canLose buffer so that a user can avoid the object that just killed them.
+*/
 void MainWindow::loseLife()
 {
 	lives_--;
@@ -359,6 +391,9 @@ void MainWindow::loseLife()
 	canLose = false;
 }
 
+/**
+Ends the game. Stops the timer and sets the finished flag. Removes and deletes the player and the items. Also sets the GameOver message.
+*/
 void MainWindow::endGame()
 {
 	timer->stop();
@@ -387,21 +422,32 @@ void MainWindow::endGame()
 	message->setVisible(true);
 }
 
+/**
+Called by WhiteMushroom. Gives the user an additional life.
+*/
 void MainWindow::gainLife()
 {
 	lives_++;
+	
+	
 	Life* end = lives.back();
 	life = new Life((end->getX()+15),5,l);
 	scene->addItem(life);
 	lives.push_back(life);
 }
 
+/**
+Called by TornadoStep. Gives the user 100 additional points.
+*/
 void MainWindow::gainPoints()
 {
 	score_ = score_ + 100;
 	score->setText(QString::number(score_));
 }
 
+/**
+Iterates through the vector of items. If the item has moved past the left boundary, it is deleted.
+*/
 void MainWindow::deleteEnemies()
 {
 	QVector<Item*>::iterator it = items.begin();
@@ -420,6 +466,10 @@ void MainWindow::deleteEnemies()
 	}
 }
 
+/**
+@param x number of lives to set lives_ to
+Called by Aquatank. Sets the number of lives to x.
+*/
 void MainWindow::setLife(int x)
 {
 	lives_ = x;

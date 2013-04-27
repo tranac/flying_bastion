@@ -3,6 +3,7 @@
 
 #include "item.h"
 
+/** Derived from Item class. One of the bonus items.*/
 class TornadoStep : public Item
 {
   public:

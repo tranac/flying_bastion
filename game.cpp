@@ -1,9 +1,10 @@
 /** @mainpage CSCI102 Programming Assignment #5
-@section Purpose/Overview
+
+@section purpose Purpose/Overview
 
 The purpose of these programming assignments is to make a game using QT. The game must including moving objects and will be implemented using timers, GUI input classes, and QT widgets.
 
-@section Requirements
+@section requirements Requirements
 
 - Must have at least 5 different items in the game, 4 of which must be moving.
 

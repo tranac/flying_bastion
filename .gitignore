@@ -23,3 +23,8 @@ Makefile
 *.pro~
 game_tranac
 moc_main.cpp
+
+# Doxygen
+config.txt
+html/
+latex/

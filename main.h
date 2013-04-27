@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>
+#include <QRadioButton>
 #include <QPushButton>
 #include <QTextEdit>
 #include <QLineEdit>
@@ -47,6 +48,8 @@ public:
 	void gainLife();
 	void gainPoints();
 	void deleteEnemies();
+	
+//	void invincibleMode();
 protected slots:
 	void startGame();
 	void pauseGame();
@@ -69,6 +72,7 @@ private:
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
+	QRadioButton* invincible;//invincibility mode
 	
 	Message* message;
 	Player* player;

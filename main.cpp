@@ -61,7 +61,10 @@ MainWindow::MainWindow()
   //create quit button
 	quit = new QPushButton("Quit Game");
 	options->addWidget(quit);
-	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit())); 
+	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit()));
+  //create invincibility option
+  	invincible = new QRadioButton("Invincible Mode?",this);
+  	options->addWidget(invincible);
   	
   //create message text
   	message = new Message();
@@ -187,7 +190,9 @@ void MainWindow::pauseGame()
 
 void MainWindow::handleTimer()
 {
-	//check collisions against wall
+  if(!invincible->isChecked())
+  {
+	//check collisions against wall if not invincible
 	if(canLose)
 	{
 		if((player->getY() <= 0) || ((player->getY() + 50) >= 350))
@@ -211,7 +216,7 @@ void MainWindow::handleTimer()
 		lose++;
 	}
 	
-	//check collisions against enemies
+	//check collisions against enemies if not invincible
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
 	  Item* temp = *it;
@@ -224,7 +229,7 @@ void MainWindow::handleTimer()
 		endGame();
 		return;
 	}
-	
+  }
 	//check if items left the scene
 		deleteEnemies();
 	

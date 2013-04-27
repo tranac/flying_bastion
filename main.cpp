@@ -281,7 +281,7 @@ void MainWindow::handleTimer()
 	player->move(v);
 
 	//create enemies
-	if(!(executions % (len/50)))
+	if(!(executions % 100))
 	{
 		createEnemies();
 	}
@@ -400,7 +400,7 @@ void MainWindow::endGame()
 	finished = true;
 	scene->removeItem(player);
 
-/*	QVector<Life*>::iterator it = lives.begin();
+	QVector<Life*>::iterator it = lives.begin();
 	while(it != lives.end())
 	{
 		Life* temp = *it;
@@ -416,7 +416,7 @@ void MainWindow::endGame()
 		delete temp;
 	}
 	items.clear();
-*/	
+
 	//set gameover message
 	message->setEnd();
 	message->setVisible(true);

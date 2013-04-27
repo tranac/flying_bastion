@@ -122,7 +122,6 @@ void MainWindow::startGame()
 		timer->stop();
 		speed = 15;
 		timer->setInterval(speed);
-		finished = false;
 		score_ = 0;
 		lives_ = 3;
 		executions = 0;
@@ -130,28 +129,33 @@ void MainWindow::startGame()
 		canLose = true;
 		len = 3500;
 		
-		//delete player
-		delete player;
+		//delete items if not already deleted
+		if(!finished)
+			{
+			//delete player
+			delete player;
+			
+			//delete enemies
+			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+			{
+				Item* temp = *it;
+				scene->removeItem(temp);
+				delete temp;
+			}
+			items.clear();
 		
-		//delete enemies
-		for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-		{
-			Item* temp = *it;
-			scene->removeItem(temp);
-			delete temp;
+			//delete lives
+			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++ it)
+			{
+				Life* temp = *it;
+				scene->removeItem(temp);
+				delete temp;
+			}
+			lives.clear();
+			}
 		}
-		items.clear();
 		
-		//delete lives
-		for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++ it)
-		{
-			Life* temp = *it;
-			scene->removeItem(temp);
-			delete temp;
-		}
-		lives.clear();
-	}
-	
+		finished = false;
 		//hide message
 		message->setVisible(false);
 		
@@ -377,6 +381,7 @@ void MainWindow::endGame()
 		delete temp;
 	}
 	items.clear();
+	
 	//set gameover message
 	message->setEnd();
 	message->setVisible(true);

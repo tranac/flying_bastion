@@ -262,7 +262,7 @@ void MainWindow::handleTimer()
 	executions++;
 	
 	//check if game requires speeding up
-	if(!(executions % len) && (len <= 40000))
+	if(!(executions % len) && (len <= 15000))
 	{
 		speed = speed / 2;
 		timer->setInterval(speed);

@@ -1,10 +1,10 @@
 #include "audio.h"
+#include <iostream>
+#include <QDebug>
 
 Audio::Audio()
 {
 	file = new QFile("music/hb.wav");
-//	file->setFileName("music/hb.wav");
-	file->open(QIODevice::ReadOnly);
 	
 	song = new QAudioFormat();
 	song->setFrequency(44100);
@@ -14,12 +14,16 @@ Audio::Audio()
 	song->setByteOrder(QAudioFormat::LittleEndian);
 	song->setSampleType(QAudioFormat::UnSignedInt);
 	audioOutput = new QAudioOutput(*song,0);
-	
-	file.close();
+	/*
+	buffer = new QBuffer(file);
+	buffer->open(QIODevice::ReadOnly);
+*/
+	QObject::connect(audioOutput,SIGNAL(stateChanged(QAudio::State)),this,SLOT(finished(QAudio::State)));
 }
 
 Audio::~Audio()
 {
+	file->close();
 	delete file;
 	delete audioOutput;
 	delete song;
@@ -27,5 +31,31 @@ Audio::~Audio()
 
 void Audio::play()
 {
+	audioOutput->setBufferSize(500000);
+	file->open(QIODevice::ReadOnly);
 	audioOutput->start(file);
+	std::cout << audioOutput->bufferSize() << std::endl;
+	std::cout << audioOutput->bytesFree() << std::endl;
+}
+
+void Audio::finished(QAudio::State state)
+{
+	if(state == QAudio::StoppedState)
+	{
+		audioOutput->stop();
+		audioOutput->reset();
+		file->close();
+		play();
+	}
+	if(state == QAudio::IdleState)
+	{
+		audioOutput->stop();
+		audioOutput->reset();
+		file->close();
+		play();
+	}
+}
+void Audio::stop()
+{
+	audioOutput->stop();
 }

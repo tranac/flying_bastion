@@ -145,33 +145,27 @@ void MainWindow::startGame()
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
+				
+		//create scrolling background
+		background = new Background(0,bg);
+		background2 = new Background(999,bg);
+		scene->addItem(background);
+		scene->addItem(background2);
 		
-		//hide invincible mode
+		//hide invincible mode selection
 		invincible->hide();
 		if(invincible->isChecked())
 		{
 			i = new QLabel("Invincible Mode!");
 			scene->addWidget(i);
 			i->setAttribute(Qt::WA_TranslucentBackground);
-			i->setGeometry(567,0,100,10);
-			i->setWindowFlags(Qt::WindowStaysOnTopHint);
-		}
-
-			i = new QLabel("Invincible Mode!");
-			scene->addWidget(i);
-			i->setAttribute(Qt::WA_TranslucentBackground);
-			i->setGeometry(550,0,100,10);
+			i->setGeometry(0,-3,300,10);
 			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 			i->show();
-	
+		}
+
 		started = true;
 		lives_ = 3;
-		
-		//create scrolling background
-		background = new Background(0,bg);
-		background2 = new Background(999,bg);
-		scene->addItem(background);
-		scene->addItem(background2);
 	
 		//create points label
 		points = new QLabel("Bonus Points!");

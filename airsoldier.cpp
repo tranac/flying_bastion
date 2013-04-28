@@ -28,7 +28,7 @@ The image alternates for each move.
 void AirSoldier::move()
 {
 	//every other move, change image
-	if(x_ % 2)
+	if(x_ % 4)
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);

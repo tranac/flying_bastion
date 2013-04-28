@@ -188,7 +188,7 @@ void MainWindow::startGame()
 		background->setVisible(true);
 		background2->setVisible(true);
 		//create new player
-		player = new Player();
+		player = new Player(this);
 		scene->addItem(player);
 		
 		//create lives
@@ -236,6 +236,7 @@ void MainWindow::handleTimer()
 {
   if(!invincible->isChecked())
   {
+  /*
 	//check collisions against wall if not invincible
 	if(canLose)
 	{
@@ -259,13 +260,15 @@ void MainWindow::handleTimer()
 			player->setVisible(true);
 		lose++;
 	}
-	
+	*/
+	player->collide();
 	//check collisions against enemies if not invincible
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
 	  Item* temp = *it;
 	  temp->collide();
 	}
+	
 
 	//check if dead
 	if(!lives_)

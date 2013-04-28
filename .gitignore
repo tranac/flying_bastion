@@ -19,7 +19,6 @@
 
 # QT Files
 Makefile
-*.pro
 *.pro~
 game_tranac
 moc_main.cpp
@@ -28,3 +27,4 @@ moc_main.cpp
 config.txt
 html/
 latex/
+Doxyfile

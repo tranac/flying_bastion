@@ -13,8 +13,10 @@
 ### Compile & Run Instructions
 The grader should use the following procedure to compile and run the code:
 ```shell
-#Compile Instructions
-qmake -project
+#QtMultimedia must first be installed
+sudo apt-get install qt-mobility-dev
+
+#Compile Instructions; .pro file already included in the repo
 qmake
 make
 

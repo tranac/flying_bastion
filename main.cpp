@@ -156,6 +156,13 @@ void MainWindow::startGame()
 			i->setGeometry(567,0,100,10);
 			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 		}
+
+			i = new QLabel("Invincible Mode!");
+			scene->addWidget(i);
+			i->setAttribute(Qt::WA_TranslucentBackground);
+			i->setGeometry(567,0,100,10);
+			i->setWindowFlags(Qt::WindowStaysOnTopHint);
+			i->show();
 	
 		started = true;
 		lives_ = 3;
@@ -282,13 +289,48 @@ void MainWindow::showHelp()
 	if(started && !finished)
 	{
 		if(timer->isActive())
+		{
 			timer->stop();
+			//hide gameplay screen
+			background->hide();
+			background2->hide();
+			player->hide();
+			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+			{
+				Item* temp = *it;
+				temp->hide();
+			}
+		
+			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
+			{
+				Life* temp = *it;
+				temp->hide();
+			}
+		}
 		else
+		{
 			timer->start();
+			//show gameplay screen
+			background->show();
+			background2->show();
+			player->show();
+			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+			{
+				Item* temp = *it;
+				temp->show();
+			}
+	
+			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
+			{
+				Life* temp = *it;
+				temp->show();
+			}
+		}
 	}
-	//show screen
+	
 	if(helpscreen->isVisible())
 	{
+		//hide help screen
 		helpscreen->hide();
 		help->setText("Need Help?");
 	}

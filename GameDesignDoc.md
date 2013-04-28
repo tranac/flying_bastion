@@ -78,25 +78,27 @@ The user has 3 lives. `WhiteMushroom`s are the only way to gain an extra life. T
 There is a menubar above the game window. (See **Layout: Game Screen**.) Pressing the `Pause` button will pause the game timer and game. A user will be able to enter their name before they begin a new name on the start screen. (see **Layout: Start Screen**).
 
 ### Invincible Mode
-The user may select an invincible mode at the any point in the game. In this mode, the player cannot die. The only way for the game to end is for the user to manually quit. This is selected by a radio button in the toolbar. No items have any effect in invincible mode, including bonus items.
-
-#### Collisions
-As mentioned above, no collisions happen in invincible mode. In regular gameplay, collisions only happen between the player and the boundaries and items. Items do not collide with each other.
+The user may select an invincible mode at the any point in the game. In this mode, the player cannot die. The only way for the game to end is for the user to manually quit. This is selected by a radio button in the toolbar at the beginning of the game. Collisions are handled (the player will flash), but no collisions have any effects besides the `TornadoStep`, which gives you extra points.
 
 ## Layout
 There will be a start screen, a gameplay screen, and a finished screen.
 
 ### Start Screen
-The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing. The toolbar also holds a radio button that the user may select if they want to play in invincible mode.
+The main screen includes the game name, a text box to enter a user name. A user **must** enter a name to start gameplay. A toolbar above also holds a start button, a pause button, and a quit button. The quit button will close the program. The start button will begin a new game and switch to the gameplay scree barring a user name input. The pause button currently does nothing. The toolbar also holds a radio button that the user may select if they want to play in invincible mode, a mute/unmute button to control the background music, and a help button.
 
 ![Start Screen](images/startscreen.png "Start Screen")
 
 ### Gameplay Screen
-The gameplay screen is similar to the start scren, but there is a scrolling background and added items. Added to the toolbar is the user's name displayed with their score. At the top left of the gameplay scene, three keyblades are shown to indicate the number of lives left. These increase and decrease as the user's lives increase and decrease.
+The gameplay screen is similar to the start scren, but there is a scrolling background and added items. Added to the toolbar is the user's name displayed with their score. The invincibility mode button is hidden. At the top left of the gameplay scene, three keyblades are shown to indicate the number of lives left. These increase and decrease as the user's lives increase and decrease.
 
 Items enter the scene from the right and exit from the left. `Player` starts at a fixed x-coordinate but moves up and down. The `Pause` button now has functionality; it will stop the game timer if it's running. Clicking on it again will start it again with the same game. `Start` now restarts the entire game from the begninning.
 
 ![Gameplay Screen](images/gamescreen.png "Game Screen")
+
+### Help Screen
+The player can click a help button in the toolbar to display a help screen. If the game is running, it will be paused until they exit the screen.
+
+![Help Screen](images/helpscreen.png "Help Screen")
 
 ### Finish Screen
 Once the player loses all three lives or hits an `Aquatank`, the game switches to the finish screen. It is very similar to the start screen, as it displays an image. All previous items in the scene (`Player`, `Item`s, et cetera) are removed from the scene and deleted. From here, the user can start a new game using `Start` or quit the program.

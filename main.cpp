@@ -160,7 +160,7 @@ void MainWindow::startGame()
 			i = new QLabel("Invincible Mode!");
 			scene->addWidget(i);
 			i->setAttribute(Qt::WA_TranslucentBackground);
-			i->setGeometry(567,0,100,10);
+			i->setGeometry(550,0,100,10);
 			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 			i->show();
 	

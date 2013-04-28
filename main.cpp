@@ -234,7 +234,7 @@ handleTimer() also checks if new enemies should be spawned or if the game should
 */
 void MainWindow::handleTimer()
 {
-  if(!invincible->isChecked())
+/*  if(!invincible->isChecked())
   {
   /*
 	//check collisions against wall if not invincible
@@ -261,6 +261,25 @@ void MainWindow::handleTimer()
 		lose++;
 	}
 	*/
+	
+	if(!canLose && lose == 51)
+	{
+		canLose = true;
+		lose = 0;
+		player->setVisible(true);
+	}
+	else if(!canLose)
+	{
+		if(lose % 2)
+			player->setVisible(false);
+		else
+			player->setVisible(true);
+		lose++;
+	}
+	
+	if(canLose)
+	{
+	//check wall collisions
 	player->collide();
 	//check collisions against enemies if not invincible
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
@@ -269,6 +288,7 @@ void MainWindow::handleTimer()
 	  temp->collide();
 	}
 	
+	}
 
 	//check if dead
 	if(!lives_)
@@ -276,7 +296,7 @@ void MainWindow::handleTimer()
 		endGame();
 		return;
 	}
-  }
+ // }
 	//check if items left the scene
 	deleteEnemies();
 	
@@ -397,15 +417,18 @@ void MainWindow::createEnemies()
 }
 
 /**
-Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canLose buffer so that a user can avoid the object that just killed them.
+Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canLose buffer so that a user can avoid the object that just killed them. If invincibility mode is on, no lives are lost but the player still flashes.
 */
 void MainWindow::loseLife()
 {
-	lives_--;
-	life = lives.back();
-	scene->removeItem(life);
-	delete life;
-	lives.pop_back();
+	if(!invincible->isChecked())
+	{
+		lives_--;
+		life = lives.back();
+		scene->removeItem(life);
+		delete life;
+		lives.pop_back();
+	}
 	player->setVisible(false);
 	lose = 0;
 	canLose = false;

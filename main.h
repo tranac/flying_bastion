@@ -92,8 +92,8 @@ private:
 	
 	Life*		   life;	//pixmap item displayed for each life
 	QVector<Life*> lives;	//vector for lives
-	bool canLose;			//buffer after losing a life
-	int lose;				//num of counts for buffer
+	bool canCollide;		//buffer after colliding with something
+	int c;				//num of counts for buffer
 	
 	int score_;				//score
 	int lives_;				//lives

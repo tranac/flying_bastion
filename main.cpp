@@ -13,7 +13,7 @@ MainWindow::MainWindow()
 	lives_ = 0;
 	executions = 0;
 	speed = 15;
-	canLose = true;
+	canCollide = true;
 	len = 3500;
 	
   //create Pixmap images
@@ -151,9 +151,12 @@ void MainWindow::startGame()
 		score_ = 0;
 		lives_ = 3;
 		executions = 0;
-		lose = 0;
-		canLose = true;
+		c = 0;
+		canCollide = true;
 		len = 3500;
+		
+		//reset pause button
+		pause->setText("Pause Game");
 		
 		//delete items if not already deleted
 		if(!finished)
@@ -234,69 +237,43 @@ handleTimer() also checks if new enemies should be spawned or if the game should
 */
 void MainWindow::handleTimer()
 {
-/*  if(!invincible->isChecked())
-  {
-  /*
-	//check collisions against wall if not invincible
-	if(canLose)
+	//end buffer if necessary
+	if(!canCollide && c == len/70)
 	{
-		if((player->getY() <= 0) || ((player->getY() + 50) >= 350))
+		canCollide = true;
+		c = 0;
+		player->setVisible(true);
+	}
+	//flash player if collision buffer is still on
+	else if(!canCollide)
+	{
+		if(c % 2)
+			player->setVisible(false);
+		else
+			player->setVisible(true);
+		c++;
+	}
+	
+	//check collisions if buffer is not set
+	if(canCollide)
+	{
+		//check boundaries
+		player->collide();
+		//check enemies
+		for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 		{
-			loseLife();
-			return;
-		}
-	}
-	else if(lose == 51)
-	{
-		canLose = true;
-		lose = 0;
-		player->setVisible(true);
-	}
-	else
-	{
-		if(lose % 2)
-			player->setVisible(false);
-		else
-			player->setVisible(true);
-		lose++;
-	}
-	*/
-	
-	if(!canLose && lose == 51)
-	{
-		canLose = true;
-		lose = 0;
-		player->setVisible(true);
-	}
-	else if(!canLose)
-	{
-		if(lose % 2)
-			player->setVisible(false);
-		else
-			player->setVisible(true);
-		lose++;
-	}
-	
-	if(canLose)
-	{
-	//check wall collisions
-	player->collide();
-	//check collisions against enemies if not invincible
-	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-	{
-	  Item* temp = *it;
-	  temp->collide();
-	}
-	
+		  Item* temp = *it;
+		  temp->collide();
+		}	
 	}
 
-	//check if dead
+	//check if player is dead
 	if(!lives_)
 	{
 		endGame();
 		return;
 	}
- // }
+	
 	//check if items left the scene
 	deleteEnemies();
 	
@@ -370,9 +347,9 @@ void MainWindow::createEnemies()
 */		//chance to create white mushroom
 		case 3:
 		{
-			int c = rand() % 3;
+			int d = rand() % 3;
 			//create gem
-			if(!c)
+			if(!d)
 			{
 				newItem = new WhiteMushroom(b,player,wm1,wm2,this);
 				scene->addItem(newItem);
@@ -383,9 +360,9 @@ void MainWindow::createEnemies()
 /*		//chance to create tornado step
 		case 4:
 		{
-			int c = rand() % 3;
+			int d = rand() % 3;
 			//create gem
-			if(!c)
+			if(!d)
 			{
 				//make sure b is in boundaries
 				if(b > 250)
@@ -417,7 +394,7 @@ void MainWindow::createEnemies()
 }
 
 /**
-Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canLose buffer so that a user can avoid the object that just killed them. If invincibility mode is on, no lives are lost but the player still flashes.
+Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canCollide buffer so that a user can avoid the object that just killed them. If invincibility mode is on, no lives are lost but the player still flashes.
 */
 void MainWindow::loseLife()
 {
@@ -430,8 +407,8 @@ void MainWindow::loseLife()
 		lives.pop_back();
 	}
 	player->setVisible(false);
-	lose = 0;
-	canLose = false;
+	c = 0;
+	canCollide = false;
 }
 
 /**
@@ -480,8 +457,8 @@ void MainWindow::gainLife()
 	life = new Life((end->getX()+15),5,l);
 	scene->addItem(life);
 	lives.push_back(life);
-	lose = 0;
-	canLose = false;
+	c = 0;
+	canCollide = false;
 }
 
 /**
@@ -491,8 +468,8 @@ void MainWindow::gainPoints()
 {
 	score_ = score_ + 100;
 	score->setText(QString::number(score_));
-	lose = 0;
-	canLose = false;
+	c = 0;
+	canCollide = false;
 }
 
 /**

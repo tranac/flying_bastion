@@ -81,6 +81,7 @@ private:
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
 	QRadioButton* invincible;//invincibility mode
+	QLabel* i;
 	
 	Message* message;
 	Player* player;
@@ -93,13 +94,15 @@ private:
 	Life*		   life;	//pixmap item displayed for each life
 	QVector<Life*> lives;	//vector for lives
 	bool canCollide;		//buffer after colliding with something
-	int c;				//num of counts for buffer
+	int c;					//num of counts for buffer
 	
 	int score_;				//score
 	int lives_;				//lives
 	int executions;			//num of timeouts()
 	int len;				//interval for timer to speed up
 	int speed;				//timer interval
+	
+	QLabel* points;			//show when gained points
 	
 	Background* background;
 	Background* background2;

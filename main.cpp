@@ -57,7 +57,6 @@ MainWindow::MainWindow()
   	start = new QPushButton("Start Game");
 	options->addWidget(start);
 	QObject::connect(start,SIGNAL(clicked()),this,SLOT(startGame()));
-
   //create pause button
   	pause = new QPushButton("Pause Game");
   	options->addWidget(pause);
@@ -132,6 +131,14 @@ void MainWindow::startGame()
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
+		
+		//hide invincible mode
+		invincible->setVisible(false);
+		if(invincible->isChecked())
+		{
+			i = new QLabel("Invincible Mode!");
+			options->addWidget(i);
+		}
 	
 		started = true;
 		lives_ = 3;
@@ -141,6 +148,13 @@ void MainWindow::startGame()
 		background2 = new Background(650,bg);
 		scene->addItem(background);
 		scene->addItem(background2);
+	
+		//create points label
+		points = new QLabel("Bonus Points!");
+		scene->addWidget(points);
+		points->setAttribute(Qt::WA_TranslucentBackground);
+		points->setGeometry(567,0,100,10);
+		points->setWindowFlags(Qt::WindowStaysOnTopHint);
 	}
 	else
 	{
@@ -181,6 +195,7 @@ void MainWindow::startGame()
 				delete temp;
 			}
 			lives.clear();
+
 			}
 		}
 		
@@ -203,6 +218,9 @@ void MainWindow::startGame()
 			lives.push_back(life);
 			x = x+15;
 		}
+		
+		//create points label
+//		points->setVisible(false);
 		
 		//start timer
 		timer->start();
@@ -243,6 +261,8 @@ void MainWindow::handleTimer()
 		canCollide = true;
 		c = 0;
 		player->setVisible(true);
+		//hide points if shown
+//		points->setVisible(false);
 	}
 	//flash player if collision buffer is still on
 	else if(!canCollide)
@@ -308,7 +328,8 @@ void MainWindow::handleTimer()
 	executions++;
 	
 	//check if game requires speeding up
-	if(!(executions % len) && (len <= 35000))
+	// && (len <= 35000)
+	if(!(executions % len))
 	{
 		speed = speed / 2;
 		timer->setInterval(speed);
@@ -344,12 +365,12 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-*/		//chance to create white mushroom
+		//chance to create white mushroom
 		case 3:
 		{
-			int d = rand() % 3;
+			int ch = rand() % 3;
 			//create gem
-			if(!d)
+			if(!ch)
 			{
 				newItem = new WhiteMushroom(b,player,wm1,wm2,this);
 				scene->addItem(newItem);
@@ -357,12 +378,12 @@ void MainWindow::createEnemies()
 			}
 			return;
 		}
-/*		//chance to create tornado step
+*/		//chance to create tornado step
 		case 4:
 		{
-			int d = rand() % 3;
+			int ch = rand() % 3;
 			//create gem
-			if(!d)
+			if(ch)			/******CHANGE BCK!!!!!!!!!!!!*******/
 			{
 				//make sure b is in boundaries
 				if(b > 250)
@@ -374,7 +395,7 @@ void MainWindow::createEnemies()
 			return;
 		}
 		//create air soldier
-		case 5:
+/*		case 5:
 		{
 			newItem = new AirSoldier(as1,as2,player,this);
 			scene->addItem(newItem);
@@ -398,6 +419,7 @@ Called when a player loses a life. Decreases the count and delets a Life image i
 */
 void MainWindow::loseLife()
 {
+	//only delete lives if not invincible
 	if(!invincible->isChecked())
 	{
 		lives_--;
@@ -418,7 +440,10 @@ void MainWindow::endGame()
 {
 	timer->stop();
 	finished = true;
+
+	//delete player 
 	scene->removeItem(player);
+	
 
 	QVector<Life*>::iterator it = lives.begin();
 	while(it != lives.end())
@@ -470,6 +495,9 @@ void MainWindow::gainPoints()
 	score->setText(QString::number(score_));
 	c = 0;
 	canCollide = false;
+	
+	//show point message
+	points->setVisible(true);
 }
 
 /**

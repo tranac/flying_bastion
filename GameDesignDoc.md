@@ -34,7 +34,7 @@ All five moving items inherit from an abstract `Item` class that contains a virt
 ### Item Three: Air Soldier
 ![AirSoldier](images/airsoldier1.png "AirSoldier")
 
-`AirSoldier`s are enemies. They travel in a straight line for the first half of its path, and then dive bomb and travel in a diagonal path downwards. Contact with an `AirSoldier` loses the player a life. Initial y-position is always at the top of the screen.
+`AirSoldier`s are enemies. They travel in a straight line for the first half of its path, and then dive bomb and travel in a diagonal path downwards. Contact with an `AirSoldier` ends the game. Initial y-position is always at the top of the screen.
 
 ### Item Four: Tornado Step
 ![TornadoStep](images/tornadostep1.png "TornadoStep")

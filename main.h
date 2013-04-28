@@ -18,7 +18,10 @@
 #include <QColor>
 #include <QVector>
 #include <QPixmap>
+#include <QLabel>
 
+
+#include "audio.h"
 #include "message.h"
 #include "life.h"
 #include "player.h"
@@ -29,6 +32,7 @@
 #include "whitemushroom.h"
 #include "tornadostep.h"
 #include "gargoyle.h"
+#include "background.h"
 
 #include <cmath>
 #include <stdexcept>
@@ -57,6 +61,8 @@ protected slots:
 	void pauseGame();
 	void handleTimer();
 private:
+	Audio* audio;
+	
 	bool started;
 	bool finished;
 	
@@ -94,6 +100,9 @@ private:
 	int executions;			//num of timeouts()
 	int len;				//interval for timer to speed up
 	int speed;				//timer interval
+	
+	Background* background;
+	Background* background2;
 	
 	QPixmap* as1;			//enemy pics
 	QPixmap* as2;

@@ -84,6 +84,10 @@ MainWindow::MainWindow()
   	timer = new QTimer();
 	timer->setInterval(speed);
 	QObject::connect(timer,SIGNAL(timeout()),this,SLOT(handleTimer()));
+	
+  //create audio
+  	audio = new Audio();
+  	audio->play();
 }
 
 /**
@@ -131,6 +135,12 @@ void MainWindow::startGame()
 	
 		started = true;
 		lives_ = 3;
+		
+		//create scrolling background
+		background = new Background(0,bg);
+		background2 = new Background(650,bg);
+		scene->addItem(background);
+		scene->addItem(background2);
 	}
 	else
 	{
@@ -175,6 +185,8 @@ void MainWindow::startGame()
 		//hide message
 		message->setVisible(false);
 		
+		background->setVisible(true);
+		background2->setVisible(true);
 		//create new player
 		player = new Player();
 		scene->addItem(player);
@@ -265,6 +277,10 @@ void MainWindow::handleTimer()
 	//check if items left the scene
 	deleteEnemies();
 	
+	//move background
+	background->move();
+	background2->move();
+	
 	//move items
 	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 	{
@@ -292,7 +308,7 @@ void MainWindow::handleTimer()
 	executions++;
 	
 	//check if game requires speeding up
-	if(!(executions % len) && (len <= 15000))
+	if(!(executions % len) && (len <= 35000))
 	{
 		speed = speed / 2;
 		timer->setInterval(speed);
@@ -385,6 +401,7 @@ void MainWindow::loseLife()
 	lives_--;
 	life = lives.back();
 	scene->removeItem(life);
+	delete life;
 	lives.pop_back();
 	player->setVisible(false);
 	lose = 0;
@@ -421,6 +438,10 @@ void MainWindow::endGame()
 	//set gameover message
 	message->setEnd();
 	message->setVisible(true);
+	
+	//hide moving background
+	background->setVisible(false);
+	background2->setVisible(false);
 }
 
 /**
@@ -429,12 +450,12 @@ Called by WhiteMushroom. Gives the user an additional life.
 void MainWindow::gainLife()
 {
 	lives_++;
-	
-	
 	Life* end = lives.back();
 	life = new Life((end->getX()+15),5,l);
 	scene->addItem(life);
 	lives.push_back(life);
+	lose = 0;
+	canLose = false;
 }
 
 /**
@@ -444,6 +465,8 @@ void MainWindow::gainPoints()
 {
 	score_ = score_ + 100;
 	score->setText(QString::number(score_));
+	lose = 0;
+	canLose = false;
 }
 
 /**

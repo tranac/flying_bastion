@@ -8,9 +8,9 @@
 @param pic2 pointer to the item's second image
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 645, the right boundary of the game. vx is always -1 (1 in the left direction) and vy is 0.
+An Item is created with these coordinates. x is always 644, the right boundary of the game. vx is always -1 (1 in the left direction) and vy is 0.
 */
-WhiteMushroom::WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2, MainWindow* main) : Item(645,y,-1,0,pic,pic2,p,main)
+WhiteMushroom::WhiteMushroom(int y, Player* p, QPixmap* pic, QPixmap* pic2, MainWindow* main) : Item(644,y,-2,0,pic,pic2,p,main)
 {
 }
 
@@ -29,17 +29,17 @@ The image alternates for each move.
 void WhiteMushroom::move()
 {
 	//every other move, change image
-	if(x_ % 2)
+	if(x_ % 4)
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);
 	
 	//if inline with player & not halfway across screen, teleport up or down
-	if((x_ > 350) && (y_ >= p_->getY()) && (y_ <= p_->getY()+82))
+	if((x_ > 350) && (y_ >= p_->getY()))
 	{
 		if(y_ <= 50)
 			y_ = y_+50;
-		else if(y_ >= 300) 
+		else if(y_ >= 275) 
 			y_ = y_-50;
 		else
 		{

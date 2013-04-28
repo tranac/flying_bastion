@@ -8,9 +8,9 @@
 @param p pointer to the player of the game
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 645, the right boundary of the game. vx is always -1 and vy is always 0.
+An Item is created with these coordinates. x is always 644, the right boundary of the game. vx is always -1 and vy is always 0.
 */
-Gargoyle::Gargoyle(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-1,0,pic,pic2,p,main)
+Gargoyle::Gargoyle(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(644,y,-2,0,pic,pic2,p,main)
 {
 }
 

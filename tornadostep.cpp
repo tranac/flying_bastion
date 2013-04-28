@@ -1,8 +1,6 @@
 #include "tornadostep.h"
 #include "main.h"
 
-#include <iostream>
-
 /**
 @param y y-coordinate of the TornadoStep relative to the scene; randomized in Main
 @param pic pointer to the item's first image
@@ -10,9 +8,9 @@
 @param p pointer to the player of the game
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 645, the right boundary of the game. vx is always -1 (1 in the left direction) and vy is initially 1. It will be changed in move().
+An Item is created with these coordinates. x is always 644, the right boundary of the game. vx is always -1 (1 in the left direction) and vy is initially 1. It will be changed in move().
 */
-TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(645,y,-1,1,pic,pic2,p,main)
+TornadoStep::TornadoStep(int y, QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(644,y,-2,1,pic,pic2,p,main)
 {
 	c_ = 0;
 }
@@ -32,13 +30,13 @@ The image alternates for each move.
 void TornadoStep::move()
 {
 	//every other move, change image
-	if(x_ % 2)
+	if(x_ % 4)
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);
 	
 	//if reached boundary, change direction
-	if((c_ == 100) || (y_ == 330) || !y_)
+	if((c_ == 100) || (y_ == 330) || (y_ <= 0))
 	{
 		vy_ = -vy_;
 		c_ = 0;

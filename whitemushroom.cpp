@@ -29,13 +29,13 @@ The image alternates for each move.
 void WhiteMushroom::move()
 {
 	//every other move, change image
-	if(x_ % 4)
+	if(x_ % 12)
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);
 	
 	//if inline with player & not halfway across screen, teleport up or down
-	if((x_ > 350) && (y_ >= p_->getY()))
+	if((x_ > 350) && (y_ >= p_->getY()) && (y_ <= p_->getY()+85))
 	{
 		if(y_ <= 50)
 			y_ = y_+50;

@@ -29,7 +29,7 @@ The image alternates for each move.
 void RedNocturne::move()
 {
 	//every other move, change image
-	if(x_ % 4)
+	if(!(x_ % 21))
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);

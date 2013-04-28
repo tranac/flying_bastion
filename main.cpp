@@ -278,7 +278,7 @@ void MainWindow::toggleSound()
 /** Shows the help screen. If the screen is already shown, hide the help screen. */
 void MainWindow::showHelp()
 {
-	//pause or start game if started
+	//pause/continue game if started
 	if(started && !finished)
 	{
 		if(timer->isActive())
@@ -526,15 +526,18 @@ void MainWindow::endGame()
 }
 
 /**
-Called by WhiteMushroom. Gives the user an additional life.
+Called by WhiteMushroom. Gives the user an additional life. Only gives an extra life if the player is not playing invincibility mode.
 */
 void MainWindow::gainLife()
 {
-	lives_++;
-	Life* end = lives.back();
-	life = new Life((end->getX()+15),5,l);
-	scene->addItem(life);
-	lives.push_back(life);
+	if(invincible->isChecked())
+	{
+		lives_++;
+		Life* end = lives.back();
+		life = new Life((end->getX()+15),5,l);
+		scene->addItem(life);
+		lives.push_back(life);
+	}
 	c = 0;
 	canCollide = false;
 }

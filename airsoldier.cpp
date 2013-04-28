@@ -32,7 +32,7 @@ void AirSoldier::move()
 	//every other move, change image until divebombing
   if(vy_ == 0)
     {
-	if(x_ % 4)
+	if(!(x_ % 12))
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);

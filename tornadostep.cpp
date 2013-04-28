@@ -30,7 +30,7 @@ The image alternates for each move.
 void TornadoStep::move()
 {
 	//every several moves, change image
-	if(x_ % 12)
+	if(!(x_ % 12))
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);

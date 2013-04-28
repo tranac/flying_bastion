@@ -29,7 +29,7 @@ The image alternates for each move.
 void WhiteMushroom::move()
 {
 	//every other move, change image
-	if(x_ % 12)
+	if(!(x_ % 12))
 		setPixmap(*pic2_);
 	else
 		setPixmap(*pic_);

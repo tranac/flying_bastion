@@ -22,6 +22,7 @@ Makefile
 *.pro~
 game_tranac
 moc_main.cpp
+moc_audio.cpp
 
 # Doxygen
 config.txt

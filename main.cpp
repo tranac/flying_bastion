@@ -329,7 +329,7 @@ void MainWindow::createEnemies()
 	switch(a)
 	{
 		//create red nocture
-		case 1:
+/*		case 1:
 		{
 			newItem = new RedNocturne(b,rn1,rn2,player,this);
 			scene->addItem(newItem);
@@ -344,7 +344,7 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-		//chance to create white mushroom
+*/		//chance to create white mushroom
 		case 3:
 		{
 			int c = rand() % 3;
@@ -357,7 +357,7 @@ void MainWindow::createEnemies()
 			}
 			return;
 		}
-		//chance to create tornado step
+/*		//chance to create tornado step
 		case 4:
 		{
 			int c = rand() % 3;
@@ -389,7 +389,7 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-	}
+*/	}
 
 }
 

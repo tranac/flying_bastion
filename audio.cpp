@@ -1,5 +1,4 @@
 #include "audio.h"
-#include <iostream>
 #include <QDebug>
 
 Audio::Audio()
@@ -34,8 +33,6 @@ void Audio::play()
 	audioOutput->setBufferSize(500000);
 	file->open(QIODevice::ReadOnly);
 	audioOutput->start(file);
-	std::cout << audioOutput->bufferSize() << std::endl;
-	std::cout << audioOutput->bytesFree() << std::endl;
 }
 
 void Audio::finished(QAudio::State state)
@@ -58,4 +55,7 @@ void Audio::finished(QAudio::State state)
 void Audio::stop()
 {
 	audioOutput->stop();
+	audioOutput->stop();
+	audioOutput->reset();
+	file->close();
 }

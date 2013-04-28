@@ -63,7 +63,6 @@ Checks if the WhiteMushroom has collided with the player. If it has, main_->gain
 */
 void WhiteMushroom::collide()
 {
-	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY()+82))
-//	if(y_ <= (p_->getY()+85) && p_->getY() >= (y_+52) && x_ <= (p_->getX()+80) && p_->getX() >= (x_+35))
+	if(QGraphicsItem::collidesWithItem(p_,Qt::IntersectsItemShape))
 		main_->gainLife();
 }

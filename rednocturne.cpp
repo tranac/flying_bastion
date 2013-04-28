@@ -44,6 +44,6 @@ Checks if the RedNocturne has collided with the player. If it has, main_->loseLi
 */
 void RedNocturne::collide()
 {
-	if((x_ >= p_->getX()+80) && (x_ <= p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
+	if(QGraphicsItem::collidesWithItem(p_,Qt::IntersectsItemShape))
 		main_->loseLife();
 }

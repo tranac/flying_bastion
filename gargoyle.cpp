@@ -48,6 +48,6 @@ Checks if the Gargoyle has collided with the player. If it has, main_->loseLife(
 */
 void Gargoyle::collide()
 {
-	if((x_ == p_->getX()+83) && (y_ >= p_->getY()) && (y_ <= p_->getY() +  82))
+	if(QGraphicsItem::collidesWithItem(p_,Qt::IntersectsItemShape))
 		main_->loseLife();
 }

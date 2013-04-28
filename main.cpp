@@ -403,7 +403,7 @@ void MainWindow::createEnemies()
 	switch(a)
 	{
 		//create red nocture
-/*		case 1:
+		case 1:
 		{
 			newItem = new RedNocturne(b,rn1,rn2,player,this);
 			scene->addItem(newItem);
@@ -431,12 +431,12 @@ void MainWindow::createEnemies()
 			}
 			return;
 		}
-*/		//chance to create tornado step
+		//chance to create tornado step
 		case 4:
 		{
 			int ch = rand() % 3;
 			//create gem
-			if(ch)			/******CHANGE BCK!!!!!!!!!!!!*******/
+			if(!ch)
 			{
 				//make sure b is in boundaries
 				if(b > 250)
@@ -448,7 +448,7 @@ void MainWindow::createEnemies()
 			return;
 		}
 		//create air soldier
-/*		case 5:
+		case 5:
 		{
 			newItem = new AirSoldier(as1,as2,as3,player,this);
 			scene->addItem(newItem);
@@ -463,12 +463,12 @@ void MainWindow::createEnemies()
 			items.push_back(newItem);
 			return;
 		}
-*/	}
+	}
 
 }
 
 /**
-Called when a player loses a life. Decreases the count and delets a Life image in the corner. Starts the canCollide buffer so that a user can avoid the object that just killed them. If invincibility mode is on, no lives are lost but the player still flashes.
+Called when a player loses a life. Decreases the count and deletes a Life image in the corner. Starts the canCollide buffer so that a user can avoid the object that just killed them. If invincibility mode is on, no lives are lost but the player still flashes.
 */
 void MainWindow::loseLife()
 {
@@ -576,9 +576,14 @@ void MainWindow::deleteEnemies()
 
 /**
 @param x number of lives to set lives_ to
-Called by Aquatank. Sets the number of lives to x.
+Called by Aquatank. Sets the number of lives to x. Does nothing if invincible
 */
 void MainWindow::setLife(int x)
 {
-	lives_ = x;
+	//set flags
+	c = 0;
+	canCollide = false;
+	
+	if(!invincible->isChecked())
+		lives_ = x;
 }

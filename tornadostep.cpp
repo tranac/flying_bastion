@@ -54,9 +54,7 @@ Checks if the TornadoStep has collided with the player. If it has, main_->gainPo
 */
 void TornadoStep::collide()
 {
-	if((x_ >= p_->getX()+80) && (x_ <= p_->getX()+83) && (y_ >= p_->getY()-5) && (y_ <= p_->getY() + 82))
-	{
+	if(QGraphicsItem::collidesWithItem(p_,Qt::IntersectsItemShape))
 		main_->gainPoints();
-	}
 }
 

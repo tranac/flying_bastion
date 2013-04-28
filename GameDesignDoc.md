@@ -107,3 +107,5 @@ Once the player loses all three lives or hits an `Aquatank`, the game switches t
 All pixel images are from this site: http://spriters-resource.com/gameboy_advance/khcom/
 
 The inital background is taken and edited from: http://www.khinsider.com/gallery/details.php?image_id=3237
+
+The background music is from: http://www.youtube.com/watch?v=Hhr3G0Xq3CU

@@ -59,6 +59,7 @@ public:
 protected slots:
 	void startGame();
 	void pauseGame();
+	void toggleSound();
 	void showHelp();
 	void handleTimer();
 private:
@@ -83,6 +84,7 @@ private:
 	QPushButton*  quit;		//quit game
 	QPushButton*  help;		//help button
 	QRadioButton* invincible;//invincibility mode
+	QPushButton*  mute;		//mute music
 	QLabel* i;
 	
 	Message* message;

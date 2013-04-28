@@ -73,6 +73,10 @@ MainWindow::MainWindow()
   //create invincibility option
   	invincible = new QRadioButton("Invincible Mode?",this);
   	options->addWidget(invincible);
+  //create mute button
+  	mute = new QPushButton("Mute");
+  	options->addWidget(mute);
+  	QObject::connect(mute,SIGNAL(clicked()),this,SLOT(toggleSound()));
   	
   //create message text
   	message = new Message();
@@ -83,7 +87,7 @@ MainWindow::MainWindow()
   	helpscreen = new Help();
   	scene->addItem(helpscreen);
   	helpscreen->hide();
-//  	helpscreen->setWindowFlags(Qt::WindowStaysOnTopHint);
+
   //create input for name
 	name_ = new QLineEdit();
 	name_->setGeometry(300,250,190,30);
@@ -147,7 +151,10 @@ void MainWindow::startGame()
 		if(invincible->isChecked())
 		{
 			i = new QLabel("Invincible Mode!");
-			options->addWidget(i);
+			scene->addWidget(i);
+			i->setAttribute(Qt::WA_TranslucentBackground);
+			i->setGeometry(567,0,100,10);
+			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 		}
 	
 		started = true;
@@ -259,7 +266,15 @@ void MainWindow::pauseGame()
 	}
 }
 
-
+/** Mutes and unmutes the game music. Handled in Audio. Only thing that needs to be changed here is the button text. */
+void MainWindow::toggleSound()
+{
+	//set button text
+	if(audio->togglePlaying())
+		mute->setText("Unmute");
+	else
+		mute->setText("Mute");
+}
 /** Shows the help screen. If the screen is already shown, hide the help screen. */
 void MainWindow::showHelp()
 {

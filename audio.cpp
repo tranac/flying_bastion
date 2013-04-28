@@ -1,6 +1,8 @@
 #include "audio.h"
 #include <QDebug>
 
+#include <iostream>
+
 Audio::Audio()
 {
 	file = new QFile("music/hb.wav");
@@ -28,6 +30,7 @@ Audio::~Audio()
 	delete song;
 }
 
+/** Starts the music. */
 void Audio::play()
 {
 	audioOutput->setBufferSize(500000);
@@ -35,6 +38,7 @@ void Audio::play()
 	audioOutput->start(file);
 }
 
+/** Checks state change */
 void Audio::finished(QAudio::State state)
 {
 	if(state == QAudio::StoppedState)
@@ -52,10 +56,28 @@ void Audio::finished(QAudio::State state)
 		play();
 	}
 }
+
+/** Stops the music. */
 void Audio::stop()
 {
 	audioOutput->stop();
 	audioOutput->stop();
 	audioOutput->reset();
 	file->close();
+}
+
+/** Stops/starts music and returns the previous state. 
+@return true if the music was playing, false if it wasn't */
+bool Audio::togglePlaying()
+{
+	if(audioOutput->state() == QAudio::ActiveState)
+	{
+		audioOutput->suspend();
+		return true;
+	}
+	else if (audioOutput->state() == QAudio::SuspendedState)
+	{
+		audioOutput->resume();
+		return false;
+	}
 }

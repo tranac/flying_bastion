@@ -15,6 +15,7 @@ public:
 	~Audio();
 	void play();
 	void stop();
+	bool togglePlaying();
 public slots:
 	void finished(QAudio::State s);
 private:

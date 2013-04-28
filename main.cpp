@@ -233,7 +233,7 @@ void MainWindow::startGame()
 		}
 		
 		//create points label
-//		points->hide();
+		points->hide();
 		
 		//start timer
 		timer->start();
@@ -300,7 +300,7 @@ void MainWindow::handleTimer()
 		c = 0;
 		player->show();
 		//hide points if shown
-//		points->hide();
+		points->hide();
 	}
 	//flash player if collision buffer is still on
 	else if(!canCollide)
@@ -322,7 +322,7 @@ void MainWindow::handleTimer()
 		{
 		  Item* temp = *it;
 		  temp->collide();
-		}	
+		}
 	}
 
 	//check if player is dead

@@ -26,7 +26,7 @@ Background::~Background()
 void Background::move()
 {
 	//if at the end of the screen, wrap around
-	if(x_ == -700)
+	if(x_ == -1000)
 	{
 		x_ = 650;
 	}

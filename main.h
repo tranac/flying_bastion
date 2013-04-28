@@ -20,8 +20,8 @@
 #include <QPixmap>
 #include <QLabel>
 
-
 #include "audio.h"
+#include "help.h"
 #include "message.h"
 #include "life.h"
 #include "player.h"
@@ -59,6 +59,7 @@ public:
 protected slots:
 	void startGame();
 	void pauseGame();
+	void showHelp();
 	void handleTimer();
 private:
 	Audio* audio;
@@ -80,10 +81,12 @@ private:
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
 	QPushButton*  quit;		//quit game
+	QPushButton*  help;		//help button
 	QRadioButton* invincible;//invincibility mode
 	QLabel* i;
 	
 	Message* message;
+	Help* helpscreen;
 	Player* player;
 	
 	QTimer*	timer;
@@ -109,6 +112,7 @@ private:
 	
 	QPixmap* as1;			//enemy pics
 	QPixmap* as2;
+	QPixmap* as3;
 	QPixmap* at;
 	QPixmap* g1;
 	QPixmap* g2;

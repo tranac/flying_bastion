@@ -19,6 +19,7 @@ MainWindow::MainWindow()
   //create Pixmap images
   	as1 = new QPixmap("images/airsoldier1.png","png");
   	as2 = new QPixmap("images/airsoldier2.png","png");
+	as3 = new QPixmap("images/airsoldier3.png","png");
   	at = new QPixmap("images/aquatank.png","png");
   	g1 = new QPixmap("images/gargoyle1.png","png");
   	g2 = new QPixmap("images/gargoyle2.png","png");
@@ -65,6 +66,10 @@ MainWindow::MainWindow()
 	quit = new QPushButton("Quit Game");
 	options->addWidget(quit);
 	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit()));
+  //create help button
+  	help = new QPushButton("Need Help?");
+  	options->addWidget(help);
+  	QObject::connect(help,SIGNAL(clicked()),this,SLOT(showHelp()));
   //create invincibility option
   	invincible = new QRadioButton("Invincible Mode?",this);
   	options->addWidget(invincible);
@@ -74,6 +79,11 @@ MainWindow::MainWindow()
   	message->setStart();
   	scene->addItem(message);
   
+  //create help screen
+  	helpscreen = new Help();
+  	scene->addItem(helpscreen);
+  	helpscreen->hide();
+//  	helpscreen->setWindowFlags(Qt::WindowStaysOnTopHint);
   //create input for name
 	name_ = new QLineEdit();
 	name_->setGeometry(300,250,190,30);
@@ -133,7 +143,7 @@ void MainWindow::startGame()
 		name_->setReadOnly(true);
 		
 		//hide invincible mode
-		invincible->setVisible(false);
+		invincible->hide();
 		if(invincible->isChecked())
 		{
 			i = new QLabel("Invincible Mode!");
@@ -145,7 +155,7 @@ void MainWindow::startGame()
 		
 		//create scrolling background
 		background = new Background(0,bg);
-		background2 = new Background(650,bg);
+		background2 = new Background(999,bg);
 		scene->addItem(background);
 		scene->addItem(background2);
 	
@@ -201,10 +211,13 @@ void MainWindow::startGame()
 		
 		finished = false;
 		//hide message
-		message->setVisible(false);
+		message->hide();
+		//hide help
+		helpscreen->hide();
+		help->setText("Need Help?");
 		
-		background->setVisible(true);
-		background2->setVisible(true);
+		background->show();
+		background2->show();
 		//create new player
 		player = new Player(this);
 		scene->addItem(player);
@@ -220,7 +233,7 @@ void MainWindow::startGame()
 		}
 		
 		//create points label
-//		points->setVisible(false);
+//		points->hide();
 		
 		//start timer
 		timer->start();
@@ -246,6 +259,31 @@ void MainWindow::pauseGame()
 	}
 }
 
+
+/** Shows the help screen. If the screen is already shown, hide the help screen. */
+void MainWindow::showHelp()
+{
+	//pause or start game if started
+	if(started && !finished)
+	{
+		if(timer->isActive())
+			timer->stop();
+		else
+			timer->start();
+	}
+	//show screen
+	if(helpscreen->isVisible())
+	{
+		helpscreen->hide();
+		help->setText("Need Help?");
+	}
+	else
+	{
+		helpscreen->show();
+		help->setText("Hide Help.");
+	}
+}
+
 /**
 Handles the timer every time it timesout. If invincible mode is checked, no collisions will be checked. Otherwise it will first check against the walls and then against the items.
 
@@ -260,17 +298,17 @@ void MainWindow::handleTimer()
 	{
 		canCollide = true;
 		c = 0;
-		player->setVisible(true);
+		player->show();
 		//hide points if shown
-//		points->setVisible(false);
+//		points->hide();
 	}
 	//flash player if collision buffer is still on
 	else if(!canCollide)
 	{
 		if(c % 2)
-			player->setVisible(false);
+			player->hide();
 		else
-			player->setVisible(true);
+			player->show();
 		c++;
 	}
 	
@@ -397,7 +435,7 @@ void MainWindow::createEnemies()
 		//create air soldier
 /*		case 5:
 		{
-			newItem = new AirSoldier(as1,as2,player,this);
+			newItem = new AirSoldier(as1,as2,as3,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
@@ -428,7 +466,7 @@ void MainWindow::loseLife()
 		delete life;
 		lives.pop_back();
 	}
-	player->setVisible(false);
+	player->hide();
 	c = 0;
 	canCollide = false;
 }
@@ -465,11 +503,11 @@ void MainWindow::endGame()
 
 	//set gameover message
 	message->setEnd();
-	message->setVisible(true);
+	message->show();
 	
 	//hide moving background
-	background->setVisible(false);
-	background2->setVisible(false);
+	background->hide();
+	background2->hide();
 }
 
 /**
@@ -497,7 +535,7 @@ void MainWindow::gainPoints()
 	canCollide = false;
 	
 	//show point message
-	points->setVisible(true);
+	points->show();
 }
 
 /**

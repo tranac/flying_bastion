@@ -5,7 +5,7 @@ Constructor. Creates the game window and the initial toolbar and welcome screen.
 */
 MainWindow::MainWindow()
 {
-  //set variables
+  //set initial variables
 	started = false;
 	finished = true;
 	score_ = 0;
@@ -31,29 +31,16 @@ MainWindow::MainWindow()
   	l = new QPixmap("images/life.png","png");
   	bg = new QPixmap("images/background.png","png");
   	bgs = new QPixmap("images/startbackground.png","png");
+  	
   //create overall layout
-	this->setGeometry(1,0,20,20);
-	
 	window = new QWidget;
 	setCentralWidget(window);
 	layout = new QVBoxLayout(window);
 	window->setLayout(layout);
 	
-  //create options sidebar 
+  //create options toolbar 
 	options = new QHBoxLayout();
-	QRect r(0,0,625,30);
-	options->setGeometry(r);
 	layout->addLayout(options);
-  //create gamespace
-	scene = new QGraphicsScene();
-	scene->setSceneRect(0,0,650,350);
-	view = new QGraphicsView(scene);
-	view->setFixedSize(675,375);
-	QColor c(Qt::black);
-	QBrush b(c,*bgs);
-	view->setBackgroundBrush(b);
- 	layout->addWidget(view);
-
   //create start button
   	start = new QPushButton("Start");
 	options->addWidget(start);
@@ -69,7 +56,7 @@ MainWindow::MainWindow()
   //create help button
   	help = new QPushButton("Help?");
   	options->addWidget(help);
-  	QObject::connect(help,SIGNAL(clicked()),this,SLOT(showHelp()));
+  	QObject::connect(help,SIGNAL(clicked()),this,SLOT(toggleHelp()));
   //create invincibility option
   	invincible = new QRadioButton("Invincible Mode?",this);
   	options->addWidget(invincible);
@@ -77,8 +64,23 @@ MainWindow::MainWindow()
   	mute = new QPushButton("Mute");
   	options->addWidget(mute);
   	QObject::connect(mute,SIGNAL(clicked()),this,SLOT(toggleSound()));
-  	
-  //create message text
+  		
+  //create gamespace
+	scene = new QGraphicsScene();
+	scene->setSceneRect(0,0,650,350);
+	view = new QGraphicsView(scene);
+	view->setFixedSize(675,375);
+	QColor c(Qt::black);
+	QBrush b(c,*bgs);
+	view->setBackgroundBrush(b);
+ 	layout->addWidget(view);
+
+  //create name input form
+	name_ = new QLineEdit();
+	name_->setGeometry(300,250,190,30);
+ 	scene->addWidget(name_);
+ 	 	
+  //create start/gameover screen
   	message = new Message();
   	message->setStart();
   	scene->addItem(message);
@@ -88,11 +90,6 @@ MainWindow::MainWindow()
   	scene->addItem(helpscreen);
   	helpscreen->hide();
 
-  //create input for name
-	name_ = new QLineEdit();
-	name_->setGeometry(300,250,190,30);
- 	scene->addWidget(name_);
- 	
   //create timer
   	timer = new QTimer();
 	timer->setInterval(speed);
@@ -108,6 +105,8 @@ Deletes the timer.
 */
 MainWindow::~MainWindow()
 {
+	audio->stop();
+	delete audio;
 	delete timer;
 	delete window;
 }
@@ -123,6 +122,7 @@ The game timer is started in this function.
 */
 void MainWindow::startGame()
 {
+	//create initial gameplay items if it's a new game
 	if(!started)
 	{
 		//grab username
@@ -141,7 +141,7 @@ void MainWindow::startGame()
   		options->addLayout(s);
   		options->setStretch(3,0.5);
   		
-		//make welcome screen invisible and unaccessible
+		//make the name input form invisible and unaccessible
 		name_->setEnabled(false);
 		name_->setHidden(true);
 		name_->setReadOnly(true);
@@ -154,6 +154,7 @@ void MainWindow::startGame()
 		
 		//hide invincible mode selection
 		invincible->hide();
+		//create invincibility mode notifier if invincibility mode is checked
 		if(invincible->isChecked())
 		{
 			i = new QLabel("Invincible Mode!");
@@ -163,9 +164,9 @@ void MainWindow::startGame()
 			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 			i->show();
 		}
-
+		
+		//set flag
 		started = true;
-		lives_ = 3;
 	
 		//create points label
 		points = new QLabel("Bonus Points!");
@@ -181,7 +182,6 @@ void MainWindow::startGame()
 		speed = 15;
 		timer->setInterval(speed);
 		score_ = 0;
-		lives_ = 3;
 		executions = 0;
 		c = 0;
 		canCollide = true;
@@ -194,6 +194,7 @@ void MainWindow::startGame()
 		if(!finished)
 			{
 			//delete player
+			scene->removeItem(player);
 			delete player;
 			
 			//delete enemies
@@ -215,36 +216,41 @@ void MainWindow::startGame()
 			lives.clear();
 
 			}
-		}
+	}
+	
 		
-		finished = false;
-		//hide message
-		message->hide();
-		//hide help
-		helpscreen->hide();
-		help->setText("Help?");
+	finished = false;
+	//hide start/gameover screen
+	message->hide();
+	
+	//hide & reset help screen
+	helpscreen->hide();
+	help->setText("Help?");
+	
+	//show moving background
+	background->show();
+	background2->show();
+	
+	//create new player
+	player = new Player(this);
+	scene->addItem(player);
+	
+	//create lives
+	lives_ = 3;
+	int x = 5;	//initial position
+	for(int i=0;i<3;i++)
+	{
+		life = new Life(x,5,l);
+		scene->addItem(life);
+		lives.push_back(life);
+		x = x+15;
+	}
 		
-		background->show();
-		background2->show();
-		//create new player
-		player = new Player(this);
-		scene->addItem(player);
+	//hide points label
+	points->hide();
 		
-		//create lives
-		int x = 5;
-		for(int i=0;i<3;i++)
-		{
-			life = new Life(x,5,l);
-			scene->addItem(life);
-			lives.push_back(life);
-			x = x+15;
-		}
-		
-		//create points label
-		points->hide();
-		
-		//start timer
-		timer->start();
+	//start timer
+	timer->start();
 }
 
 /**
@@ -276,8 +282,9 @@ void MainWindow::toggleSound()
 	else
 		mute->setText("Mute");
 }
+
 /** Shows the help screen. If the screen is already shown, hide the help screen. */
-void MainWindow::showHelp()
+void MainWindow::toggleHelp()
 {
 	//pause/continue game if started
 	if(started && !finished)
@@ -330,6 +337,7 @@ void MainWindow::showHelp()
 	}
 	else
 	{
+		//show help screen
 		helpscreen->show();
 		help->setText("Hide.");
 	}
@@ -360,6 +368,7 @@ void MainWindow::handleTimer()
 			player->hide();
 		else
 			player->show();
+		//increase count
 		c++;
 	}
 	
@@ -417,24 +426,23 @@ void MainWindow::handleTimer()
 	executions++;
 	
 	//check if game requires speeding up
-	// && (len <= 35000)
 	if(!(executions % len))
 	{
-		speed = speed / 2;
+		speed = speed / 3;
 		timer->setInterval(speed);
 		len = len + 5000;
 	}
 }
 
 /**
-Creates a new item. The new item is randomized. For WhiteMushrooms and TornadoSteps, they must also be selected by a second random statement.
+Creates a new item. The new item is randomized. For WhiteMushrooms and TornadoSteps, they must also pass a second randomized statement.
 */
 void MainWindow::createEnemies()
 {
 	//randomly create enemies
 	srand(time(0));
 	int a = rand() % 7;
-	int b = rand() % 300;
+	int b = rand() % 280;
 	
 	switch(a)
 	{
@@ -500,7 +508,48 @@ void MainWindow::createEnemies()
 			return;
 		}
 	}
+}
 
+/**
+Ends the game. Stops the timer and sets the finished flag. Removes and deletes the player and the items. Also sets the GameOver message.
+*/
+void MainWindow::endGame()
+{
+	//stop timer and set flags
+	timer->stop();
+	finished = true;
+
+	//delete player 
+	scene->removeItem(player);
+	delete player;
+
+	//delete lives if any are left
+	QVector<Life*>::iterator it = lives.begin();
+	while(it != lives.end())
+	{
+		Life* temp = *it;
+		scene->removeItem(temp);
+		delete temp;
+		++it;
+	}
+	lives.clear();
+
+	//delete remaining items
+	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+	{
+		Item* temp = *it;
+		scene->removeItem(temp);
+		delete temp;
+	}
+	items.clear();
+
+	//set gameover message
+	message->setEnd();
+	message->show();
+	
+	//hide moving background
+	background->hide();
+	background2->hide();
 }
 
 /**
@@ -523,50 +572,12 @@ void MainWindow::loseLife()
 }
 
 /**
-Ends the game. Stops the timer and sets the finished flag. Removes and deletes the player and the items. Also sets the GameOver message.
-*/
-void MainWindow::endGame()
-{
-	timer->stop();
-	finished = true;
-
-	//delete player 
-	scene->removeItem(player);
-	
-
-	QVector<Life*>::iterator it = lives.begin();
-	while(it != lives.end())
-	{
-		Life* temp = *it;
-		scene->removeItem(temp);
-		delete temp;
-		++it;
-	}
-	lives.clear();
-	
-	for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-	{
-		Item* temp = *it;
-		scene->removeItem(temp);
-		delete temp;
-	}
-	items.clear();
-
-	//set gameover message
-	message->setEnd();
-	message->show();
-	
-	//hide moving background
-	background->hide();
-	background2->hide();
-}
-
-/**
 Called by WhiteMushroom. Gives the user an additional life. Only gives an extra life if the player is not playing invincibility mode.
 */
 void MainWindow::gainLife()
 {
-	if(invincible->isChecked())
+	//adds a new life
+	if(!invincible->isChecked())
 	{
 		lives_++;
 		Life* end = lives.back();
@@ -574,6 +585,7 @@ void MainWindow::gainLife()
 		scene->addItem(life);
 		lives.push_back(life);
 	}
+	//set flags
 	c = 0;
 	canCollide = false;
 }
@@ -583,12 +595,15 @@ Called by TornadoStep. Gives the user 100 additional points.
 */
 void MainWindow::gainPoints()
 {
-	score_ = score_ + 100;
-	score->setText(QString::number(score_));
+	//set flags
 	c = 0;
 	canCollide = false;
 	
-	//show point message
+	//update score
+	score_ = score_ + 100;
+	score->setText(QString::number(score_));
+	
+	//show message
 	points->show();
 }
 
@@ -599,10 +614,11 @@ void MainWindow::deleteEnemies()
 {
 	QVector<Item*>::iterator it = items.begin();
 	
+	//walks through list of items
 	while(it != items.end())
 	{
 		Item* temp = *it;
-		if(temp->getX() <= -20)
+		if(temp->getX() <= -20)	//deletes item if item is off screen
 	 	 {
 			it = items.erase(it);
 			scene->removeItem(temp);

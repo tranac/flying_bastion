@@ -1,6 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <cmath>
+#include <stdexcept>
+#include <cstdlib>
+
 #include <QApplication>
 #include <QMainWindow>
 #include <QWidget>
@@ -20,23 +24,19 @@
 #include <QPixmap>
 #include <QLabel>
 
-#include "audio.h"
-#include "help.h"
-#include "message.h"
-#include "life.h"
-#include "player.h"
-#include "item.h"
-#include "aquatank.h"
-#include "rednocturne.h"
 #include "airsoldier.h"
-#include "whitemushroom.h"
-#include "tornadostep.h"
-#include "gargoyle.h"
+#include "aquatank.h"
+#include "audio.h"
 #include "background.h"
-
-#include <cmath>
-#include <stdexcept>
-#include <cstdlib>
+#include "gargoyle.h"
+#include "help.h"
+#include "item.h"
+#include "life.h"
+#include "message.h"
+#include "player.h"
+#include "rednocturne.h"
+#include "tornadostep.h"
+#include "whitemushroom.h"
 
 /**
 Main class of the game. Holds the game window, members, and functions.
@@ -46,38 +46,35 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow();	//takes in number of commandline arguments
+    explicit MainWindow();
     ~MainWindow();
     
-	void createEnemies();
-	void loseLife();
+	void createEnemies();	
 	void endGame();
+	void loseLife();
 	void gainLife();
 	void gainPoints();
 	void deleteEnemies();
 	void setLife(int x);
 protected slots:
-	void startGame();
-	void pauseGame();
-	void toggleSound();
-	void showHelp();
-	void handleTimer();
+	void startGame();		//starts & restarts games
+	void pauseGame();		//pauses & continues game
+	void toggleSound();		//mutes & unmutes background music
+	void toggleHelp();		//shows & hides help screen
+	void handleTimer();		//handles timer
 private:
-	Audio* audio;
+	Audio* audio;			//background music
 	
-	bool started;
-	bool finished;
-	
-	QWidget*		window;
-	QVBoxLayout* 	layout;
-	QHBoxLayout* 	options;
-	
+	QWidget*		window;	//central widget
+	QVBoxLayout* 	layout;	//central layout
+	QHBoxLayout* 	options;//toolbar
 	QGraphicsScene* scene;	//game window
-	QGraphicsView* 	view;
+	QGraphicsView* 	view;	//game view
+	QTimer*	timer;			//timer
 	
-	QLineEdit*    name_;
-	QLineEdit*	  score;
-	QFormLayout*  s;
+	QLineEdit*    name_;	//input for user name
+	QLineEdit*	  score;	//score display
+	QFormLayout*  s;		//user name & score display
 
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
@@ -87,32 +84,34 @@ private:
 	QPushButton*  mute;		//mute music
 	QLabel* i;
 	
-	Message* message;
-	Help* helpscreen;
-	Player* player;
-	
-	QTimer*	timer;
-	
+	Message* message;		//start and gameover screen images
+	Help* helpscreen;		//help screen image
+
+	Player* player;			//player
+		
 	QVector<Item*> items;	//list of items in screen
-	Item*		   newItem;	
+	Item*		   newItem;	//temp to add in new items
 	
 	Life*		   life;	//pixmap item displayed for each life
 	QVector<Life*> lives;	//vector for lives
-	bool canCollide;		//buffer after colliding with something
-	int c;					//num of counts for buffer
+	int  c;					//num of counts for buffer
+	bool canCollide;		//flag for collision buffer
+	
+	bool started;			//flag for started games
+	bool finished;			//flag for finished games
 	
 	int score_;				//score
 	int lives_;				//lives
-	int executions;			//num of timeouts()
+	int executions;			//num of timeouts(); used for speed up
 	int len;				//interval for timer to speed up
 	int speed;				//timer interval
 	
-	QLabel* points;			//show when gained points
+	QLabel* points;			//shown to notify user of bonus points
 	
-	Background* background;
-	Background* background2;
+	Background* background;	//scrolling background image 1
+	Background* background2;//scrolling background image 2
 	
-	QPixmap* as1;			//enemy pics
+	QPixmap* as1;		//pixmap items for player, items, and screens
 	QPixmap* as2;
 	QPixmap* as3;
 	QPixmap* at;
@@ -125,8 +124,8 @@ private:
 	QPixmap* wm1;
 	QPixmap* wm2;
 	QPixmap* l;
-	QPixmap* bg;			//background
-	QPixmap* bgs;			//start background
+	QPixmap* bg;
+	QPixmap* bgs;
 } ;
 
 #endif

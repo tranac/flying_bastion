@@ -1,5 +1,4 @@
 #include "main.h"
-#include <iostream>
 
 /**
 Constructor. Creates the game window and the initial toolbar and welcome screen. Sets intial values. Creates Pixmap images for items. 
@@ -42,32 +41,33 @@ MainWindow::MainWindow()
 	
   //create options sidebar 
 	options = new QHBoxLayout();
+	QRect r(0,0,625,30);
+	options->setGeometry(r);
 	layout->addLayout(options);
   //create gamespace
 	scene = new QGraphicsScene();
 	scene->setSceneRect(0,0,650,350);
 	view = new QGraphicsView(scene);
 	view->setFixedSize(675,375);
-	QRect r(0,0,675,375);
 	QColor c(Qt::black);
 	QBrush b(c,*bgs);
 	view->setBackgroundBrush(b);
  	layout->addWidget(view);
 
   //create start button
-  	start = new QPushButton("Start Game");
+  	start = new QPushButton("Start");
 	options->addWidget(start);
 	QObject::connect(start,SIGNAL(clicked()),this,SLOT(startGame()));
   //create pause button
-  	pause = new QPushButton("Pause Game");
+  	pause = new QPushButton("Pause");
   	options->addWidget(pause);
   	QObject::connect(pause,SIGNAL(clicked()),this,SLOT(pauseGame()));
   //create quit button
-	quit = new QPushButton("Quit Game");
+	quit = new QPushButton("Quit");
 	options->addWidget(quit);
 	QObject::connect(quit,SIGNAL(clicked()),qApp,SLOT(quit()));
   //create help button
-  	help = new QPushButton("Need Help?");
+  	help = new QPushButton("Help?");
   	options->addWidget(help);
   	QObject::connect(help,SIGNAL(clicked()),this,SLOT(showHelp()));
   //create invincibility option
@@ -188,7 +188,7 @@ void MainWindow::startGame()
 		len = 3500;
 		
 		//reset pause button
-		pause->setText("Pause Game");
+		pause->setText("Pause");
 		
 		//delete items if not already deleted
 		if(!finished)
@@ -222,7 +222,7 @@ void MainWindow::startGame()
 		message->hide();
 		//hide help
 		helpscreen->hide();
-		help->setText("Need Help?");
+		help->setText("Help?");
 		
 		background->show();
 		background2->show();
@@ -326,12 +326,12 @@ void MainWindow::showHelp()
 	{
 		//hide help screen
 		helpscreen->hide();
-		help->setText("Need Help?");
+		help->setText("Help?");
 	}
 	else
 	{
 		helpscreen->show();
-		help->setText("Hide Help.");
+		help->setText("Hide.");
 	}
 }
 

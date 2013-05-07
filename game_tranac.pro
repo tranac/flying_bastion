@@ -22,7 +22,9 @@ HEADERS += airsoldier.h \
            player.h \
            rednocturne.h \
            tornadostep.h \
-           whitemushroom.h
+           whitemushroom.h \
+           trickmaster.h \
+           wyvern.h
 SOURCES += airsoldier.cpp \
            aquatank.cpp \
            audio.cpp \
@@ -37,4 +39,6 @@ SOURCES += airsoldier.cpp \
            player.cpp \
            rednocturne.cpp \
            tornadostep.cpp \
-           whitemushroom.cpp
+           whitemushroom.cpp \
+           trickmaster.cpp \
+           wyvern.cpp

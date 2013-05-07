@@ -478,7 +478,7 @@ void MainWindow::createEnemies()
 {
 	//randomly create enemies
 	srand(time(0));
-	int a = rand() % 7;
+	int a = rand() % 9;
 	int b = rand() % 280;
 	
 	switch(a)
@@ -540,6 +540,25 @@ void MainWindow::createEnemies()
 		case 6:
 		{
 			newItem = new Gargoyle(player->getY(),g1,g2,player,this);
+			scene->addItem(newItem);
+			items.push_back(newItem);
+			return;
+		}
+		//chane to create trickmaster
+		case 7:
+		{
+			int ch = rand() % 3;
+			if(!ch)
+			{
+				newItem = new Trickmaster(tm1,tm2,player,this);
+				scene->addItem(newItem);
+				items.push_back(newItem);
+			}
+			return;
+		}
+		//create wyvern
+		{
+			newItem = new Wyvern(w1,w2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;

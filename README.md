@@ -14,7 +14,7 @@
 The grader should use the following procedure to compile and run the code:
 ```shell
 #QtMultimedia Must Be Installed
-sudo apt-get install qt-mobility-dev
+sudo apt-get install qtmobility-dev
 
 #Compile Instructions 
 #.pro file already included in the repo

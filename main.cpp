@@ -14,6 +14,7 @@ MainWindow::MainWindow()
 	speed = 15;
 	canCollide = true;
 	len = 3500;
+	level = 1;
 	
   //create Pixmap images
   	as1 = new QPixmap("images/airsoldier1.png","png");
@@ -24,12 +25,18 @@ MainWindow::MainWindow()
   	g2 = new QPixmap("images/gargoyle2.png","png");
   	rn1 = new QPixmap("images/rednocturne1.png","png");
   	rn2 = new QPixmap("images/rednocturne2.png","png");
+	tm1 = new QPixmap("images/trickmaster1.png","png");
+	tm2 = new QPixmap("images/trickmaster2.png","png");
   	ts1 = new QPixmap("images/tornadostep1.png","png");
   	ts2 = new QPixmap("images/tornadostep2.png","png");
+	w1 = new QPixmap("images/wyvern1.png","png");
+	w2 = new QPixmap("images/wyvern2.png","png");
   	wm1 = new QPixmap("images/whitemushroom1.png","png");
   	wm2 = new QPixmap("images/whitemushroom2.png","png");
   	l = new QPixmap("images/life.png","png");
-  	bg = new QPixmap("images/background.png","png");
+  	l1 = new QPixmap("images/level1.png","png");
+	l2 = new QPixmap("images/level2.png","png");
+	l3 = new QPixmap("images/level3.png","png");
   	bgs = new QPixmap("images/startbackground.png","png");
   	
   //create overall layout
@@ -147,8 +154,8 @@ void MainWindow::startGame()
 		name_->setReadOnly(true);
 				
 		//create scrolling background
-		background = new Background(0,bg);
-		background2 = new Background(999,bg);
+		background = new Background(0,l1,l2,l3);
+		background2 = new Background(999,l1,l2,l3);
 		scene->addItem(background);
 		scene->addItem(background2);
 		
@@ -227,7 +234,12 @@ void MainWindow::startGame()
 	helpscreen->hide();
 	help->setText("Help?");
 	
-	//show moving background
+	//set level
+	level = 1;
+
+	//set level 1 image and show moving background
+	background->setImage(level);
+	background->setImage(level);
 	background->show();
 	background2->show();
 	
@@ -425,13 +437,29 @@ void MainWindow::handleTimer()
 	score->setText(QString::number(score_));
 	executions++;
 	
+	//check if level up to two
+	if(score_ == 3000)
+	  {
+	    level++;
+	    timer->setInterval(7);
+	    background->setImage(level);
+	    background2->setImage(level);
+	  }
+	//check if level up to three
+	if(score_ == 10000)
+	  {
+	    level++;
+	    background->setImage(level);
+	    background2->setImage(level);
+	  }
+	/*
 	//check if game requires speeding up
 	if(!(executions % len))
 	{
 		speed = speed / 3;
 		timer->setInterval(speed);
 		len = len + 5000;
-	}
+		}*/
 }
 
 /**
@@ -560,11 +588,30 @@ void MainWindow::loseLife()
 	//only delete lives if not invincible
 	if(!invincible->isChecked())
 	{
+	  //check level first
+	  if(level == 3)
+	    {
+	    setLife(0);
+	    
+	    //clear life images
+	    QVector<Life*>::iterator it = lives.begin();
+	    while(it != lives.end())
+	      {
+                Life* temp = *it;
+                scene->removeItem(temp);
+		delete temp;
+                ++it;
+	      }
+	    lives.clear();
+	    }
+	  else
+	    {
 		lives_--;
 		life = lives.back();
 		scene->removeItem(life);
 		delete life;
 		lives.pop_back();
+	    }
 	}
 	player->hide();
 	c = 0;

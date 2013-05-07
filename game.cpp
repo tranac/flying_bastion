@@ -22,10 +22,16 @@ The purpose of these programming assignments is to make a game using QT. The gam
 
 #include <QtGui/QApplication>
 #include <cstdlib>
+#include <iostream>
 #include "main.h"
 
 int main(int argc,char* argv[])
 {
+  if(argc > 1)
+    {
+      std::cerr << "No commandline arguments necessary." << std::endl;
+      return 1;
+    }
 	QApplication a(argc, argv);
 	
 	MainWindow w;

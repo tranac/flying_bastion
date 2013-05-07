@@ -1,27 +1,33 @@
 #include "background.h"
 
 /**
-Creates a Background object. Initial coordinates are always (50,125).
+@param x initial x-coordinate
+@param l1 pointer to level one image
+@param l2 pointer to level two image
+@param l3 pointer to level three image
+
+Creates a scrolling Background object. Two will be created for the background. Image will change for each level. Image initialized to l1_.
 */
-Background::Background(int x, QPixmap* pic)
+Background::Background(int x, QPixmap* l1, QPixmap* l2, QPixmap* l3)
 {
 	x_ = x;
 	y_ =-10;
 	setPos(x_,y_);
-	pic_ = pic;
-	setPixmap(*pic_);
+	l1_ = l1;
+	l2_ = l2;
+	l3_ = l3;
+	setPixmap(*l1_);
 }
 
 /**
-Deletes dynamically-allocated Pixmap images.
+Nothing needs to be deleted.
 */
 Background::~Background()
 {
-	delete pic_;
 }
 
 /**
-
+Moves the background image one pixel to the left.
 */
 void Background::move()
 {
@@ -36,4 +42,18 @@ void Background::move()
 	}
 	
 	setPos(x_,y_);
+}
+
+/**
+@param l Level to change image to.
+Changes background image for each level.
+*/
+void Background::setImage(int l)
+{
+  if(l == 1)
+    setPixmap(*l1_);
+  else if(l == 2)
+    setPixmap(*l2_);
+  else
+    setPixmap(*l3_);
 }

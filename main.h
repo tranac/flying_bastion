@@ -34,6 +34,7 @@
 #include "life.h"
 #include "message.h"
 #include "player.h"
+#include "score.h"
 #include "rednocturne.h"
 #include "tornadostep.h"
 #include "whitemushroom.h"
@@ -102,12 +103,14 @@ private:
 	
 	int score_;				//score
 	int lives_;				//lives
+	int level;
 	int executions;			//num of timeouts(); used for speed up
 	int len;				//interval for timer to speed up
 	int speed;				//timer interval
 	
 	QLabel* points;			//shown to notify user of bonus points
 	
+	Score* hscores;
 	Background* background;	//scrolling background image 1
 	Background* background2;//scrolling background image 2
 	
@@ -119,12 +122,18 @@ private:
 	QPixmap* g2;
 	QPixmap* rn1;
 	QPixmap* rn2;
+	QPixmap* tm1;
+	QPixmap* tm2;
 	QPixmap* ts1;
 	QPixmap* ts2;
+	QPixmap* w1;
+	QPixmap* w2;
 	QPixmap* wm1;
 	QPixmap* wm2;
 	QPixmap* l;
-	QPixmap* bg;
+	QPixmap* l1;
+	QPixmap* l2;
+	QPixmap* l3;
 	QPixmap* bgs;
 } ;
 

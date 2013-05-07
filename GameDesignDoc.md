@@ -66,7 +66,7 @@ The player will start automatically falling down the screen at a constant rate (
 There are 3 types of enemies: `RedNocturne`s, `AirSoldier`s, `Gargoyle`s, and `Aquatank`s. Contact with the first three all lose the player a life while contact with an `Aquatank` ends the game.
 
 ### Levels
-There are no specific levels to the game. However, at set intervals, the game speed starts to speed up (both the player and the enemies/items).
+There are three levels to the game. Level one involves standard speed with the above mention properties (`Gargoyle`s and `Red Nocturne`s lose a life, while `Aquatank`s end the game.) Level two is similar, but at a faster speed. Once you reach level three, all enemies automatically end the game, no matter how many lives you have. 
 
 ### Scoring
 A user's score is equivalent to the "distance" they've traveled, aka how long they've stayed in the game. `TornadoStep`s are worth 100 bonus points. The score keeps incrementing as long as the game lasts and cannot be decreased.

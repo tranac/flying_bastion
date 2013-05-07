@@ -179,8 +179,15 @@ void MainWindow::startGame()
 		points = new QLabel("Bonus Points!");
 		scene->addWidget(points);
 		points->setAttribute(Qt::WA_TranslucentBackground);
-		points->setGeometry(567,0,100,10);
+		points->setGeometry(567,15,100,10);
 		points->setWindowFlags(Qt::WindowStaysOnTopHint);
+		
+		//create levels label
+		lvl = new QLabel("Level One");
+		scene->addWidget(lvl);
+		lvl->setAttribute(Qt::WA_TranslucentBackground);
+		lvl->setGeometry(573,0,100,10);
+		lvl->setWindowFlags(Qt::WindowStaysOnTopHint);
 	}
 	else
 	{
@@ -236,6 +243,8 @@ void MainWindow::startGame()
 	
 	//set level
 	level = 1;
+	lvl->setText("Level One");
+	lvl->show();
 
 	//set level 1 image and show moving background
 	background->setImage(level);
@@ -308,6 +317,7 @@ void MainWindow::toggleHelp()
 			background->hide();
 			background2->hide();
 			player->hide();
+			lvl->hide();
 			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 			{
 				Item* temp = *it;
@@ -327,6 +337,7 @@ void MainWindow::toggleHelp()
 			background->show();
 			background2->show();
 			player->show();
+			lvl->show();
 			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
 			{
 				Item* temp = *it;
@@ -444,6 +455,7 @@ void MainWindow::handleTimer()
 	    timer->setInterval(7);
 	    background->setImage(level);
 	    background2->setImage(level);
+	    lvl->setText("Level Two");
 	  }
 	//check if level up to three
 	if(score_ == 10000)
@@ -451,15 +463,12 @@ void MainWindow::handleTimer()
 	    level++;
 	    background->setImage(level);
 	    background2->setImage(level);
+	    lvl->setText("Level Three");
+	    //set label color
+	    QColor c(Qt::black);
+	    QPalette p(c);
+	    lvl->setPalette(p);
 	  }
-	/*
-	//check if game requires speeding up
-	if(!(executions % len))
-	{
-		speed = speed / 3;
-		timer->setInterval(speed);
-		len = len + 5000;
-		}*/
 }
 
 /**
@@ -545,6 +554,9 @@ void MainWindow::endGame()
 {
 	//stop timer and set flags
 	timer->stop();
+	points->hide();
+	lvl->hide();
+	i->hide();
 	finished = true;
 
 	//delete player 

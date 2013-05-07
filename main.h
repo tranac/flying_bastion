@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <QString>
 #include <QColor>
+#include <QPalette>
 #include <QVector>
 #include <QPixmap>
 #include <QLabel>
@@ -37,7 +38,9 @@
 #include "score.h"
 #include "rednocturne.h"
 #include "tornadostep.h"
+#include "trickmaster.h"
 #include "whitemushroom.h"
+#include "wyvern.h"
 
 /**
 Main class of the game. Holds the game window, members, and functions.
@@ -84,6 +87,7 @@ private:
 	QRadioButton* invincible;//invincibility mode
 	QPushButton*  mute;		//mute music
 	QLabel* i;
+	QLabel* lvl;
 	
 	Message* message;		//start and gameover screen images
 	Help* helpscreen;		//help screen image

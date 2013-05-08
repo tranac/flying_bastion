@@ -685,8 +685,9 @@ void MainWindow::endGame()
 	background2->hide();
 	
 	//add high score
-//	string n = name_->text().toUtf8().constData();
-//	std::cout << n << " " << score_ << std::endl;
+	string n = name_->text().toUtf8().constData();
+	std::cout << n << " " << score_ << std::endl;
+	scores->add(n,score_);
 //	scores->add(score_,name_->text());
 }
 

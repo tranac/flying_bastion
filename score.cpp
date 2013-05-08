@@ -4,7 +4,9 @@ Score::Score()
 {
 	setEnabled(false);
 	setReadOnly(true);
-	setGeometry(50,50,200,350);
+	setGeometry(75,40,400,300);
+	
+	read();
 }
 
 Score::~Score()
@@ -14,14 +16,17 @@ Score::~Score()
 
 void Score::add(string n, int s)
 {
-	read();
-
+	QString string = toPlainText();
+	string = string + QString::fromStdString(n);
+	setText(string);
+/*
 	for(map<string,int>::iterator it=hscores_.begin();it != hscores_.end(); ++it)
 	{
 		int t = it->second;
 		if(s > t)
 			cout << "Test!" << endl;
 	}
+*/
 }
 
 void Score::write()
@@ -40,8 +45,8 @@ void Score::read()
 	
 	if(ifile.good())
 	{
-		cout << "Good!" << endl;
+		setText("Test");
 	}
 	else
-		cout << "Empty." << endl;
+		setText("New.");
 }

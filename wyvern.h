@@ -12,6 +12,7 @@ class Wyvern : public Item
 	void move();
 	void collide();
  private:
+	int ct;
 } ;
 
 #endif

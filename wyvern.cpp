@@ -7,10 +7,11 @@
 @param p pointer to the player of the game
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 644, the right boundary of the game. Initial y is always 300, at the bottom of the screen. vx is -1 and vy is initially 0. It will be changed in move().
+An Item is created with these coordinates. x is always 680. Initial y is always 300, at the bottom of the screen. vx is -2 and vy is initially 0. It will be changed in move().
 */
-Wyvern::Wyvern(QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(644,300,-2,0,pic,pic2,p,main)
+Wyvern::Wyvern(QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(680,250,-2,0,pic,pic2,p,main)
 {
+	ct = 0;
 }
 
 /**
@@ -21,24 +22,26 @@ Wyvern::~Wyvern()
 }
 
 /** 
-Moves the Wyvern in the intended direction. It starts moving in a straight horizontal line. After 60 pixels, it moves up 40 pixels, travels in a straight line for 10 more pixels, and continues.
+Moves the Wyvern in the intended direction. It starts moving in a straight horizontal line. After 80 pixels, it moves up 40 pixels, travels in a straight line for 10 more pixels, and continues.
 
 The image alternates for each move.
 */
 void Wyvern::move()
 {
-	if(!(x_+84 % 50))
+	ct++;
+	
+	if(ct == 100)
 	{
 		setPixmap(*pic2_);
-		vy_ = 1;
+		vy_ = -1;
 	}
-
-	if(!(x_+74 & 50))
+		
+	if(ct == 150)
 	{
 		setPixmap(*pic_);
 		vy_ = 0;
+		ct = 0;
 	}
-		
 	//change xy coordinates
 	x_ = x_ + vx_;
 	y_ = y_ + vy_;

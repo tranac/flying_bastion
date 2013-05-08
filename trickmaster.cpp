@@ -7,10 +7,11 @@
 @param p pointer to the player of the game
 @param main pointer to the mainwindow of the game
 
-An Item is created with these coordinates. x is always 5 and Initial y is always 300, the bottom-left corner of the screen. Object does not move until after it's been on the screen for 50 handleTimer();
+An Item is created with these coordinates. x is always 5 and Initial y is always 200, the bottom-left corner of the screen. Object does not move until after it's been on the screen for 250 timeouts;
 */
-Trickmaster::Trickmaster(QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(5,300,0,0,pic,pic2,p,main)
+Trickmaster::Trickmaster(QPixmap* pic, QPixmap* pic2, Player* p, MainWindow* main) : Item(5,200,0,0,pic,pic2,p,main)
 {
+	moves = 0;
 }
 
 /**
@@ -21,17 +22,17 @@ Trickmaster::~Trickmaster()
 }
 
 /** 
-Moves the Trickmaster in the intended direction. It starts moving in a straight horizontal line. At the halfway point, it dives down diagonally.
+Moves the Trickmaster in the intended direction. It stays stationary at first and after 250 moves, moves off the screen.
 
-The image alternates for each move.
+The image changes to an upright Trickmaster when they can kill you.
 */
 void Trickmaster::move()
 {
-	//if it's been 10 clicks, move trickmaster up and make it collidable
-	if(moves == 10)
+	//if it's been 100 clicks, move trickmaster up and make it collidable
+	if(moves == 100)
 		setPixmap(*pic2_);
 	//checks if time to move trickmaster out of screen
-	else if(moves == 50)
+	else if(moves == 250)
 		vx_ = -2;
 		
 	//change xy coordinates
@@ -44,11 +45,11 @@ void Trickmaster::move()
 }
 
 /**
-Checks if the Trickmaster has collided with the player. Only checks collision if Trickmaster is in "stage two" and able to be collided with If it has, main_->setLife() is called.
+Checks if the Trickmaster has collided with the player. Only checks collision if Trickmaster is in "stage two" and able to be collided with If it has, main_->setLife() is called and set to 0.
 */
 void Trickmaster::collide()
 {
-	if(moves > 10)
+	if(moves > 100)
 	{
 		if(QGraphicsItem::collidesWithItem(p_,Qt::IntersectsItemShape))
 			main_->setLife(0);

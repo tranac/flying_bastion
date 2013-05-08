@@ -491,7 +491,7 @@ void MainWindow::createEnemies()
 	int a = rand() % 9;
 	int b = rand() % 280;
 	
-	switch(a)
+/*	switch(a)
 	{
 		//create red nocture
 		case 1:
@@ -567,13 +567,14 @@ void MainWindow::createEnemies()
 			return;
 		}
 		//create wyvern
-		{
+		case 8:
+*/		{
 			newItem = new Wyvern(w1,w2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
 		}
-	}
+//	}
 }
 
 /**

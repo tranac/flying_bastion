@@ -15,10 +15,7 @@ Audio::Audio()
 	song->setByteOrder(QAudioFormat::LittleEndian);
 	song->setSampleType(QAudioFormat::UnSignedInt);
 	audioOutput = new QAudioOutput(*song,0);
-	/*
-	buffer = new QBuffer(file);
-	buffer->open(QIODevice::ReadOnly);
-*/
+
 	QObject::connect(audioOutput,SIGNAL(stateChanged(QAudio::State)),this,SLOT(finished(QAudio::State)));
 }
 
@@ -80,4 +77,6 @@ bool Audio::togglePlaying()
 		audioOutput->resume();
 		return false;
 	}
+
+	return false;
 }

@@ -1,4 +1,5 @@
 #include "main.h"
+#include <iostream>
 
 /**
 Constructor. Creates the game window and the initial toolbar and welcome screen. Sets intial values. Creates Pixmap images for items. 
@@ -71,6 +72,11 @@ MainWindow::MainWindow()
   	mute = new QPushButton("Mute");
   	options->addWidget(mute);
   	QObject::connect(mute,SIGNAL(clicked()),this,SLOT(toggleSound()));
+  	
+  //create high scores button
+  	hscores = new QPushButton("High Scores");
+  	options->addWidget(hscores);
+  	QObject::connect(hscores,SIGNAL(clicked()),this,SLOT(toggleScores()));
   		
   //create gamespace
 	scene = new QGraphicsScene();
@@ -105,6 +111,19 @@ MainWindow::MainWindow()
   //create audio
   	audio = new Audio();
   	audio->play();
+  	
+  //create high scores
+  	scores = new Score();
+  	scene->addWidget(scores);
+  	scores->hide();
+  	
+  //create invincible mode label
+  	i = new QLabel("Invincible Mode!");
+	scene->addWidget(i);
+	i->setAttribute(Qt::WA_TranslucentBackground);
+	i->setGeometry(0,-3,300,10);
+	i->setWindowFlags(Qt::WindowStaysOnTopHint);
+	i->hide();
 }
 
 /**
@@ -139,7 +158,7 @@ void MainWindow::startGame()
 			return;
 		
 		//create username and score output
-		n = n + " Score";
+//		n = n + " Score";
 		s = new QFormLayout();
  	 	score = new QLineEdit(QString::number(score_));
  	 	score->setReadOnly(true);
@@ -163,14 +182,7 @@ void MainWindow::startGame()
 		invincible->hide();
 		//create invincibility mode notifier if invincibility mode is checked
 		if(invincible->isChecked())
-		{
-			i = new QLabel("Invincible Mode!");
-			scene->addWidget(i);
-			i->setAttribute(Qt::WA_TranslucentBackground);
-			i->setGeometry(0,-3,300,10);
-			i->setWindowFlags(Qt::WindowStaysOnTopHint);
 			i->show();
-		}
 		
 		//set flag
 		started = true;
@@ -363,6 +375,68 @@ void MainWindow::toggleHelp()
 		//show help screen
 		helpscreen->show();
 		help->setText("Hide.");
+	}
+}
+
+/** Shows the high scores screen. If the screen is already shown, hide the screen. Automatically pauses game. */
+void MainWindow::toggleScores()
+{
+	//pause/continue game if started
+	if(started && !finished)
+	{
+		if(timer->isActive())
+		{
+			timer->stop();
+			//hide gameplay screen
+			background->hide();
+			background2->hide();
+			player->hide();
+			lvl->hide();
+			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+			{
+				Item* temp = *it;
+				temp->hide();
+			}
+		
+			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
+			{
+				Life* temp = *it;
+				temp->hide();
+			}
+		}
+		else
+		{
+			timer->start();
+			//show gameplay screen
+			background->show();
+			background2->show();
+			player->show();
+			lvl->show();
+			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
+			{
+				Item* temp = *it;
+				temp->show();
+			}
+	
+			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
+			{
+				Life* temp = *it;
+				temp->show();
+			}
+		}
+	}
+	
+	if(scores->isVisible())
+	{
+		//hide help screen
+		scores->hide();
+		hscores->setText("High Scores");
+	}
+	else
+	{
+		//show help screen
+		scores->show();
+		hscores->setText("Hide.");
 	}
 }
 
@@ -609,6 +683,11 @@ void MainWindow::endGame()
 	//hide moving background
 	background->hide();
 	background2->hide();
+	
+	//add high score
+//	string n = name_->text().toUtf8().constData();
+//	std::cout << n << " " << score_ << std::endl;
+//	scores->add(score_,name_->text());
 }
 
 /**

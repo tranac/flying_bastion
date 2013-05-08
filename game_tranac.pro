@@ -24,7 +24,8 @@ HEADERS += airsoldier.h \
            tornadostep.h \
            whitemushroom.h \
            trickmaster.h \
-           wyvern.h
+           wyvern.h \
+           score.h
 SOURCES += airsoldier.cpp \
            aquatank.cpp \
            audio.cpp \
@@ -41,4 +42,5 @@ SOURCES += airsoldier.cpp \
            tornadostep.cpp \
            whitemushroom.cpp \
            trickmaster.cpp \
-           wyvern.cpp
+           wyvern.cpp \
+           score.cpp

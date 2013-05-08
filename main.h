@@ -4,6 +4,7 @@
 #include <cmath>
 #include <stdexcept>
 #include <cstdlib>
+#include <string>
 
 #include <QApplication>
 #include <QMainWindow>
@@ -66,6 +67,7 @@ protected slots:
 	void toggleSound();		//mutes & unmutes background music
 	void toggleHelp();		//shows & hides help screen
 	void handleTimer();		//handles timer
+	void toggleScores();
 private:
 	Audio* audio;			//background music
 	
@@ -79,6 +81,7 @@ private:
 	QLineEdit*    name_;	//input for user name
 	QLineEdit*	  score;	//score display
 	QFormLayout*  s;		//user name & score display
+	Score* scores;
 
 	QPushButton*  start;	//start game
 	QPushButton*  pause;	//pause game
@@ -86,6 +89,7 @@ private:
 	QPushButton*  help;		//help button
 	QRadioButton* invincible;//invincibility mode
 	QPushButton*  mute;		//mute music
+	QPushButton*  hscores;	//high scores
 	QLabel* i;
 	QLabel* lvl;
 	
@@ -114,7 +118,6 @@ private:
 	
 	QLabel* points;			//shown to notify user of bonus points
 	
-	Score* hscores;
 	Background* background;	//scrolling background image 1
 	Background* background2;//scrolling background image 2
 	

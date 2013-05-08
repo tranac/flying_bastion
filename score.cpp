@@ -2,38 +2,38 @@
 
 Score::Score()
 {
+	n = 0;
 	setEnabled(false);
 	setReadOnly(true);
-	setGeometry(75,40,400,300);
-	
+	setFixedSize(200,350);
+
 	read();
 }
 
 Score::~Score()
 {
-
 }
 
-void Score::add(string n, int s)
+void Score::add(int s, string name)
 {
-	QString string = toPlainText();
-	string = string + QString::fromStdString(n);
-	setText(string);
-/*
-	for(map<string,int>::iterator it=hscores_.begin();it != hscores_.end(); ++it)
+	hscores_[s] = name;
+	n++;
+	
+	if(n > 10)
 	{
-		int t = it->second;
-		if(s > t)
-			cout << "Test!" << endl;
+		hscores_.erase(hscores_.begin());
+		n--;
 	}
-*/
+	
+	setBox();
+	write();
 }
 
 void Score::write()
 {
 	ofstream ofile("scores.txt");
-	
-	for(map<string,int>::iterator it=hscores_.begin();it != hscores_.end(); ++it)
+	ofile << n << endl;
+	for(map<int,string>::iterator it=hscores_.begin();it != hscores_.end(); ++it)
 	{
 		ofile << it->first << " " << it->second << endl;
 	}
@@ -45,8 +45,30 @@ void Score::read()
 	
 	if(ifile.good())
 	{
-		setText("Test");
+		ifile >> n;
 	}
-	else
-		setText("New.");
+	for(int i=0;i<n;i++)
+	{
+		string tmp;
+		int score;
+		ifile >> score >> tmp;
+		hscores_[score] = tmp;
+	}
+	
+	setBox();
+}
+
+void Score::setBox()
+{
+	QString text = "High Scores!\n\n";
+	int ct = 1;
+	for(map<int,string>::reverse_iterator it= hscores_.rbegin();it!=hscores_.rend();it++)
+	{
+		string name = it->second;
+		int s = it->first;
+		text = text + QString::number(ct) + ".  "  + QString::fromStdString(name) + "\t" + QString::number(s) + '\n';
+		ct++;
+	}
+
+	setText(text);
 }

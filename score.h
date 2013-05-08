@@ -15,11 +15,12 @@ class Score : public QTextEdit {
 public:
 	Score();
 	~Score();
-	void add(string n, int s);
+	void add(int s, string name);
 	void write();
 	void read();
+	void setBox();
 private:
-	map<string,int> hscores_;
+	map<int,string> hscores_;
 	int n;
 } ;
 

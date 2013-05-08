@@ -67,13 +67,13 @@ protected slots:
 	void toggleSound();		//mutes & unmutes background music
 	void toggleHelp();		//shows & hides help screen
 	void handleTimer();		//handles timer
-	void toggleScores();
 private:
 	Audio* audio;			//background music
 	
 	QWidget*		window;	//central widget
 	QVBoxLayout* 	layout;	//central layout
 	QHBoxLayout* 	options;//toolbar
+	QHBoxLayout*	gameplay;
 	QGraphicsScene* scene;	//game window
 	QGraphicsView* 	view;	//game view
 	QTimer*	timer;			//timer
@@ -89,7 +89,6 @@ private:
 	QPushButton*  help;		//help button
 	QRadioButton* invincible;//invincibility mode
 	QPushButton*  mute;		//mute music
-	QPushButton*  hscores;	//high scores
 	QLabel* i;
 	QLabel* lvl;
 	

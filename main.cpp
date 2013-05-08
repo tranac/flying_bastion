@@ -45,7 +45,7 @@ MainWindow::MainWindow()
 	setCentralWidget(window);
 	layout = new QVBoxLayout(window);
 	window->setLayout(layout);
-	
+
   //create options toolbar 
 	options = new QHBoxLayout();
 	layout->addLayout(options);
@@ -72,13 +72,11 @@ MainWindow::MainWindow()
   	mute = new QPushButton("Mute");
   	options->addWidget(mute);
   	QObject::connect(mute,SIGNAL(clicked()),this,SLOT(toggleSound()));
-  	
-  //create high scores button
-  	hscores = new QPushButton("High Scores");
-  	options->addWidget(hscores);
-  	QObject::connect(hscores,SIGNAL(clicked()),this,SLOT(toggleScores()));
   		
   //create gamespace
+  	gameplay = new QHBoxLayout();
+	layout->addLayout(gameplay);
+	
 	scene = new QGraphicsScene();
 	scene->setSceneRect(0,0,650,350);
 	view = new QGraphicsView(scene);
@@ -86,8 +84,8 @@ MainWindow::MainWindow()
 	QColor c(Qt::black);
 	QBrush b(c,*bgs);
 	view->setBackgroundBrush(b);
- 	layout->addWidget(view);
-
+// 	layout->addWidget(view);
+	gameplay->addWidget(view);
   //create name input form
 	name_ = new QLineEdit();
 	name_->setGeometry(300,250,190,30);
@@ -115,7 +113,7 @@ MainWindow::MainWindow()
   //create high scores
   	scores = new Score();
   	scene->addWidget(scores);
-  	scores->hide();
+  	gameplay->addWidget(scores);
   	
   //create invincible mode label
   	i = new QLabel("Invincible Mode!");
@@ -378,68 +376,6 @@ void MainWindow::toggleHelp()
 	}
 }
 
-/** Shows the high scores screen. If the screen is already shown, hide the screen. Automatically pauses game. */
-void MainWindow::toggleScores()
-{
-	//pause/continue game if started
-	if(started && !finished)
-	{
-		if(timer->isActive())
-		{
-			timer->stop();
-			//hide gameplay screen
-			background->hide();
-			background2->hide();
-			player->hide();
-			lvl->hide();
-			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-			{
-				Item* temp = *it;
-				temp->hide();
-			}
-		
-			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
-			{
-				Life* temp = *it;
-				temp->hide();
-			}
-		}
-		else
-		{
-			timer->start();
-			//show gameplay screen
-			background->show();
-			background2->show();
-			player->show();
-			lvl->show();
-			for(QVector<Item*>::iterator it = items.begin(); it != items.end(); ++it)
-			{
-				Item* temp = *it;
-				temp->show();
-			}
-	
-			for(QVector<Life*>::iterator it = lives.begin(); it != lives.end(); ++it)
-			{
-				Life* temp = *it;
-				temp->show();
-			}
-		}
-	}
-	
-	if(scores->isVisible())
-	{
-		//hide help screen
-		scores->hide();
-		hscores->setText("High Scores");
-	}
-	else
-	{
-		//show help screen
-		scores->show();
-		hscores->setText("Hide.");
-	}
-}
-
 /**
 Handles the timer every time it timesout. If invincible mode is checked, no collisions will be checked. Otherwise it will first check against the walls and then against the items.
 
@@ -687,8 +623,7 @@ void MainWindow::endGame()
 	//add high score
 	string n = name_->text().toUtf8().constData();
 	std::cout << n << " " << score_ << std::endl;
-	scores->add(n,score_);
-//	scores->add(score_,name_->text());
+	scores->add(score_,n);
 }
 
 /**

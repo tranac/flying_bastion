@@ -491,7 +491,7 @@ void MainWindow::createEnemies()
 	int a = rand() % 9;
 	int b = rand() % 280;
 	
-/*	switch(a)
+	switch(a)
 	{
 		//create red nocture
 		case 1:
@@ -568,13 +568,13 @@ void MainWindow::createEnemies()
 		}
 		//create wyvern
 		case 8:
-*/		{
+		{
 			newItem = new Wyvern(w1,w2,player,this);
 			scene->addItem(newItem);
 			items.push_back(newItem);
 			return;
 		}
-//	}
+	}
 }
 
 /**
@@ -637,7 +637,7 @@ void MainWindow::loseLife()
 	{
 	  //check level first
 	  if(level == 3)
-	    {
+	  {
 	    setLife(0);
 	    
 	    //clear life images
@@ -650,15 +650,15 @@ void MainWindow::loseLife()
                 ++it;
 	      }
 	    lives.clear();
-	    }
+	  }
 	  else
-	    {
+	  {
 		lives_--;
 		life = lives.back();
 		scene->removeItem(life);
 		delete life;
 		lives.pop_back();
-	    }
+	  }
 	}
 	player->hide();
 	c = 0;

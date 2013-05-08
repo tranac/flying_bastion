@@ -44,18 +44,23 @@ All five moving items inherit from an abstract `Item` class that contains a virt
 ### Item Five: White Mushroom
 ![WhiteMushroom](images/whitemushroom1.png "WhiteMushroom")
 
-`WhiteMushroom`s are bonus items. They spawn rarely, and colliding with a `WhiteMushroom` gives the user an extra life. For the first half of the screen, the `WhiteMushroom` will teleport 50 pixels up or 50 pixels down from its current position if it has the same y-coordinate as the player. Otherwise, it will travel in a straight horizontal line. It will stop teleporting once it gets halfway across the screen. Intial y-position is random.
+`WhiteMushroom`s are bonus items. They spawn rarely, and colliding with a `WhiteMushroom` gives the user an extra life. For the first half of the screen, the `WhiteMushroom` will teleport 50 pixels up or 50 pixels down from its current position if it has the same y-coordinate as the player. Otherwise, it will travel in a straight horizontal line. It will stop teleporting once it gets halfway across the screen. Intial y-position is random. **Player AI Item**
 
 ### Item Six: Gargoyle
 ![Gargoyle](images/gargoyle1.png "Gargoyle")
 
-`Gargoyle`s are enemies. While `WhiteMushroom`s avoid the user's position, the `Gargoyle` will mimic it for the first third of the screen. Once it reaches that one-third point, it will travel in a straight horizontal line. Contact with a `Gargoyle` loses the player a life. Intial y-position is the `Player`'s y-coordinate at the time.
+`Gargoyle`s are enemies. While `WhiteMushroom`s avoid the user's position, the `Gargoyle` will mimic it for the first third of the screen. Once it reaches that one-third point, it will travel in a straight horizontal line. Contact with a `Gargoyle` loses the player a life. Intial y-position is the `Player`'s y-coordinate at the time. **Player AI Item**
+
+### Item Seven: Trickmaster
+![Trickmaster](images/trickmaster1.png "Trickmaster")
+
+`Trickmaster`s are enemies. They appear in the bottom left corner and stay stationary for a while. They are benign at this time. After a certain amount of the time, they extend and automatically kill you. They leave the screen after a while.
 
 
-### Nonmoving Items
-![Life](images/life.png "Life")
+### Item Eight: Wyvern
+![Wyvern](images/wyvern1.png "Wyvern")
 
-I also have several non-moving items. There is a `Life` item that is simply displayed for each life the user has left. `Life`s are held in a vector. There is also a `Message` item that has two `Pixmap`s in it: one for the start screen and one for the game over screen. `Message` is hidden during gameplay.
+`Wyrvern`s are enemies. They travel straight, then up, then straight, then up. 
 
 ## Gameplay
 This game is a side-scrolling game similar to the well-known helicopter game on the internet, but with a Kingdom Hearts twist. The goal is to stay alive as long as possible by avoiding obstacles and the screen boundaries.
